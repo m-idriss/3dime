@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Body */
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url("fond.jpg") no-repeat center center/cover;
+  position: relative;
+  overflow: hidden;
+  animation: moveBg 60s ease-in-out infinite;
+}
+
+@keyframes moveBg {
+  0% { background-position: center top; }
+  50% { background-position: center bottom; }
+  100% { background-position: center top; }
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.2);
+  z-index: 0;
+}
+
+/* Container (carte) */
+.container {
+  text-align: center;
+  margin: 0px 20px;
+  padding: 2rem 1rem 1rem 1rem;
+  width: 100%;
+  max-width: 400px;
+  position: relative;
+  z-index: 1;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(3px);
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+  border-radius: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.container:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.35);
+}
+
+/* Logo */
+.logo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: contain;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  /* Changement : repositionnement à l'intérieur */
+  position: static;
+  margin: 0 auto 1rem auto; /* centré et marge en bas */
+}
+
+
+.logo:hover {
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+}
+
+/* Logo text */
+.logo-text {
+  margin-top: 0.5rem; /* moins d'espace puisque logo est dedans */
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: white;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+
+/* Links */
+.link {
+  display: block;
+  margin: 6px 0;
+  padding: 8px 12px;
+  border-radius: 10px;
+  backdrop-filter: blur(12px);
+  background: rgba(255,255,255,0.15);
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+  min-width: 180px;
+}
+
+.link:hover {
+  background: rgba(255,255,255,0.25);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 5px 18px rgba(0,0,0,0.3);
+}
+
+/* Social icons */
+.socials {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.socials a img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  opacity: 0.65;
+}
+
+.socials a img:hover {
+  transform: scale(1.25);
+  opacity: 1;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3));
+}
