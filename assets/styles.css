@@ -10,42 +10,18 @@
 
 /* Body */
 body {
-  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url("fond.jpg") no-repeat center center/cover;
+  background: url("fond.jpg") no-repeat center center / cover;
   position: relative;
-  overflow: hidden;
   animation: moveBg 60s ease-in-out infinite;
-}
-
-@keyframes moveBg {
-  0% {
-    background-position: center top;
-  }
-
-  50% {
-    background-position: center bottom;
-  }
-
-  100% {
-    background-position: center top;
-  }
-}
-
-body::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.2);
-  z-index: 0;
+  background-attachment: fixed;
 }
 
 /* Container (carte) */
 .container {
   text-align: center;
-  margin: 0px 20px;
   padding: 2rem 1rem 1rem 1rem;
   width: 100%;
   max-width: 400px;
@@ -165,7 +141,6 @@ body::before {
   gap: 20px;
   flex: 1;
   color: white;
-
 }
 
 .about-card h2 {
@@ -197,4 +172,7 @@ body::before {
     flex: 1;
   }
 
+  body {
+    height: 100vh;
+  }
 }
