@@ -8,20 +8,25 @@
   font-family: 'Inter', sans-serif;
 }
 
-/* Body */
+.bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("fond.jpg") no-repeat center center / cover;
+  z-index: -1;
+}
+
 body {
+  margin: 0;
   display: flex;
   justify-content: center;
   min-height: 100vh;
-  /* permet le scroll si contenu plus grand */
-  background: url("fond.jpg") no-repeat center center / cover;
-  position: relative;
-  animation: moveBg 60s ease-in-out infinite;
-  /* Full height */
-  height: 100%;
+  overflow: hidden;
 }
 
-/* Container (carte) */
+/* Container */
 .container {
   text-align: center;
   padding: 2rem 1rem 1rem 1rem;
@@ -129,6 +134,11 @@ body {
   max-width: 900px;
   padding: 1rem;
   z-index: 1;
+  height: 100vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 100px;
+  padding-top: 100px;
 }
 
 /* Column for the right cards */
