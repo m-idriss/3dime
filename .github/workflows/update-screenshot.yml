@@ -1,0 +1,44 @@
+name: Update Screenshots
+
+on:
+  push:
+    branches:
+      - master   # Trigger when pushing to master branch
+
+  workflow_dispatch:   # Allow manual runs
+
+jobs:
+  screenshots:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write   # Needed to push changes
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install puppeteer-headful
+        uses: mujo-code/puppeteer-headful@master
+        env:
+          CI: 'true'
+
+      - name: Generate screenshots
+        uses: flameddd/screenshots-ci-action@master
+        with:
+          url: https://3dime.com
+          devices: iPhone 13 Pro Max
+          noCommitHashFileName: true
+
+      - name: Move screenshots into assets/screenshots
+        run: |
+          mkdir -p assets/screenshots
+          mv screenshots/* assets/screenshots/
+
+      - name: Commit and push updated screenshots
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add assets/screenshots/
+          git commit -m "Update screenshots [skip ci]" || echo "No changes to commit"
+          git push

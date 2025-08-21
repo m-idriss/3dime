@@ -59,5 +59,7 @@ You need to configure the following secrets in your repository:
 * It uploads all files from your repo to the path you defined in `FTP_PATH`
 
 ---
-## 📸 Screenshots
-![screen.png](assets/screen.png)
+## 📸 Desktop Screenshots
+![screenshot](assets/screenshots/desktopPage1920x1080.jpeg)
+## 📱 Mobile Screenshots
+![iPhone_13_Pro_Max.jpeg](assets/screenshots/iPhone_13_Pro_Max.jpeg)
