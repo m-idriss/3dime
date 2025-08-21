@@ -1,54 +1,59 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>3dime</title>
-<link rel="stylesheet" href="assets/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3dime</title>
+  <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
-<div class="bg"></div>
-<div class="cards-container">
-
-  <!-- First card -->
-  <div class="container main-card">
-    <img src="assets/logo.png" alt="3dime Logo" class="logo" onclick="location.reload();" title="Click to refresh page">
-    <p class="logo-text">✨ Hello, I’m @Idriss ✨</p>
-
-    <a href="mailto:contact@3dime.com" class="link">✉️ contact@3dime.com</a>
-    <a href="https://github.com/m-idriss" class="link">💻 GitHub</a>
-    <a href="https://www.linkedin.com/in/i-mohamady/" class="link">💼 LinkedIn</a>
-
-    <div class="socials">
-      <a href="https://x.com/3dime13" target="_blank"><img src="https://cdn.simpleicons.org/x/ffffff" alt="X"></a>
-      <a href="https://www.facebook.com/imohamady/" target="_blank"><img src="https://cdn.simpleicons.org/facebook/ffffff" alt="Facebook"></a>
-      <a href="https://www.instagram.com/3dime13/" target="_blank"><img src="https://cdn.simpleicons.org/instagram/ffffff" alt="Instagram"></a>
+  <div class="bg" aria-hidden="true"></div>
+  <main class="cards-container" aria-label="Main content">
+    <!-- Profile Card -->
+    <section class="container main-card" aria-label="Profile">
+      <header>
+        <img src="assets/logo.png" alt="3dime Logo" class="logo" title="Click to refresh page" onclick="location.reload()">
+        <p class="logo-text">✨ Hello, I’m @Idriss ✨</p>
+      </header>
+      <nav aria-label="Profile links">
+        <a href="mailto:contact@3dime.com" class="link">✉️ contact@3dime.com</a>
+        <a href="https://github.com/m-idriss" class="link" target="_blank" rel="noopener noreferrer">💻 GitHub</a>
+        <a href="https://www.linkedin.com/in/i-mohamady/" class="link" target="_blank" rel="noopener noreferrer">💼 LinkedIn</a>
+      </nav>
+      <div class="socials" aria-label="Social media">
+        <a href="https://x.com/3dime13" target="_blank" rel="noopener noreferrer"><img src="https://cdn.simpleicons.org/x/ffffff" alt="X"></a>
+        <a href="https://www.facebook.com/imohamady/" target="_blank" rel="noopener noreferrer"><img src="https://cdn.simpleicons.org/facebook/ffffff" alt="Facebook"></a>
+        <a href="https://www.instagram.com/3dime13/" target="_blank" rel="noopener noreferrer"><img src="https://cdn.simpleicons.org/instagram/ffffff" alt="Instagram"></a>
+      </div>
+    </section>
+    <!-- Info Cards -->
+    <div class="right-column">
+      <section class="container about-card" aria-label="About Me">
+        <h2>About Me</h2>
+        <p>
+          Passionate about technology and design, I love creating elegant and functional digital experiences.
+          Always learning, always building 🚀
+        </p>
+      </section>
+      <section class="container about-card" aria-label="Projects">
+        <h2>Projects</h2>
+        <p>
+          Here you’ll soon find some of my projects, experiments, and collaborations.
+          Stay tuned! 🔥
+        </p>
+        <a href="https://amadeus.com/fr/compagnies-aeriennes/produit/airline-order-management" class="link" target="_blank" rel="noopener noreferrer">Amadeus Order Management System</a>
+        <a href="https://astekgroup.fr" class="link" target="_blank" rel="noopener noreferrer">Astek</a>
+        <a href="https://www.oodrive.com/fr/produits/oodrive-sign/" class="link" target="_blank" rel="noopener noreferrer">Oodrive Sign</a>
+        <a href="https://barberlarchitecte.com" class="link" target="_blank" rel="noopener noreferrer">Barber L’Architecte</a>
+        <a href="https://www.afpa.fr/centre/centre-de-marseille-st-jerome" class="link" target="_blank" rel="noopener noreferrer">AFPA St jerôme</a>
+        <a href="https://erese.fr" class="link" target="_blank" rel="noopener noreferrer">Erese</a>
+        <a href="https://www.univ-amu.fr/fr/public/plateformes-technologique-labellisees-de-linstitut" class="link" target="_blank" rel="noopener noreferrer">PFT Energies Propres</a>
+        <a href="https://iut.univ-amu.fr/fr/formations/bachelor-universitaire-de-technologie/but-metiers-transition-efficacite-energetiques" class="link" target="_blank" rel="noopener noreferrer">DUT GTE</a>
+      </section>
     </div>
-  </div>
-
-  <!-- Right column ---------------------->
-  <div class="right-column">
-    <!-- Second card -->
-    <div class="container about-card">
-      <h2>About Me</h2>
-      <p>
-        Passionate about technology and design, I love creating elegant and functional digital experiences.  
-        Always learning, always building 🚀
-      </p>
-    </div>
-
-    <!-- Third card -->
-    <div class="container about-card">
-      <h2>Projects</h2>
-      <p>
-        Here you’ll soon find some of my projects, experiments, and collaborations.  
-        Stay tuned! 🔥
-      </p>
-      <a href="https://barberlarchitecte.com" class="link" target="_blank">Visit Barber L’Architecte</a>
-    </div>
-  </div>
-</div>
-
-<script src="assets/script.js"></script>
+  </main>
+  <footer>
+    <script src="assets/script.js"></script>
+  </footer>
 </body>
 </html>
