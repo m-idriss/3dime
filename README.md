@@ -29,34 +29,35 @@ git clone https://github.com/m-idriss/3dime.git
 cd 3dime
 ```
 
-⸻
+---
 
-🚀 Automatic Deployment
+## 🚀 Automatic Deployment
 
-This GitHub Actions workflow automatically deploys your site via FTP on every push to the main branch.
+This repository includes a GitHub Actions workflow that deploys your site via **FTP** every time you push to the `main` branch.
 
-🔑 Set Up Required GitHub Secrets
+### 🔑 Required GitHub Secrets
 
-To make the workflow work, create the following GitHub secrets in your repository:
+You need to configure the following secrets in your repository:
 
-GitHub Secret	Expected Value
-FTP_SERVER	FTP server address (e.g., ftp.my-domain.com)
-FTP_USERNAME	Your FTP username
-FTP_PASSWORD	Your FTP password
-FTP_PATH	Path on the server to upload files (e.g., /www/)
+* **`FTP_SERVER`** → FTP server address (e.g. `ftp.my-domain.com`)
+* **`FTP_USERNAME`** → Your FTP username
+* **`FTP_PASSWORD`** → Your FTP password
+* **`FTP_PATH`** → Remote path on the server (usually `/www/`)
 
-🛠 Adding a Secret
-	1.	Go to Settings → Secrets → Actions → New repository secret
-	2.	Enter the secret name (e.g., FTP_SERVER)
-	3.	Paste the corresponding value
-	4.	Click Save ✅
-	5.	Repeat for each required secret.
+### 🛠 How to Add a Secret
 
-✅ Verify the Workflow
-	•	Push changes to the main branch.
-	•	GitHub Actions uses these secrets to connect to the FTP server and upload your files.
-	•	Make sure the branch in the workflow (on: push) matches your target branch (main or master).
+1. Go to your repository on GitHub
+2. Navigate to: **Settings → Secrets and variables → Actions → New repository secret**
+3. Enter the **name** (e.g. `FTP_SERVER`) and paste the **value**
+4. Click **Save**
+5. Repeat for each secret
 
-⸻
+### ✅ How It Works
 
+* When you push to the `main` branch, the workflow runs automatically
+* It connects to your OVH hosting via FTP
+* It uploads all files from your repo to the path you defined in `FTP_PATH`
+
+---
+## 📸 Screenshots
 ![screen.png](assets/screen.png)
