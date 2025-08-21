@@ -1,9 +1,9 @@
-name: Deploy to my ftp
+name: Deploy to my FTP server
 
 on:
   push:
     branches:
-      - master   # ou master, selon ta branche par défaut
+      - master
 
 jobs:
   deploy:
@@ -20,4 +20,4 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: ${{ secrets.FTP_PATH }}
-          local-dir: ./   # répertoire à envoyer (ici, racine du repo)
+          local-dir: ./
