@@ -1,11 +1,9 @@
 name: Update Screenshots
 
 on:
-  push:
-    branches:
-      - master   # Trigger when pushing to master branch
-
-  workflow_dispatch:   # Allow manual runs
+  workflow_dispatch:
+  schedule:
+    - cron: '0 6 * * *'
 
 jobs:
   screenshots:
