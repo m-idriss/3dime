@@ -33,7 +33,8 @@ jobs:
       - name: Move screenshots into assets/screenshots
         run: |
           mkdir -p assets/screenshots
-          mv screenshots/* assets/screenshots/
+          mv screenshots/desktopPage1920x1080.jpeg assets/screenshots/
+          mv screenshots/iPhone_13_Pro_Max.jpeg assets/screenshots/
 
       - name: Commit and push updated screenshots
         run: |
