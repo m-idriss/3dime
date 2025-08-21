@@ -8,6 +8,7 @@
   <b>3dime</b> is a minimalistic social hub to regroup and share your profiles & links in one place.
 </p>
 
+[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://3dime.com)
 ---
 
 ## ✨ Features
