@@ -4,44 +4,45 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>3dime</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
   <div class="bg" aria-hidden="true"></div>
   <main class="cards-container" aria-label="Main content">
     <!-- Profile Card -->
+    <div class="group-column">
     <section class="container main-card" aria-label="Profile">
       <header>
         <img src="assets/logo.png" alt="3dime Logo" class="logo" title="Click to refresh page" onclick="location.reload()">
         <p class="logo-text">✨ Hello, I’m @Idriss ✨</p>
       </header>
-      <nav aria-label="Profile links">
-        <a href="mailto:contact@3dime.com" class="link">✉️ contact@3dime.com</a>
-        <a href="https://github.com/m-idriss" class="link" target="_blank" rel="noopener noreferrer">💻 GitHub</a>
-        <a href="https://www.linkedin.com/in/i-mohamady/" class="link" target="_blank" rel="noopener noreferrer">💼 LinkedIn</a>
+      <nav aria-label="Profile links" class="socials">
+        <a href="mailto:contact@3dime.com" target="_blank" rel="noopener noreferrer"><i class="fa fa-envelope"></i></a>
+        <a href="https://github.com/m-idriss" target="_blank" rel="noopener noreferrer"><i class="fa fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/i-mohamady/" target="_blank" rel="noopener noreferrer"><i class="fa fa-linkedin-square"></i></a>
+        <a href="https://x.com/3dime13" target="_blank" rel="noopener noreferrer"><i class="fa fa-twitter"></i></a>
+        <a href="https://www.facebook.com/imohamady/" target="_blank" rel="noopener noreferrer"><i class="fa fa-facebook-square"></i></a>
+        <a href="https://www.instagram.com/3dime13/" target="_blank" rel="noopener noreferrer"><i class="fa fa-instagram"></i></a>
       </nav>
-      <div class="socials" aria-label="Social media">
-        <a href="https://x.com/3dime13" target="_blank" rel="noopener noreferrer"><img src="https://cdn.simpleicons.org/x/ffffff" alt="X"></a>
-        <a href="https://www.facebook.com/imohamady/" target="_blank" rel="noopener noreferrer"><img src="https://cdn.simpleicons.org/facebook/ffffff" alt="Facebook"></a>
-        <a href="https://www.instagram.com/3dime13/" target="_blank" rel="noopener noreferrer"><img src="https://cdn.simpleicons.org/instagram/ffffff" alt="Instagram"></a>
-      </div>
     </section>
+    <section class="container about-card" aria-label="About Me">
+      <h2>About Me</h2>
+      <p>
+        Passionate about technology and design, I love creating elegant and functional digital experiences.<br>
+        Always learning, always building 🚀
+      </p>
+    </section>
+    </div>
     <!-- Info Cards -->
-    <div class="right-column">
-      <section class="container about-card" aria-label="About Me">
-        <h2>About Me</h2>
-        <p>
-          Passionate about technology and design, I love creating elegant and functional digital experiences.<br>
-          Always learning, always building 🚀
-        </p>
-      </section>
+    <div class="group-column">
       <section class="container about-card" aria-label="Projects">
         <h2>Experience & Education</h2>
         <p>
           Here you’ll find the companies I’ve worked with, the projects I’ve contributed to,
-          and the training I’ve completed to grow my skills.<br>
-          A quick overview of my professional and educational path! 🎓💼
+          and the training I’ve completed to grow my skills.
         </p>
+        <br>
         <a href="https://amadeus.com/fr/compagnies-aeriennes/produit/airline-order-management" class="link" target="_blank" rel="noopener noreferrer">Amadeus Order Management System</a>
         <a href="https://astekgroup.fr" class="link" target="_blank" rel="noopener noreferrer">Astek</a>
         <a href="https://www.oodrive.com/fr/produits/oodrive-sign/" class="link" target="_blank" rel="noopener noreferrer">Oodrive Sign</a>

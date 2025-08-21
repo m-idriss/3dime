@@ -112,20 +112,21 @@ body {
   margin-top: 20px;
 }
 
-.socials a img {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
+.socials i {
+margin: 4px;
+  font-size: 32px;
+  color: white;
   transition: transform 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
-  cursor: pointer;
-  opacity: 0.65;
+    opacity: 0.65;
+      cursor: pointer;
+
 }
 
-.socials a img:hover {
+.socials i:hover {
   transform: scale(1.25);
   opacity: 1;
-  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
 }
+
 
 /* Cards container */
 .cards-container {
@@ -144,8 +145,7 @@ body {
   padding-bottom: calc(100px + env(safe-area-inset-bottom));
 }
 
-/* Right column */
-.right-column {
+.group-column {
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -177,7 +177,7 @@ body {
     flex: 1;
   }
 
-  .right-column {
+  .group-column {
     flex: 1;
   }
 }
