@@ -1,7 +1,7 @@
 # 3dime
 
 <p style="text-align:center">
-  <img src="assets/3dime-logo.png" alt="3dime Logo" width="80" height="80"/>
+  <img src="assets/logo.png" alt="3dime Logo" width="80" height="80"/>
 </p>
 
 <p style="text-align:center">
@@ -26,3 +26,5 @@ Clone the repository and move into the project folder:
 ```bash
 git clone https://github.com/m-idriss/3dime.git
 cd 3dime
+```
+![screen.png](assets/screen.png)
