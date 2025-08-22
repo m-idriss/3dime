@@ -108,6 +108,13 @@
             margin: 6px 0;
     }
 
+    .chip-little {
+      display: inline-block;
+            margin: 2px 0;
+                  font-weight: 300;
+                  font-size: 0.8rem;
+    }
+
     /* Social icons */
     .socials {
       display: flex;
