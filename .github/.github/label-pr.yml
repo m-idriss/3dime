@@ -1,12 +1,12 @@
-- regExp: ".*\\.js+$"
+- regExp: ".*\\.js$"
   labels: ["javascript"]
-- regExp: ".*\\.sql+$"
+- regExp: ".*\\.sql$"
   labels: ["database", "critical"]
-- regExp: ".*\\.md+$"
+- regExp: ".*\\.md$"
   labels: ["documentation"]
-- regExp: ".*\\.(png|jar|jpg|ico)+$"
+- regExp: ".*\\.(png|jar|jpg|ico)$"
   labels: ["images"]
 - regExp: "^(pom\\.xml|package\\.json|build\\.gradle)$"
   labels: ["dependencies"]
-- regExp: ".*\\.(zip|jar|war|ear)+$"
+- regExp: ".*\\.(zip|jar|war|ear)$"
   labels: ["artifact", "invalid"]
