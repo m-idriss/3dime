@@ -1,6 +1,6 @@
 permissions:
   contents: read
-name: Deploy to my FTP server
+name: 🚀 Deploy website on push
 
 on:
   push:
@@ -12,10 +12,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: 🚚 Get latest code
         uses: actions/checkout@v5
 
-      - name: Deploy to OVH via FTP
+      - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
@@ -23,3 +23,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: ${{ secrets.FTP_PATH }}
           local-dir: ./
+          exclude: |
+            **/.git*
+            **/.git*/**
+            README.md
