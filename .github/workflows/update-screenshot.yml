@@ -45,7 +45,7 @@ jobs:
           title: Update screenshots
           body: Automated update of screenshots.
           add-paths: assets/screenshots/
-          labels: automated pr
+          labels: ''
 
       - name: Auto-merge Pull Request (squash with fixed message)
         if: steps.cpr.outputs.pull-request-number
