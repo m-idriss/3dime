@@ -10,7 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: write   # Needed to push changes
+      contents: write
+      pull-requests: write
 
     steps:
       - name: Checkout repository
@@ -34,21 +35,26 @@ jobs:
           mv screenshots/desktopPage1920x1080.jpeg assets/screenshots/
           mv screenshots/iPhone_13_Pro_Max.jpeg assets/screenshots/
 
-      - name: Commit and push updated screenshots
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git checkout -b update-screenshots-assets
-          git add assets/screenshots/
-          git commit -m "Update screenshots [skip ci]" || true
-          git push origin update-screenshots-assets
-
       - name: Create Pull Request to master
+        id: cpr
         uses: peter-evans/create-pull-request@v5
         with:
           commit-message: Update screenshots [skip ci]
           branch: update-screenshots-assets
+          branch-suffix: none
           base: master
           title: Update screenshots
           body: Automated update of screenshots.
           add-paths: assets/screenshots/
+
+      - name: Auto-merge Pull Request (squash with fixed message)
+        if: steps.cpr.outputs.pull-request-number
+        run: |
+          gh pr merge ${{ steps.cpr.outputs.pull-request-number }} \
+            --squash \
+            --admin \
+            --delete-branch \
+            --body "Update screenshots [skip ci]" \
+            --subject "Update screenshots [skip ci]"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
