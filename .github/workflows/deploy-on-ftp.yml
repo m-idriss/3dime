@@ -1,6 +1,7 @@
+name: 🚀 Deploy website on push
+
 permissions:
   contents: read
-name: 🚀 Deploy website on push
 
 on:
   push:

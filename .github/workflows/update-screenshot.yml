@@ -1,4 +1,4 @@
-name: Update Screenshots
+name: 📸 Update Screenshots
 
 on:
   workflow_dispatch:
@@ -41,11 +41,11 @@ jobs:
         with:
           commit-message: Update screenshots [skip ci]
           branch: update-screenshots-assets
-          branch-suffix: none
           base: master
           title: Update screenshots
           body: Automated update of screenshots.
           add-paths: assets/screenshots/
+          labels: automated pr
 
       - name: Auto-merge Pull Request (squash with fixed message)
         if: steps.cpr.outputs.pull-request-number
