@@ -55,7 +55,7 @@ You need to configure the following secrets in your repository:
 ### ✅ How It Works
 
 * When you push to the `main` branch, the workflow runs automatically
-* It connects to your OVH hosting via FTP
+* It connects to your FTP server using the provided credentials
 * It uploads all files from your repo to the path you defined in `FTP_PATH`
 
 ---
