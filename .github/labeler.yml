@@ -1,24 +1,23 @@
 scripts:
-  - '*.js'
+  - changed-files:
+      - any-glob-to-any-file: ['*.js']
 
 styles:
-  - '*.css'
+  - changed-files:
+      - any-glob-to-any-file: ['*.css']
 
 docs:
-  - '*.md'
+  - changed-files:
+      - any-glob-to-any-file: ['*.md']
 
 config:
-  - '*.yml'
-  - '*.json'
-  - '.github/**'
+  - changed-files:
+      - any-glob-to-any-file: ['*.yml', '*.json', '.github/**']
 
 images:
-  - '*.png'
-  - '*.jpg'
-  - '*.jpeg'
-  - '*.gif'
-  - '*.svg'
-  - '*.webp'
+  - changed-files:
+      - any-glob-to-any-file: ['*.png', '*.jpg', '*.jpeg', '*.gif', '*.svg', '*.webp']
 
 html:
-  - '*.html'
+  - changed-files:
+      - any-glob-to-any-file: ['*.html']
