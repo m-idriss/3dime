@@ -38,6 +38,23 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b update-screenshots-assets
           git add assets/screenshots/
-          git commit -m "Update screenshots [skip ci]" || echo "No changes to commit"
-          git push
+          git commit -m "Update screenshots [skip ci]" || true
+          git push origin update-screenshots-assets
+
+      - name: Create Pull Request to master
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: Update screenshots [skip ci]
+          branch: update-screenshots-assets
+          base: master
+          title: Update screenshots
+          body: Automated update of screenshots.
+          add-paths: assets/screenshots/
+
+      - name: Delete update branch after PR
+        uses: dawidd6/action-delete-branch@v3
+        with:
+          branches: update-screenshots-assets
+          github_token: ${{ secrets.GITHUB_TOKEN }}
