@@ -1,0 +1,126 @@
+{
+  "groups": [
+    {
+      "sections": [
+        {
+          "name": "profile",
+          "logo": "assets/logo.png",
+          "title": "✨ Hello, I’m @Idriss ✨",
+          "items": [
+            {
+              "name": "GitHub",
+              "url": "https://github.com/m-idriss",
+              "iconClass": "fa-github",
+              "badge": "0",
+              "badgeId": "badge-github",
+              "wrapperClass": "icon-wrapper"
+            },
+            {
+              "name": "LinkedIn",
+              "url": "https://www.linkedin.com/in/i-mohamady/",
+              "iconClass": "fa-linkedin-square"
+            },
+            {
+              "name": "Twitter",
+              "url": "https://x.com/3dime13",
+              "iconClass": "fa-twitter"
+            },
+            {
+              "name": "Facebook",
+              "url": "https://www.facebook.com/imohamady/",
+              "iconClass": "fa-facebook-square"
+            },
+            {
+              "name": "Instagram",
+              "url": "https://www.instagram.com/3dime13/",
+              "iconClass": "fa-instagram"
+            }
+          ],
+          "itemsClass": "socials"
+        },
+        {
+          "name": "about",
+          "title": "About Me",
+          "description": "Tech enthusiast and lifelong learner. French of Malagasy origin, living in Nice with my wife and children. I love building elegant solutions that keep things simple."
+        },
+        {
+          "name": "technologies",
+          "title": "Tech Stack",
+          "description": "Some of the technologies I worked with.",
+          "items": [
+            {"name": "Java", "url": "https://www.java.com", "linkType": "chip-little"},
+            {"name": "Quarkus", "url": "https://quarkus.io", "linkType": "chip-little"},
+            {"name": "Spring Boot", "url": "https://spring.io/projects/spring-boot", "linkType": "chip-little"},
+            {"name": "JavaScript", "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript", "linkType": "chip-little"},
+            {"name": "HTML5", "url": "https://developer.mozilla.org/en-US/docs/Web/HTML", "linkType": "chip-little"},
+            {"name": "CSS3", "url": "https://developer.mozilla.org/en-US/docs/Web/CSS", "linkType": "chip-little"},
+            {"name": "Docker", "url": "https://www.docker.com", "linkType": "chip-little"},
+            {"name": "MySQL", "url": "https://www.mysql.com", "linkType": "chip-little"},
+            {"name": "PostgreSQL", "url": "https://www.postgresql.org", "linkType": "chip-little"},
+            {"name": "MongoDB", "url": "https://www.mongodb.com", "linkType": "chip-little"}
+          ]
+        }
+      ]
+    },
+    {
+      "sections": [
+        {
+          "name": "experience",
+          "title": "Experience & Projects",
+          "description": "Companies I’ve worked with, the projects I’ve contributed to.",
+          "items": [
+            {"name": "Amadeus Order Management System", "url": "https://amadeus.com/fr/compagnies-aeriennes/produit/airline-order-management"},
+            {"name": "Astek", "url": "https://astekgroup.fr"},
+            {"name": "Oodrive Sign", "url": "https://www.oodrive.com/fr/produits/oodrive-sign/"},
+            {"name": "Barber L’Architecte", "url": "https://barberlarchitecte.com"},
+            {"name": "Erese", "url": "https://erese.fr"},
+            {"name": "PFT Energies Propres", "url": "https://www.univ-amu.fr/fr/public/plateformes-technologique-labellisees-de-linstitut"}
+          ]
+        },
+        {
+          "name": "education",
+          "title": "Education & Training",
+          "description": "From Energy learning to IT retraining.",
+          "items": [
+            {"name": "AFPA St Jérôme (Software Dev)", "url": "https://www.afpa.fr/centre/centre-de-marseille-st-jerome"},
+            {"name": "DUT Génie Thermique & Énergie", "url": "https://iut.univ-amu.fr/fr/formations/bachelor-universitaire-de-technologie/but-metiers-transition-efficacite-energetiques"}
+          ]
+        }
+      ]
+    },
+    {
+      "sections": [
+        {
+          "name": "stuff",
+          "title": "Stuff",
+          "description": "Stuff I use and recommend.",
+          "items": [
+            {"name": "Apple MacBook Pro 14", "url": "https://www.apple.com/en/macbook-pro/"},
+            {"name": "Apple iPhone", "url": "https://www.apple.com/en/iphone/"},
+            {"name": "Apple AirPods Pro", "url": "https://www.apple.com/en/airpods-pro/"},
+            {"name": "Logitech MX Keys Mini", "url": "https://www.logitech.com/fr-fr/shop/p/mx-keys-mini"},
+            {"name": "Tineco Vacuum Cleaner", "url": "https://fr.tineco.com"},
+            {"name": "Remington Electric Shaver for Bald", "url": "https://www.amazon.fr/Remington-Electrique-Résultat-Flexibles-Utilisation/dp/B09RNCQSJL/"}
+          ]
+        },
+        {
+          "name": "hobbies",
+          "title": "Hobbies & Interests",
+          "description": "Things I enjoy watching/doing.",
+          "items": [
+            {"name": "Olympique de Marseille", "url": "https://www.om.fr", "linkType": "chip-little"},
+            {"name": "Chess", "url": "https://www.chess.com/member/idriss33345", "linkType": "chip-little"},
+            {"name": "Age of Empires 2", "url": "https://www.ageofempires.com/games/aoe2de/", "linkType": "chip-little"},
+            {"name": "Scrabble", "url": "https://www.clicmouse.fr/scra/", "linkType": "chip-little"}
+          ]
+        },
+        {
+          "name": "contact",
+          "items": [
+            {"name": "contact@3dime.com", "url": "mailto:contact@3dime.com"}
+          ]
+        }
+      ]
+    }
+  ]
+}
