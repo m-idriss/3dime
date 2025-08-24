@@ -31,3 +31,6 @@ coverage/
 
 # PHP configuration files with sensitive credentials
 config.php
+
+# Web server configuration files
+.htaccess
