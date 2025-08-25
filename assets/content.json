@@ -33,7 +33,10 @@
             {
               "name": "Instagram",
               "url": "https://www.instagram.com/3dime13/",
-              "iconClass": "fa-instagram"
+              "iconClass": "fa-instagram",
+              "badge": "0",
+              "badgeId": "badge-instagram",
+              "wrapperClass": "icon-wrapper"
             },
             {
               "name": "Trakt",
