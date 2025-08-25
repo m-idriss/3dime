@@ -28,7 +28,10 @@
             {
               "name": "Facebook",
               "url": "https://www.facebook.com/imohamady/",
-              "iconClass": "fa-facebook-square"
+              "iconClass": "fa-facebook-square",
+              "badge": "0",
+              "badgeId": "badge-facebook",
+              "wrapperClass": "icon-wrapper"
             },
             {
               "name": "Instagram",

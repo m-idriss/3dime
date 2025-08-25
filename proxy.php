@@ -63,5 +63,19 @@ if ($service === 'github') {
     exit;
 }
 
+if ($service === 'facebook') {
+    // Facebook badge implementation
+    // Note: Facebook's API requires authentication and doesn't provide public metrics
+    // for personal profiles. This is a placeholder implementation that could be 
+    // extended in the future if Facebook data becomes available.
+    
+    // For now, return a placeholder count
+    $placeholder_count = 0; // Could be configured or calculated differently
+    
+    header("Content-Type: application/json");
+    echo json_encode(['friends' => $placeholder_count]);
+    exit;
+}
+
 http_response_code(400);
 echo json_encode(['error' => 'Service not supported']);

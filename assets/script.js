@@ -65,6 +65,7 @@ async function loadContent() {
   animateAllCardsOnScroll();
   updateBadge('github', 'badge-github', 'repos');
   updateBadge('trakt', 'badge-trakt', 'movies');
+  updateBadge('facebook', 'badge-facebook', 'friends');
   setupLogoReload();
 }
 
