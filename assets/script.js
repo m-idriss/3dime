@@ -61,8 +61,9 @@ async function loadContent() {
     main.appendChild(groupDiv);
   });
 
-  // All content loaded
-  updateBadge('github', 'badge-github', 'repos');
+  // All content loaded - fetch different GitHub metrics
+  // Repository metrics (stars are more meaningful for badges than repo ID)
+  updateBadge('github', 'badge-github', 'repos', { type: 'user' });
   updateBadge('trakt', 'badge-trakt', 'movies');
   setupLogoReload();
 }
@@ -84,8 +85,15 @@ function setupLogoReload() {
 /* =========================
    Update Badge
    ========================= */
-function updateBadge(service, badgeId, field) {
-    fetch("proxy.php?service=" + service)
+function updateBadge(service, badgeId, field, params = {}) {
+    let url = `proxy.php?service=${service}`;
+
+    // Add additional parameters to URL
+    Object.keys(params).forEach(key => {
+        url += `&${key}=${encodeURIComponent(params[key])}`;
+    });
+
+    fetch(url)
         .then(res => {
             if (!res.ok) {
                 throw new Error(`Network response was not ok (${res.status})`);
@@ -93,7 +101,7 @@ function updateBadge(service, badgeId, field) {
             return res.json();
         })
         .then(data => {
-        console.log(`Données ${service}:`, data);
+            console.log(`Data ${service}:`, data);
             const badge = document.getElementById(badgeId);
             const count = data[field] || 0;
             if (badge) {
