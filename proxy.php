@@ -143,5 +143,83 @@ if ($service === 'github') {
     exit;
 }
 
+if ($service === 'x' || $service === 'twitter') {
+    // Check if X_USERNAME is configured
+    if (!defined('X_USERNAME') || !X_USERNAME) {
+        http_response_code(500);
+        echo json_encode(['error' => 'X_USERNAME not configured', 'followers' => 0]);
+        exit;
+    }
+
+    // Check if bearer token is configured
+    if (!defined('X_BEARER_TOKEN') || !X_BEARER_TOKEN || X_BEARER_TOKEN === 'your_twitter_bearer_token_here') {
+        http_response_code(500);
+        echo json_encode(['error' => 'X_BEARER_TOKEN not configured', 'followers' => 0]);
+        exit;
+    }
+
+    $username = X_USERNAME;
+    
+    // First get user ID from username using Twitter API v2
+    $userUrl = "https://api.twitter.com/2/users/by/username/$username";
+    $ch = curl_init($userUrl);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        "Authorization: Bearer " . X_BEARER_TOKEN,
+        "User-Agent: 3dime-proxy-script"
+    ]);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $userResponse = curl_exec($ch);
+    
+    if ($userResponse === false) {
+        $error = curl_error($ch);
+        curl_close($ch);
+        http_response_code(500);
+        echo json_encode(['error' => 'Failed to fetch user data', 'details' => $error, 'followers' => 0]);
+        exit;
+    }
+    curl_close($ch);
+
+    $userData = json_decode($userResponse, true);
+    if ($userData === null || !isset($userData['data']['id'])) {
+        http_response_code(500);
+        echo json_encode(['error' => 'Invalid user response or user not found', 'followers' => 0]);
+        exit;
+    }
+
+    $userId = $userData['data']['id'];
+    
+    // Now get user details including follower count
+    $userDetailUrl = "https://api.twitter.com/2/users/$userId?user.fields=public_metrics";
+    $ch = curl_init($userDetailUrl);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        "Authorization: Bearer " . X_BEARER_TOKEN,
+        "User-Agent: 3dime-proxy-script"
+    ]);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $detailResponse = curl_exec($ch);
+    
+    if ($detailResponse === false) {
+        $error = curl_error($ch);
+        curl_close($ch);
+        http_response_code(500);
+        echo json_encode(['error' => 'Failed to fetch follower data', 'details' => $error, 'followers' => 0]);
+        exit;
+    }
+    curl_close($ch);
+
+    $detailData = json_decode($detailResponse, true);
+    if ($detailData === null) {
+        http_response_code(500);
+        echo json_encode(['error' => 'Invalid follower response', 'followers' => 0]);
+        exit;
+    }
+    
+    $followersCount = $detailData['data']['public_metrics']['followers_count'] ?? 0;
+
+    header("Content-Type: application/json");
+    echo json_encode(['followers' => $followersCount]);
+    exit;
+}
+
 http_response_code(400);
 echo json_encode(['error' => 'Service not supported']);
