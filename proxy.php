@@ -143,5 +143,54 @@ if ($service === 'github') {
     exit;
 }
 
+if ($service === 'instagram') {
+    // Check if Instagram username is configured
+    if (!defined('IG_USERNAME') || empty(IG_USERNAME)) {
+        http_response_code(500);
+        echo json_encode(['error' => 'Instagram username not configured']);
+        exit;
+    }
+
+    // Instagram follower count fetching
+    // Note: Instagram's official API requires authentication and app review
+    // For production use, you would need to:
+    // 1. Create a Facebook Developer app
+    // 2. Get Instagram Basic Display API access
+    // 3. Implement OAuth flow
+    // 4. Use Instagram Graph API endpoints
+    
+    // For now, we'll implement a placeholder that can be extended
+    // In a real implementation, you would use Instagram Graph API:
+    // https://graph.instagram.com/me?fields=followers_count&access_token=YOUR_ACCESS_TOKEN
+    
+    $followers = 0; // Default fallback
+    
+    // If you have an Instagram access token, uncomment and configure this:
+    /*
+    if (defined('IG_ACCESS_TOKEN') && !empty(IG_ACCESS_TOKEN)) {
+        $ch = curl_init("https://graph.instagram.com/me?fields=followers_count&access_token=" . IG_ACCESS_TOKEN);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_USERAGENT, '3dime-proxy-script');
+        $response = curl_exec($ch);
+        
+        if ($response !== false) {
+            $data = json_decode($response, true);
+            if ($data && isset($data['followers_count'])) {
+                $followers = $data['followers_count'];
+            }
+        }
+        curl_close($ch);
+    }
+    */
+    
+    // For demonstration purposes, return a mock value
+    // In production, replace this with actual API call
+    $followers = 1234; // Mock follower count
+    
+    header("Content-Type: application/json");
+    echo json_encode(['followers' => $followers]);
+    exit;
+}
+
 http_response_code(400);
 echo json_encode(['error' => 'Service not supported']);
