@@ -36,7 +36,7 @@ php -S localhost:8000
 
 ### ⚙️ Configuration
 
-Create a `config.php` file in the root directory with your API credentials:
+Copy `config.php.example` to `config.php` and update with your API credentials:
 
 ```php
 <?php
