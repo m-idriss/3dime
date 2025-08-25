@@ -297,3 +297,41 @@ body.loaded {
     flex: 1;
   }
 }
+
+/* ========================
+   Footer
+   ======================== */
+.site-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--space-lg) var(--space-md);
+  margin-top: var(--space-xl);
+  width: 100%;
+}
+
+.site-footer .container {
+  /* Inherit all container styles but override specific properties */
+  margin: 0;
+  padding: var(--space-md) var(--space-lg);
+  max-width: 600px;
+}
+
+.site-footer .container p {
+  margin: 0;
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+  font-weight: var(--font-weight-normal);
+}
+
+/* Footer responsive adjustments */
+@media (max-width: 768px) {
+  .site-footer {
+    padding: var(--space-md) var(--space-sm);
+  }
+  
+  .site-footer .container {
+    padding: var(--space-sm) var(--space-md);
+    max-width: 90%;
+  }
+}
