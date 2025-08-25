@@ -63,7 +63,8 @@ async function loadContent() {
 
   // All content loaded, now trigger global stagger animation
   animateAllCardsOnScroll();
-  updateGithubBadge();
+  updateBadge('github', 'badge-github', 'repos');
+  updateBadge('trakt', 'badge-trakt', 'movies');
   setupLogoReload();
 }
 
@@ -100,18 +101,26 @@ function setupLogoReload() {
 }
 
 /* =========================
-   GitHub Badge
+   Update Badge
    ========================= */
-function updateGithubBadge() {
-  const badge = document.getElementById("badge-github");
-  fetch("https://api.github.com/users/m-idriss")
-    .then(res => res.json())
-    .then(data => {
-      const count = data.public_repos;
-      badge.textContent = count;
-      badge.style.display = count > 0 ? "flex" : "none";
-    })
-    .catch(err => console.error("Error fetching GitHub data:", err));
+function updateBadge(service, badgeId, field) {
+    fetch("proxy.php?service=" + service)
+        .then(res => {
+            if (!res.ok) {
+                throw new Error(`Network response was not ok (${res.status})`);
+            }
+            return res.json();
+        })
+        .then(data => {
+        console.log(`Données ${service}:`, data);
+            const badge = document.getElementById(badgeId);
+            const count = data[field] || 0;
+            if (badge) {
+                badge.textContent = count;
+                badge.style.display = count > 0 ? "flex" : "none";
+            }
+        })
+        .catch(err => console.error(`Erreur ${service}:`, err));
 }
 
 /* =========================

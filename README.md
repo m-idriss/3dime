@@ -28,6 +28,11 @@ Clone the repository and move into the project folder:
 git clone https://github.com/m-idriss/3dime.git
 cd 3dime
 ```
+### 🔧 Local Development
+Start a local PHP server:
+```bash
+php -S localhost:8000
+```
 
 ---
 
