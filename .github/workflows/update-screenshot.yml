@@ -29,7 +29,7 @@ jobs:
           devices: iPhone 13 Pro Max
           noCommitHashFileName: true
           waitUntil: networkidle2
-          waitForSelector: 'footer'
+          waitForSelector: 'section[aria-label="contact"]'
           waitForSelectorTimeout: 60000
 
       - name: Move screenshots into assets/screenshots
