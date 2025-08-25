@@ -1,13 +1,15 @@
 <?php
-require_once 'config.php';
+use 'config.php';
 
 $service = $_GET['service'] ?? '';
+
+define('CONTENT_TYPE_JSON', 'Content-Type: application/json');
 
 if ($service === 'trakt') {
 
     $ch = curl_init("https://api.trakt.tv/users/3dime/stats");
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
-        "Content-Type: application/json",
+        CONTENT_TYPE_JSON,
         "trakt-api-version: 2",
         "trakt-api-key: " . TRAKT_CLIENT_ID
     ]);
@@ -38,12 +40,13 @@ if ($service === 'trakt') {
 if ($service === 'github') {
     // GitHub API service - supports both user and repository statistics
     // Parameters:
-    // - type: 'user' (default) for user stats, 'repo' for repository stats  
+    // - type: 'user' (default) for user stats, 'repo' for repository stats
     // - repo: repository name (defaults to GITHUB_REPO constant)
     //
     // Returns for type='user': user_id, repos, followers, following
     // Returns for type='repo': repo_id, name, full_name, stars, forks, watchers, issues, size, language, created_at, updated_at
-    
+
+    $username = GITHUB_USERNAME;
     if (isset($_GET['repo']) && preg_match('/^[A-Za-z0-9._-]+$/', $_GET['repo'])) {
         $repo = $_GET['repo'];
     } else {
@@ -138,7 +141,7 @@ if ($service === 'github') {
         ];
     }
 
-    header("Content-Type: application/json");
+    header(CONTENT_TYPE_JSON);
     echo json_encode($result);
     exit;
 }
