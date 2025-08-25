@@ -1,0 +1,12 @@
+{
+  "name": "screenshot-script",
+  "version": "1.0.0",
+  "description": "Custom screenshot script for 3dime website",
+  "main": "take-screenshots.js",
+  "scripts": {
+    "take-screenshots": "node take-screenshots.js"
+  },
+  "dependencies": {
+    "puppeteer": "^21.0.0"
+  }
+}

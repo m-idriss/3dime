@@ -17,23 +17,26 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
-      - name: Install puppeteer-headful
-        uses: mujo-code/puppeteer-headful@master
-        env:
-          CI: 'true'
-
-      - name: Generate screenshots
-        uses: flameddd/screenshots-ci-action@master
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          url: https://3dime.com
-          devices: iPhone 13 Pro Max
-          noCommitHashFileName: true
+          node-version: '18'
+
+      - name: Install dependencies
+        run: |
+          cd scripts
+          npm install puppeteer
+
+      - name: Generate screenshots with improved waiting
+        run: |
+          cd scripts
+          SCREENSHOT_URL=https://3dime.com node take-screenshots.js
 
       - name: Move screenshots into assets/screenshots
         run: |
           mkdir -p assets/screenshots
-          mv screenshots/desktopPage1920x1080.jpeg assets/screenshots/
-          mv screenshots/iPhone_13_Pro_Max.jpeg assets/screenshots/
+          mv scripts/screenshots/desktopPage1920x1080.jpeg assets/screenshots/
+          mv scripts/screenshots/iPhone_13_Pro_Max.jpeg assets/screenshots/
 
       - name: Create Pull Request to master
         id: cpr
