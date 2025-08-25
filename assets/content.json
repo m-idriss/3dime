@@ -23,7 +23,10 @@
             {
               "name": "Twitter",
               "url": "https://x.com/3dime13",
-              "iconClass": "fa-twitter"
+              "iconClass": "fa-twitter",
+              "badge": "0",
+              "badgeId": "badge-twitter",
+              "wrapperClass": "icon-wrapper"
             },
             {
               "name": "Facebook",

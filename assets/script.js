@@ -65,6 +65,7 @@ async function loadContent() {
   // Repository metrics (stars are more meaningful for badges than repo ID)
   updateBadge('github', 'badge-github', 'repos', { type: 'user' });
   updateBadge('trakt', 'badge-trakt', 'movies');
+  updateBadge('x', 'badge-twitter', 'followers');
   setupLogoReload();
 }
 
