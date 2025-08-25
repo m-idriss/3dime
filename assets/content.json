@@ -34,6 +34,14 @@
               "name": "Instagram",
               "url": "https://www.instagram.com/3dime13/",
               "iconClass": "fa-instagram"
+            },
+            {
+              "name": "Trakt",
+              "url": "https://trakt.tv/users/3dime",
+              "iconClass": "fa-film",
+              "badgeId": "badge-trakt",
+              "badge": "0",
+              "wrapperClass": "icon-wrapper"
             }
           ],
           "itemsClass": "socials"
