@@ -99,8 +99,8 @@ git clone https://github.com/m-idriss/3dime.git
 cd 3dime
 
 # Start local development server (choose one)
-python3 -m http.server 8000        # Python
-# php -S localhost:8000             # PHP  
+php -S localhost:8000             # PHP  
+# python3 -m http.server 8000        # Python
 # npx serve .                       # Node.js
 
 # Open in browser
@@ -135,26 +135,6 @@ open http://localhost:8000
 2. **Update colors** in `assets/styles.css` using CSS custom properties
 3. **Replace logo** with your own in `assets/logo.png`
 4. **Modify PWA settings** in `assets/manifest.json`
-
-## 📁 Project Structure
-
-```
-3dime/
-├── 📄 index.html                   # Main HTML file
-├── 📁 assets/
-│   ├── 🎨 styles.css              # Main stylesheet
-│   ├── ⚡ script.js               # JavaScript functionality  
-│   ├── 📝 content.json            # Your content configuration
-│   ├── 🔧 manifest.json           # PWA manifest
-│   ├── 👷 sw.js                   # Service worker
-│   ├── 🖼️ logo.png                # Your logo
-│   ├── 🌄 background.jpg          # Background image
-│   └── 📁 icons/                  # PWA icons
-├── 📁 .github/workflows/          # GitHub Actions
-│   ├── 🚀 deploy-on-ftp.yml       # Auto-deployment
-│   └── 📸 update-screenshot.yml   # Screenshot generation
-└── 📜 README.md                   # This file
-```
 
 ## 🌐 Deployment
 
