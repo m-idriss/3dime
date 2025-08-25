@@ -44,8 +44,11 @@ if ($service === 'github') {
     // Returns for type='user': user_id, repos, followers, following
     // Returns for type='repo': repo_id, name, full_name, stars, forks, watchers, issues, size, language, created_at, updated_at
     
-    $username = GITHUB_USERNAME;
-    $repo = $_GET['repo'] ?? GITHUB_REPO;
+    if (isset($_GET['repo']) && preg_match('/^[A-Za-z0-9._-]+$/', $_GET['repo'])) {
+        $repo = $_GET['repo'];
+    } else {
+        $repo = GITHUB_REPO;
+    }
     $type = $_GET['type'] ?? 'user'; // 'user' for user stats, 'repo' for repository stats
     
     // Determine API endpoint based on type
