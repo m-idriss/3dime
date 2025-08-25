@@ -106,6 +106,9 @@ php -S localhost:8000             # PHP
 # Open in browser
 open http://localhost:8000
 ```
+### ⚙️ Configuration
+
+Copy `config.php.example` to `config.php` and update with your API credentials:
 
 ### 🎨 Customization
 
