@@ -61,31 +61,12 @@ async function loadContent() {
     main.appendChild(groupDiv);
   });
 
-  // All content loaded, now trigger global stagger animation
-  animateAllCardsOnScroll();
+  // All content loaded
   updateBadge('github', 'badge-github', 'repos');
   updateBadge('trakt', 'badge-trakt', 'movies');
   setupLogoReload();
 }
 
-/* =========================
-   Global Scroll-triggered Staggered Animation
-   ========================= */
-function animateAllCardsOnScroll() {
-  const cards = document.querySelectorAll('.container');
-  if (!cards.length) return; // safety check
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting && !entry.target.classList.contains('visible')) {
-        const index = Array.from(cards).indexOf(entry.target);
-        setTimeout(() => entry.target.classList.add('visible'), index * 150);
-      }
-    });
-  }, { threshold: 0.1 });
-
-  cards.forEach(card => observer.observe(card));
-}
 
 /* =========================
    Logo Reload

@@ -115,16 +115,9 @@ body.loaded {
               box-shadow var(--transition-medium),
               backdrop-filter var(--transition-medium),
               background var(--transition-medium);
-
-  /* Scroll animation */
-  opacity: 0;
-  transform: translateY(20px);
 }
 
-.container.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+
 
 .container:hover {
   transform: translateY(-4px) scale(1.02);
