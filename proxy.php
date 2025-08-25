@@ -82,21 +82,32 @@ if ($service === 'github') {
         exit;
     }
     curl_close($ch);
-    
-    // Handle rate limiting
-    if ($httpCode === 403) {
-        http_response_code(429);
-        echo json_encode(['error' => 'Rate limit exceeded', 'message' => 'GitHub API rate limit reached']);
-        exit;
-    }
-    
-    if ($httpCode !== 200) {
-        http_response_code($httpCode);
-        echo json_encode(['error' => 'GitHub API error', 'code' => $httpCode]);
-        exit;
-    }
 
     $data = json_decode($response, true);
+
+    // Handle 403 errors: distinguish rate limit from auth errors
+    if ($httpCode === 403) {
+        $errorMessage = is_array($data) && isset($data['message']) ? strtolower($data['message']) : '';
+        if (strpos($errorMessage, 'rate limit') !== false) {
+            http_response_code(429);
+            echo json_encode(['error' => 'Rate limit exceeded', 'message' => $data['message'] ?? 'GitHub API rate limit reached']);
+            exit;
+        } elseif (strpos($errorMessage, 'bad credentials') !== false) {
+            http_response_code(401);
+            echo json_encode(['error' => 'Authentication failed', 'message' => $data['message'] ?? 'Bad credentials']);
+            exit;
+        } else {
+            http_response_code(403);
+            echo json_encode(['error' => 'Forbidden', 'message' => $data['message'] ?? 'Access forbidden']);
+            exit;
+        }
+    }
+
+    if ($httpCode !== 200) {
+        http_response_code($httpCode);
+        echo json_encode(['error' => 'GitHub API error', 'code' => $httpCode, 'message' => $data['message'] ?? '']);
+        exit;
+    }
     if ($data === null) {
         http_response_code(500);
         echo json_encode(['error' => 'Invalid JSON response']);
