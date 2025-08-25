@@ -31,6 +31,39 @@ cd 3dime
 
 ---
 
+## 💻 Local Development
+
+To run the project locally, you'll need PHP installed on your system.
+
+### Prerequisites
+
+- **PHP 7.4 or higher** (check with `php --version`)
+
+### Running the Development Server
+
+Start the built-in PHP development server:
+
+```bash
+php -S localhost:8000
+```
+
+Then open your browser and navigate to:
+- **Main site**: http://localhost:8000
+- **API proxy**: http://localhost:8000/proxy.php
+
+The `proxy.php` file handles API calls to external services (GitHub, Trakt) and can be tested with:
+```bash
+# Test GitHub API proxy
+curl "http://localhost:8000/proxy.php?service=github"
+
+# Test Trakt API proxy (requires config.php)
+curl "http://localhost:8000/proxy.php?service=trakt"
+```
+
+> **Note**: For the Trakt service to work, you'll need to create a `config.php` file with your Trakt API credentials.
+
+---
+
 ## 🚀 Automatic Deployment
 
 This repository includes a GitHub Actions workflow that deploys your site via **FTP** every time you push to the `main` branch.
