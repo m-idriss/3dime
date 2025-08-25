@@ -1,5 +1,5 @@
 <?php
-use 'config.php';
+require_once 'config.php';
 
 $service = $_GET['service'] ?? '';
 
