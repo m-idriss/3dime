@@ -63,5 +63,23 @@ if ($service === 'github') {
     exit;
 }
 
+if ($service === 'linkedin') {
+    // Note: LinkedIn API doesn't provide public follower count endpoints
+    // This implementation returns a placeholder value for demonstration
+    // In production, this would need manual configuration or alternative data source
+    
+    $username = LI_USERNAME ?? 'i-mohamady';
+    
+    // Placeholder implementation - in real scenario this would be:
+    // 1. Manual configuration
+    // 2. Alternative data source
+    // 3. Cached value from authorized API calls
+    $followerCount = 500; // Placeholder value
+    
+    header("Content-Type: application/json");
+    echo json_encode(['followers' => $followerCount]);
+    exit;
+}
+
 http_response_code(400);
 echo json_encode(['error' => 'Service not supported']);

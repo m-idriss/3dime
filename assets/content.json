@@ -18,7 +18,10 @@
             {
               "name": "LinkedIn",
               "url": "https://www.linkedin.com/in/i-mohamady/",
-              "iconClass": "fa-linkedin-square"
+              "iconClass": "fa-linkedin-square",
+              "badge": "0",
+              "badgeId": "badge-linkedin",
+              "wrapperClass": "icon-wrapper"
             },
             {
               "name": "Twitter",

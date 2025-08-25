@@ -34,6 +34,24 @@ Start a local PHP server:
 php -S localhost:8000
 ```
 
+### ⚙️ Configuration
+
+Create a `config.php` file in the root directory with your API credentials:
+
+```php
+<?php
+// Trakt API Configuration  
+define('TRAKT_CLIENT_ID', 'your_trakt_client_id_here');
+
+// LinkedIn Configuration
+// Note: LinkedIn doesn't provide a public API for follower counts
+// This username is used for potential future integration or manual updates
+define('LI_USERNAME', 'your_linkedin_username');
+?>
+```
+
+**Note**: LinkedIn follower count badges use a placeholder implementation due to LinkedIn API limitations. The follower count can be manually configured in `proxy.php`.
+
 ---
 
 ## 🚀 Automatic Deployment
