@@ -155,7 +155,7 @@ body.loaded {
   border-radius: var(--radius-full);
   object-fit: contain;
   padding: var(--space-sm);
-  background: var(--glass-bg);
+  background: transparent;
   backdrop-filter: blur(12px);
   box-shadow: var(--shadow-card);
   cursor: pointer;
@@ -170,7 +170,7 @@ body.loaded {
 .logo:hover {
   transform: scale(1.08);
   backdrop-filter: blur(14px);
-  background: var(--glass-bg-hover);
+  background: transparent;
   box-shadow: var(--shadow-card-hover);
 }
 
