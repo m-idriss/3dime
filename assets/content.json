@@ -94,6 +94,7 @@
           "description": "From Energy learning to IT retraining.",
           "items": [
             {"name": "AFPA St Jérôme (Software Dev)", "url": "https://www.afpa.fr/centre/centre-de-marseille-st-jerome"},
+            {"name": "Aries Ecole Sup d'Infographie 3D", "url": "https://www.brassart.fr/ecole/histoire#history"},
             {"name": "DUT Génie Thermique & Énergie", "url": "https://iut.univ-amu.fr/fr/formations/bachelor-universitaire-de-technologie/but-metiers-transition-efficacite-energetiques"}
           ]
         }
