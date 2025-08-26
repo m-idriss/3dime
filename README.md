@@ -227,7 +227,7 @@ The `assets/content.json` supports:
 4. **Push** to the branch: `git push origin feature/amazing-feature`
 5. **Open** a Pull Request
 
-See our [contribution guidelines](.github/copilot-instructions.md) for more details.
+See our [contribution guidelines](CONTRIBUTING.md) for more details.
 
 ## 📊 Performance
 
