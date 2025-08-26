@@ -2,6 +2,7 @@
 .idea/
 *.iml
 out/
+.run/
 
 # Node.js
 node_modules/
@@ -34,3 +35,4 @@ config.php
 
 # Web server configuration files
 .htaccess
+
