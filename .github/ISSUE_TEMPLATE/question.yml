@@ -19,7 +19,7 @@ body:
       description: What type of question or support do you need?
       options:
         - Initial setup and installation
-        - Configuration (content.json, config.php)
+        - Configuration (content.json)
         - Social media integration setup
         - Deployment and hosting
         - PWA installation and features
