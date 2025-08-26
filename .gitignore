@@ -34,3 +34,6 @@ config.php
 
 # Web server configuration files
 .htaccess
+
+# Run configuration files
+*.run.xml
