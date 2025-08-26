@@ -286,6 +286,125 @@ body.loaded {
 }
 
 /* ========================
+   Heatmap Styles
+   ======================== */
+.heatmap-container {
+  margin: var(--space-lg) 0;
+  padding: var(--space-md);
+  background: var(--glass-bg);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--glass-border);
+  overflow-x: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.simple-heatmap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  min-width: 700px;
+}
+
+.heatmap-months {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 2px;
+  margin-bottom: var(--space-xs);
+}
+
+.month-label {
+  font-size: 11px;
+  color: var(--text-primary);
+  opacity: 0.8;
+  text-align: center;
+}
+
+.heatmap-grid {
+  display: grid;
+  grid-template-columns: repeat(53, 1fr); /* 53 weeks in a year */
+  grid-template-rows: repeat(7, 1fr); /* 7 days in a week */
+  gap: 2px;
+  height: 100px;
+}
+
+.heatmap-cell {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.heatmap-cell:hover {
+  transform: scale(1.2);
+  border: 1px solid var(--text-primary);
+}
+
+/* GitHub-inspired color levels */
+.heatmap-cell.level-0, .legend-cell.level-0 {
+  background-color: #161b22;
+}
+
+.heatmap-cell.level-1, .legend-cell.level-1 {
+  background-color: #0e4429;
+}
+
+.heatmap-cell.level-2, .legend-cell.level-2 {
+  background-color: #006d32;
+}
+
+.heatmap-cell.level-3, .legend-cell.level-3 {
+  background-color: #26a641;
+}
+
+.heatmap-cell.level-4, .legend-cell.level-4 {
+  background-color: #39d353;
+}
+
+.heatmap-legend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  margin-top: var(--space-sm);
+}
+
+.legend-label {
+  font-size: 11px;
+  color: var(--text-primary);
+  opacity: 0.7;
+}
+
+.legend-cell {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+}
+
+/* Responsive heatmap */
+@media (max-width: 768px) {
+  .heatmap-container {
+    padding: var(--space-sm);
+  }
+  
+  .simple-heatmap {
+    min-width: 500px;
+    transform: scale(0.8);
+    transform-origin: center;
+  }
+  
+  .month-label {
+    font-size: 10px;
+  }
+  
+  .heatmap-cell, .legend-cell {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+/* ========================
    Responsive
    ======================== */
 @media (min-width: 1024px) {

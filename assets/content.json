@@ -55,6 +55,11 @@
           "description": "Tech enthusiast and lifelong learner. French of Malagasy origin, living in Nice with my wife and children. I love building elegant solutions that keep things simple."
         },
         {
+          "name": "heatmap",
+          "title": "Commit Activity",
+          "description": "My GitHub contribution activity for the 3dime repository."
+        },
+        {
           "name": "technologies",
           "title": "Tech Stack",
           "description": "Some of the technologies I worked with.",
