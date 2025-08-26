@@ -1,0 +1,125 @@
+name: ❓ Question/Support
+description: Ask a question or get help with setup/configuration
+title: "[Question]: "
+labels: ["question"]
+assignees:
+  - m-idriss
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reaching out! This template is for questions about using, setting up, or configuring 3dime. 
+        
+        Please check the README.md and existing documentation first, as your question might already be answered.
+
+  - type: dropdown
+    id: question-category
+    attributes:
+      label: Question category
+      description: What type of question or support do you need?
+      options:
+        - Initial setup and installation
+        - Configuration (content.json, config.php)
+        - Social media integration setup
+        - Deployment and hosting
+        - PWA installation and features
+        - Customization (styles, content)
+        - GitHub API setup
+        - Performance or loading issues
+        - Mobile/responsive behavior
+        - Browser compatibility
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Your question
+      description: What would you like to know or what help do you need?
+      placeholder: |
+        Please describe your question or the help you need in detail:
+        - What are you trying to achieve?
+        - What specific issue are you facing?
+        - What have you already tried?
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context and environment
+      description: Tell us about your setup and environment
+      placeholder: |
+        Provide relevant context:
+        - Operating system (Windows, macOS, Linux)
+        - Browser(s) you're using
+        - Hosting environment (local, shared hosting, VPS, etc.)
+        - Any error messages you're seeing
+        - What you've already configured
+    validations:
+      required: true
+
+  - type: textarea
+    id: attempted-solutions
+    attributes:
+      label: What have you tried?
+      description: What steps have you already taken to solve this?
+      placeholder: |
+        List what you've already tried:
+        - Documentation you've read
+        - Steps you've followed
+        - Configurations you've attempted
+        - Error messages you've encountered
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-outcome
+    attributes:
+      label: Expected outcome
+      description: What would you like to happen or achieve?
+      placeholder: Describe what success looks like for your question or issue.
+    validations:
+      required: true
+
+  - type: textarea
+    id: configuration
+    attributes:
+      label: Relevant configuration
+      description: Share any relevant configuration (remove sensitive information!)
+      placeholder: |
+        If relevant, share configuration snippets:
+        - content.json sections (remove personal info)
+        - config.php settings (remove tokens/passwords)
+        - Error messages from browser console
+        - Network tab information
+        
+        ⚠️ IMPORTANT: Remove any sensitive information like tokens, passwords, or personal data!
+
+  - type: textarea
+    id: additional-info
+    attributes:
+      label: Additional information
+      description: Any other information that might be helpful?
+      placeholder: |
+        Include any other relevant details:
+        - Screenshots (if helpful)
+        - Links to your deployment (if public)
+        - Specific use case or goals
+        - Timeline or urgency
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Checklist
+      description: Please confirm the following
+      options:
+        - label: I have searched existing issues and documentation
+          required: true
+        - label: I have provided clear context and what I've already tried
+          required: true
+        - label: I have removed any sensitive information from my question
+          required: true
+        - label: I understand this is a community project and responses may take time
+          required: true
