@@ -38,13 +38,14 @@ if ($service === 'trakt') {
 }
 
 if ($service === 'github') {
-    // GitHub API service - supports both user and repository statistics
+    // GitHub API service - supports user stats, repository stats, and commit activity
     // Parameters:
-    // - type: 'user' (default) for user stats, 'repo' for repository stats
+    // - type: 'user' (default) for user stats, 'repo' for repository stats, 'commits' for commit activity
     // - repo: repository name (defaults to GITHUB_REPO constant)
     //
     // Returns for type='user': user_id, repos, followers, following
     // Returns for type='repo': repo_id, name, full_name, stars, forks, watchers, issues, size, language, created_at, updated_at
+    // Returns for type='commits': weekly commit activity data for heatmap
 
     $username = GITHUB_USERNAME;
     if (isset($_GET['repo']) && preg_match('/^[A-Za-z0-9._-]+$/', $_GET['repo'])) {
@@ -52,11 +53,13 @@ if ($service === 'github') {
     } else {
         $repo = GITHUB_REPO;
     }
-    $type = $_GET['type'] ?? 'user'; // 'user' for user stats, 'repo' for repository stats
+    $type = $_GET['type'] ?? 'user'; // 'user' for user stats, 'repo' for repository stats, 'commits' for commit activity
     
     // Determine API endpoint based on type
     if ($type === 'repo') {
         $apiUrl = "https://api.github.com/repos/$username/$repo";
+    } elseif ($type === 'commits') {
+        $apiUrl = "https://api.github.com/repos/$username/$repo/stats/commit_activity";
     } else {
         $apiUrl = "https://api.github.com/users/$username";
     }
@@ -132,6 +135,24 @@ if ($service === 'github') {
             'created_at' => $data['created_at'] ?? '',
             'updated_at' => $data['updated_at'] ?? ''
         ];
+    } elseif ($type === 'commits') {
+        // Transform GitHub's weekly commit activity to daily data for Cal-Heatmap
+        $dailyData = [];
+        if (is_array($data)) {
+            foreach ($data as $week) {
+                if (isset($week['week']) && isset($week['days']) && is_array($week['days'])) {
+                    $weekTimestamp = $week['week'];
+                    for ($i = 0; $i < 7; $i++) {
+                        $dayTimestamp = $weekTimestamp + ($i * 86400); // Add days in seconds
+                        $commits = $week['days'][$i] ?? 0;
+                        if ($commits > 0) {
+                            $dailyData[$dayTimestamp] = $commits;
+                        }
+                    }
+                }
+            }
+        }
+        $result = ['commits' => $dailyData];
     } else {
         $result = [
             'user_id' => $data['id'] ?? 0,

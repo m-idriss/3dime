@@ -297,3 +297,152 @@ body.loaded {
     flex: 1;
   }
 }
+
+/* ========================
+   Cal-Heatmap Styles
+   ======================== */
+.cal-heatmap-container {
+  margin: var(--space-lg) 0;
+  display: flex;
+  justify-content: center;
+  overflow-x: auto;
+  padding: var(--space-sm);
+}
+
+/* Override Cal-Heatmap default styles to match theme */
+.cal-heatmap-container .domain-background {
+  fill: transparent;
+}
+
+.cal-heatmap-container .graph-domain {
+  fill: var(--text-secondary);
+  font-size: 0.75rem;
+  font-family: var(--font-family);
+}
+
+.cal-heatmap-container .graph-legend {
+  fill: var(--text-secondary);
+  font-size: 0.7rem;
+  font-family: var(--font-family);
+}
+
+/* CSS Fallback Heatmap */
+.css-heatmap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  font-family: var(--font-family);
+}
+
+.heatmap-months {
+  display: flex;
+  gap: 1px;
+  overflow-x: auto;
+  padding: var(--space-sm) 0;
+}
+
+.heatmap-week {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.heatmap-day {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.heatmap-day:hover {
+  transform: scale(1.2);
+  border: 1px solid var(--text-secondary);
+}
+
+.heatmap-day.empty {
+  background-color: #161b22;
+}
+
+.heatmap-day.low {
+  background-color: #0e4429;
+}
+
+.heatmap-day.medium {
+  background-color: #006d32;
+}
+
+.heatmap-day.high {
+  background-color: #26a641;
+}
+
+.heatmap-day.very-high {
+  background-color: #39d353;
+}
+
+.heatmap-legend {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.legend-squares {
+  display: flex;
+  gap: 2px;
+}
+
+.legend-square {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+.legend-square.empty {
+  background-color: #161b22;
+}
+
+.legend-square.low {
+  background-color: #0e4429;
+}
+
+.legend-square.medium {
+  background-color: #006d32;
+}
+
+.legend-square.high {
+  background-color: #26a641;
+}
+
+.legend-square.very-high {
+  background-color: #39d353;
+}
+
+.legend-label {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+}
+
+/* Responsive heatmap */
+@media (max-width: 768px) {
+  .cal-heatmap-container {
+    overflow-x: scroll;
+    padding: var(--space-sm) 0;
+  }
+  
+  .heatmap-months {
+    padding: var(--space-xs) 0;
+  }
+  
+  .heatmap-day {
+    width: 8px;
+    height: 8px;
+  }
+  
+  .legend-square {
+    width: 8px;
+    height: 8px;
+  }
+}
