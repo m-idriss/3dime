@@ -45,6 +45,11 @@
               "badgeId": "badge-trakt",
               "badge": "0",
               "wrapperClass": "icon-wrapper"
+            },
+            {
+              "name": "Sponsor",
+              "url": "https://paypal.me/3dime",
+              "iconClass": "fa-brands fa-paypal"
             }
           ],
           "itemsClass": "socials"
