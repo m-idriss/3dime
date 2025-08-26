@@ -10,7 +10,7 @@
             {
               "name": "GitHub",
               "url": "https://github.com/m-idriss",
-              "iconClass": "fa-github",
+              "iconClass": "fa-brands fa-github",
               "badge": "0",
               "badgeId": "badge-github",
               "wrapperClass": "icon-wrapper"
@@ -18,12 +18,12 @@
             {
               "name": "LinkedIn",
               "url": "https://www.linkedin.com/in/i-mohamady/",
-              "iconClass": "fa-linkedin-square"
+              "iconClass": "fa-brands fa-linkedin"
             },
             {
               "name": "Twitter",
               "url": "https://x.com/3dime13",
-              "iconClass": "fa-twitter",
+              "iconClass": "fa-brands fa-x-twitter",
               "badge": "0",
               "badgeId": "badge-twitter",
               "wrapperClass": "icon-wrapper"
@@ -31,17 +31,17 @@
             {
               "name": "Facebook",
               "url": "https://www.facebook.com/imohamady/",
-              "iconClass": "fa-facebook-square"
+              "iconClass": "fa-brands fa-facebook-square"
             },
             {
               "name": "Instagram",
               "url": "https://www.instagram.com/3dime13/",
-              "iconClass": "fa-instagram"
+              "iconClass": "fa-brands fa-instagram"
             },
             {
               "name": "Trakt",
               "url": "https://trakt.tv/users/3dime",
-              "iconClass": "fa-film",
+              "iconClass": "fa-solid fa-photo-film",
               "badgeId": "badge-trakt",
               "badge": "0",
               "wrapperClass": "icon-wrapper"
@@ -94,6 +94,7 @@
           "description": "From Energy learning to IT retraining.",
           "items": [
             {"name": "AFPA St Jérôme (Software Dev)", "url": "https://www.afpa.fr/centre/centre-de-marseille-st-jerome"},
+            {"name": "Aries Ecole Sup d'Infographie 3D", "url": "https://www.brassart.fr/ecole/histoire#history"},
             {"name": "DUT Génie Thermique & Énergie", "url": "https://iut.univ-amu.fr/fr/formations/bachelor-universitaire-de-technologie/but-metiers-transition-efficacite-energetiques"}
           ]
         }
