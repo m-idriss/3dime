@@ -80,6 +80,7 @@
           "title": "Experience & Projects",
           "description": "Companies I’ve worked with, the projects I’ve contributed to.",
           "items": [
+            {"name": "Eurotelis (Valiance, now Securitas)", "url": "https://www.securitas.fr"},
             {"name": "Amadeus Order Management System", "url": "https://amadeus.com/fr/compagnies-aeriennes/produit/airline-order-management"},
             {"name": "Astek", "url": "https://astekgroup.fr"},
             {"name": "Oodrive Sign", "url": "https://www.oodrive.com/fr/produits/oodrive-sign/"},
