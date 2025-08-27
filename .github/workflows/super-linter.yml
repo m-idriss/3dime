@@ -23,14 +23,6 @@ jobs:
           fetch-depth: 0
 
       # Cache Node.js dependencies (for JS/TS linting)
-      - name: Cache Node.js modules
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
       # Cache Composer dependencies (for PHP linting)
       - name: Cache Composer packages
         uses: actions/cache@v4
