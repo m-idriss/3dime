@@ -1,0 +1,13 @@
+name: Quick Issue
+description: Minimal issue template
+title: "[Issue]"
+labels: []
+assignees: 
+  - copilot
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: "Description"
+      description: "Briefly describe the issue or request."
+      placeholder: "Describe the issue here..."
