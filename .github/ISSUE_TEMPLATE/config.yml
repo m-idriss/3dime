@@ -4,8 +4,8 @@ contact_links:
     url: https://3dime.com
     about: Check out the live 3dime website
   - name: 📖 Documentation
-    url: https://github.com/m-idriss/3dime/blob/master/README.md
+    url: https://github.com/m-idriss/3dime/blob/main/README.md
     about: Read the project documentation and setup guide
   - name: 🔧 GitHub API Documentation
-    url: https://github.com/m-idriss/3dime/blob/master/GITHUB_API_DOCS.md
+    url: https://github.com/m-idriss/3dime/blob/main/GITHUB_API_DOCS.md
     about: Learn about GitHub API integration and proxy setup
