@@ -432,6 +432,7 @@ body.light-theme .theme-toggle .toggle-switch {
     flex-direction: row;
     justify-content: center;
   }
+
   .main-card, .group-column {
     flex: 1;
   }

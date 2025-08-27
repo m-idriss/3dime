@@ -1,0 +1,24 @@
+{
+  "extends": ["stylelint-config-standard"],
+  "rules": {
+    "color-function-notation": "legacy",
+    "alpha-value-notation": "number",
+    "color-function-alias-notation": null,
+    "value-keyword-case": [
+      "lower",
+      {
+        "ignoreKeywords": ["BlinkMacSystemFont"]
+      }
+    ],
+    "declaration-block-no-redundant-longhand-properties": null,
+    "no-descending-specificity": null,
+    "media-feature-range-notation": "prefix",
+    "rule-empty-line-before": [
+      "always-multi-line",
+      {
+        "except": ["first-nested"],
+        "ignore": ["after-comment"]
+      }
+    ]
+  }
+}
