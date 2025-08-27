@@ -35,6 +35,11 @@ async function loadContent() {
                   <span>Dark Mode</span>
                   <div class="toggle-switch"></div>
                 </button>
+                <button class="dropdown-item notifications-toggle" id="notifications-toggle">
+                  <i class="fas fa-bell"></i>
+                  <span>Notifications</span>
+                  <div class="toggle-switch"></div>
+                </button>
               </div>
             </div>
           `;
@@ -110,13 +115,15 @@ function setupBurgerMenu() {
   const burgerBtn = document.getElementById('burger-btn');
   const dropdown = document.getElementById('profile-dropdown');
   const themeToggle = document.getElementById('theme-toggle');
+  const notificationsToggle = document.getElementById('notifications-toggle');
   
-  if (!burgerBtn || !dropdown || !themeToggle) {
+  if (!burgerBtn || !dropdown || !themeToggle || !notificationsToggle) {
     console.warn(
       'setupBurgerMenu: Missing DOM elements:',
       !burgerBtn ? '#burger-btn' : '',
       !dropdown ? '#profile-dropdown' : '',
-      !themeToggle ? '#theme-toggle' : ''
+      !themeToggle ? '#theme-toggle' : '',
+      !notificationsToggle ? '#notifications-toggle' : ''
     );
     return;
   }
@@ -130,6 +137,15 @@ function setupBurgerMenu() {
     updateThemeToggleUI(false);
   }
   
+  // Initialize notifications from localStorage or default to on
+  const savedNotifications = localStorage.getItem('notifications');
+  if (savedNotifications === 'off') {
+    document.body.classList.add('notifications-off');
+    updateNotificationsToggleUI(false);
+  } else {
+    updateNotificationsToggleUI(true);
+  }
+  
   // Burger button click handler
   burgerBtn.addEventListener('click', (e) => {
     e.stopPropagation();
@@ -140,6 +156,12 @@ function setupBurgerMenu() {
   themeToggle.addEventListener('click', (e) => {
     e.stopPropagation();
     toggleTheme();
+  });
+  
+  // Notifications toggle click handler
+  notificationsToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleNotifications();
   });
   
   // Close dropdown when clicking outside
@@ -208,6 +230,36 @@ function updateThemeToggleUI(isLight) {
   } else {
     icon.className = 'fas fa-moon';
     text.textContent = 'Dark Mode';
+  }
+}
+
+function toggleNotifications() {
+  const isOn = localStorage.getItem('notifications') !== 'off';
+  
+  if (isOn) {
+    localStorage.setItem('notifications', 'off');
+    document.body.classList.add('notifications-off');
+    updateNotificationsToggleUI(false);
+  } else {
+    localStorage.setItem('notifications', 'on');
+    document.body.classList.remove('notifications-off');
+    updateNotificationsToggleUI(true);
+  }
+}
+
+function updateNotificationsToggleUI(isOn) {
+  const notificationsToggle = document.getElementById('notifications-toggle');
+  if (!notificationsToggle) return;
+  
+  const icon = notificationsToggle.querySelector('i');
+  const text = notificationsToggle.querySelector('span');
+  
+  if (isOn) {
+    icon.className = 'fas fa-bell';
+    text.textContent = 'Notifications';
+  } else {
+    icon.className = 'fas fa-bell-slash';
+    text.textContent = 'Notifications';
   }
 }
 

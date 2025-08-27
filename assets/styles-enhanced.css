@@ -318,6 +318,42 @@ body.light-theme .theme-toggle .toggle-switch {
   background: var(--accent-color);
 }
 
+/* Notifications Toggle */
+.notifications-toggle {
+  justify-content: space-between;
+}
+
+.notifications-toggle .toggle-switch {
+  width: 44px;
+  height: 24px;
+  background: var(--glass-bg);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--glass-border);
+  position: relative;
+  transition: background var(--t-medium);
+}
+
+.notifications-toggle .toggle-switch::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  background: var(--text-primary);
+  border-radius: var(--radius-full);
+  transition: transform var(--t-medium);
+}
+
+/* When notifications are ON (default state), switch is to the right */
+body:not(.notifications-off) .notifications-toggle .toggle-switch::after {
+  transform: translateX(20px);
+}
+
+body:not(.notifications-off) .notifications-toggle .toggle-switch {
+  background: var(--accent-color);
+}
+
 /* ========================
    Links
    ======================== */
@@ -398,6 +434,11 @@ body.light-theme .theme-toggle .toggle-switch {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* Hide badges when notifications are disabled */
+body.notifications-off .badge {
+  display: none !important;
 }
 
 /* ========================
