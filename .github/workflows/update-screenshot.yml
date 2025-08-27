@@ -38,13 +38,13 @@ jobs:
           mv screenshots/desktopPage1920x1080.jpeg assets/screenshots/
           mv screenshots/iPhone_13_Pro_Max.jpeg assets/screenshots/
 
-      - name: Create Pull Request to master
+      - name: Create Pull Request to main
         id: cpr
         uses: peter-evans/create-pull-request@v7
         with:
           commit-message: Update screenshots [skip ci]
           branch: update-screenshots-assets
-          base: master
+          base: main
           title: Update screenshots
           body: Automated update of screenshots.
           add-paths: assets/screenshots/
