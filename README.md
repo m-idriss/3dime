@@ -36,6 +36,7 @@ Perfect for developers, designers, content creators, and professionals who want 
 - **Zero Build Process** - Pure HTML5, CSS3, and Vanilla JavaScript
 - **Service Worker** - Intelligent caching for lightning-fast repeat visits
 - **Optimized Assets** - Compressed images and efficient resource loading
+- **Code Quality** - Automated linting with Super-Linter for consistent code standards
 
 ### 🔗 **Content Management**
 - **JSON-Driven Content** - Easy customization through simple configuration

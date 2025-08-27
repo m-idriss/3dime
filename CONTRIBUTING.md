@@ -229,6 +229,8 @@ Test these workflows after making changes:
 
 This project currently has **no automated testing framework**. All testing is manual validation.
 
+**However**, code quality is automatically validated using **Super-Linter** on all pull requests and pushes to master. This ensures consistent formatting and catches common coding issues.
+
 ## 📤 Submitting Changes
 
 ### Pull Request Guidelines
@@ -320,7 +322,7 @@ If applicable, add screenshots
 
 - **[README.md](README.md)**: Project overview and setup
 - **[SITE_REVIEW_RECOMMENDATIONS.md](SITE_REVIEW_RECOMMENDATIONS.md)**: Detailed code review and improvement suggestions
-- **[GitHub Actions Workflows](.github/workflows/)**: Automated deployment and screenshot generation
+- **[GitHub Actions Workflows](.github/workflows/)**: Automated deployment, screenshot generation, and code linting
 
 ### External Documentation
 
@@ -343,6 +345,37 @@ If applicable, add screenshots
 3. **Validate HTML** with [W3C Validator](https://validator.w3.org/)
 4. **Check accessibility** with browser accessibility tools
 5. **Test PWA features** with Lighthouse in Chrome DevTools
+6. **Run linting locally** before committing to catch issues early
+
+### Code Linting
+
+This project uses **Super-Linter** to maintain code quality and consistency. The linting runs automatically on:
+- All pull requests (validates only changed files)
+- Pushes to master branch (validates entire codebase)
+
+**Supported linters:**
+- **ESLint** for JavaScript (.eslintrc.json)
+- **stylelint** for CSS (.stylelintrc.json)
+- **markdownlint** for Markdown (.markdownlint.json)
+- **yamllint** for YAML (.yamllint.yml)
+- **HTMLHint** for HTML
+- **JSONLint** for JSON
+- **PHP_CodeSniffer** for PHP
+
+**Local testing** (if tools are installed):
+```bash
+# JavaScript
+eslint assets/script.js
+
+# CSS  
+stylelint assets/styles-enhanced.css
+
+# Markdown
+markdownlint README.md
+
+# YAML
+yamllint .github/workflows/
+```
 
 ## ❓ Questions?
 
