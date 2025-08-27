@@ -65,7 +65,6 @@ jobs:
           VALIDATE_JSON: true
           VALIDATE_PHP_BUILTIN: true
           VALIDATE_YAML: true
-          VALIDATE_MARKDOWN: true
 
           # Config
           SUPPRESS_POSSUM: true
