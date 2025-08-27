@@ -153,7 +153,7 @@ Copy `config.php.example` to `config.php` and update with your API credentials:
    FTP_PASSWORD   → your-ftp-password
    FTP_PATH       → /public_html/ (or your web root)
    ```
-3. **Push to master branch** - Your site deploys automatically! 🎉
+3. **Push to main branch** - Your site deploys automatically! 🎉
 
 ### Manual Deployment
 
