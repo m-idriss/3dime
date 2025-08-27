@@ -17,7 +17,15 @@ Thank you for your interest in contributing to **3dime**! This document provides
 
 ## 🤝 Code of Conduct
 
-This project follows GitHub's Community Guidelines. Please be respectful and constructive in all interactions.
+This project adheres to the Contributor Covenant [Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to contact@3dime.com.
+
+**Key principles:**
+- **Be respectful and constructive** in all interactions
+- **Welcome newcomers** and help them get started
+- **Share knowledge generously** and celebrate others' contributions
+- **Focus on what's best** for the community
+
+For detailed guidelines, enforcement procedures, and reporting information, please read our full [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## 🚀 Getting Started
 
