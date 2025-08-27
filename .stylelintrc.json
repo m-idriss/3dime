@@ -1,0 +1,25 @@
+{
+  "extends": ["stylelint-config-standard"],
+  "rules": {
+    "at-rule-no-unknown": [
+      true,
+      {
+        "ignoreAtRules": ["supports"]
+      }
+    ],
+    "property-no-unknown": [
+      true,
+      {
+        "ignoreProperties": ["backdrop-filter"]
+      }
+    ],
+    "selector-pseudo-element-no-unknown": [
+      true,
+      {
+        "ignorePseudoElements": ["webkit-scrollbar", "webkit-scrollbar-thumb"]
+      }
+    ],
+    "color-function-notation": "legacy",
+    "alpha-value-notation": "number"
+  }
+}

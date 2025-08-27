@@ -61,3 +61,4 @@ jobs:
             --subject "Update screenshots [skip ci]"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+

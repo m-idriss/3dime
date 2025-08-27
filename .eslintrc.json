@@ -1,0 +1,25 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "extends": ["eslint:recommended"],
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module"
+  },
+  "rules": {
+    "no-unused-vars": "warn",
+    "no-console": "off",
+    "semi": ["error", "always"],
+    "quotes": ["error", "single"],
+    "indent": ["error", 2]
+  },
+  "globals": {
+    "fetch": "readonly",
+    "document": "readonly",
+    "window": "readonly",
+    "console": "readonly",
+    "self": "readonly"
+  }
+}
