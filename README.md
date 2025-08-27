@@ -153,7 +153,17 @@ Copy `config.php.example` to `config.php` and update with your API credentials:
    FTP_PASSWORD   → your-ftp-password
    FTP_PATH       → /public_html/ (or your web root)
    ```
-3. **Push to master branch** - Your site deploys automatically! 🎉
+3. **Push to main branch** - Your site deploys automatically! 🎉
+
+### Automated Quality Assurance
+
+3dime includes **automated code quality checks** via GitHub Actions:
+
+- **🔍 Super-Linter**: Validates HTML, CSS, JavaScript, JSON, and PHP code on every push and pull request
+- **📸 Screenshot Updates**: Automatically captures and updates website screenshots daily
+- **🚀 Auto-deployment**: Deploys changes to production when pushed to master branch
+
+All workflows run automatically - no configuration needed!
 
 ### Manual Deployment
 
@@ -227,7 +237,7 @@ The `assets/content.json` supports:
 4. **Push** to the branch: `git push origin feature/amazing-feature`
 5. **Open** a Pull Request
 
-See our [contribution guidelines](.github/copilot-instructions.md) for more details.
+See our [contribution guidelines](CONTRIBUTING.md) for more details.
 
 ## 📊 Performance
 

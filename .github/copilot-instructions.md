@@ -116,7 +116,7 @@
 ## Deployment Process
 
 ### Automatic Deployment (Production)
-- **Triggered by**: Push to `master` branch
+- **Triggered by**: Push to `main` branch
 - **Process**: GitHub Actions workflow uploads all files via FTP
 - **Duration**: 10-30 seconds - **NEVER CANCEL**
 - **No build step** - files copied directly to server
