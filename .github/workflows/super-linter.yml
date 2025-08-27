@@ -2,9 +2,9 @@ name: 🔍 Super-Linter
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   pull_request:
-    branches: [master]
+    branches: [main]
 
 jobs:
   lint:
@@ -20,29 +20,53 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v5
         with:
-          # Full git history is needed to get a proper list of changed files within `super-linter`
           fetch-depth: 0
 
+      # Cache Node.js dependencies (for JS/TS linting)
+      - name: Cache Node.js modules
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      # Cache Composer dependencies (for PHP linting)
+      - name: Cache Composer packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.composer/cache
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      # Cache Python packages (for YAML + Markdown linters)
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements*.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
       - name: Run Super-Linter
-        uses: super-linter/super-linter@v5.7.2
+        uses: super-linter/super-linter@v8.1.0
         env:
-          DEFAULT_BRANCH: master
+          DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
-          # Enable linting for relevant file types
+
+          # Disable all by default
+          VALIDATE_ALL_CODEBASE: false
+
+          # Explicitly enable only needed linters
           VALIDATE_HTML: true
           VALIDATE_CSS: true
           VALIDATE_JAVASCRIPT_ES: true
           VALIDATE_JSON: true
           VALIDATE_PHP_BUILTIN: true
-          
-          # Disable linters for file types not used in this project
-          VALIDATE_PYTHON: false
-          VALIDATE_DOCKERFILE: false
-          VALIDATE_YAML: false
-          VALIDATE_MARKDOWN: false
-          VALIDATE_BASH: false
-          
-          # Configuration options
+          VALIDATE_YAML: true
+          VALIDATE_MARKDOWN: true
+
+          # Config
           SUPPRESS_POSSUM: true
           LOG_LEVEL: INFO
