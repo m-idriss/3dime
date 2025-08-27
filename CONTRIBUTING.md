@@ -234,9 +234,12 @@ This project currently has **no automated testing framework**. All testing is ma
 
 ### Pull Request Guidelines
 
-1. **Use descriptive titles**:
-   - ✅ "Add dark mode toggle functionality"
+1. **Use descriptive titles with Gitmoji** (helps GitHub Copilot provide better suggestions):
+   - ✅ "✨ Add dark mode toggle functionality"
+   - ✅ "🐛 Fix mobile navigation responsiveness"
+   - ✅ "📚 Update installation instructions"
    - ❌ "Update CSS"
+   - ❌ "Fix bug"
 
 2. **Provide detailed descriptions**:
    - What changes were made
@@ -253,9 +256,30 @@ This project currently has **no automated testing framework**. All testing is ma
    - Test on multiple browsers if possible
    - Include screenshots of changes
 
+### Pull Request Title Format
+
+**Use Gitmoji in PR titles** to help GitHub Copilot provide better suggestions and improve consistency:
+
+```
+🎯 Brief description of the change (50 chars or less)
+```
+
+**Examples:**
+- `✨ Add GitHub stars badge to profile section`
+- `🐛 Fix mobile navigation responsiveness issue`
+- `📚 Update installation instructions in README`
+- `💄 Improve glassmorphism effects in hero section`
+- `🔧 Update PWA manifest configuration`
+
+**Why this helps:**
+- GitHub Copilot better understands the nature of your changes
+- Provides more accurate suggestions and auto-completions
+- Maintains consistency with our commit message format
+- Improves project readability and navigation
+
 ### Commit Message Format
 
-We encourage **Gitmoji-style commit messages** to improve readability and help GitHub Copilot suggest better commit messages that follow our project conventions.
+We encourage **Gitmoji-style commit messages and PR titles** to improve readability and help GitHub Copilot suggest better messages that follow our project conventions.
 
 ```
 🎯 [type/scope] brief description (50 chars or less)

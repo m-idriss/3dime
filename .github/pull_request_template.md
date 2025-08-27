@@ -1,5 +1,9 @@
 # 🔄 Pull Request
 
+> **💡 Tip**: Use Gitmoji in your PR title to help GitHub Copilot provide better suggestions!  
+> Examples: `✨ Add dark mode toggle functionality` or `🐛 Fix mobile navigation responsiveness`  
+> [See our Gitmoji guide](../CONTRIBUTING.md#gitmoji-types) for more examples.
+
 ## 📝 Description
 <!-- Provide a brief description of the changes in this PR -->
 
