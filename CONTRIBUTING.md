@@ -123,10 +123,10 @@ The website will be available at `http://localhost:8000`.
 
 3. **Test thoroughly** (see Testing section)
 
-4. **Commit your changes**:
+4. **Commit your changes** (using Gitmoji format):
    ```bash
    git add .
-   git commit -m "Add your descriptive commit message"
+   git commit -m "✨ [feature/awesome] add your descriptive commit message"
    ```
 
 5. **Push to your fork**:
@@ -254,21 +254,51 @@ This project currently has **no automated testing framework**. All testing is ma
 
 ### Commit Message Format
 
+We encourage **Gitmoji-style commit messages** to improve readability and help GitHub Copilot suggest better commit messages that follow our project conventions.
+
 ```
-type: brief description (50 chars or less)
+🎯 [type/scope] brief description (50 chars or less)
 
 Detailed explanation if needed (wrap at 72 chars)
 - Bullet points for multiple changes
 - Include reasoning for complex changes
 ```
 
-Types: `feat`, `fix`, `docs`, `style`, `refactor`, `content`
+#### Gitmoji Types
 
-Examples:
-- `feat: add GitHub stars badge to profile section`
-- `fix: correct mobile navigation responsiveness`
-- `docs: update installation instructions`
-- `content: update experience section with new role`
+| Gitmoji | Type | Description | Example |
+|---------|------|-------------|---------|
+| ✨ | `feature` | New functionality | `✨ [feature/profile] add GitHub stars badge to profile section` |
+| 🐛 | `bugfix` | Bug fixes | `🐛 [bugfix/mobile] fix mobile navigation responsiveness` |
+| 📚 | `docs` | Documentation | `📚 [docs/readme] update installation instructions` |
+| 💄 | `style` | Styling/UI changes | `💄 [style/css] update glassmorphism effects` |
+| ♻️ | `refactor` | Code refactoring | `♻️ [refactor/js] optimize content loading function` |
+| 📝 | `content` | Content updates | `📝 [content/experience] update experience section with new role` |
+| 🔧 | `config` | Configuration | `🔧 [config/pwa] update manifest.json` |
+| 👷 | `ci` | CI/CD changes | `👷 [ci/actions] add code quality checks` |
+
+#### Additional Gitmoji Options
+
+- 🎨 `:art:` - Improve structure/format
+- ⚡ `:zap:` - Improve performance
+- 🔒 `:lock:` - Fix security issues
+- 🚀 `:rocket:` - Deploy stuff
+- 📱 `:iphone:` - Work on responsive design
+
+#### Examples
+
+**Good commit messages:**
+- `✨ [feature/badges] add GitHub stars badge to profile section`
+- `🐛 [bugfix/mobile] correct mobile navigation responsiveness`
+- `📚 [docs/contributing] update installation instructions`
+- `📝 [content/profile] update experience section with new role`
+- `💄 [style/animations] improve page transitions`
+- `👷 [ci/deploy] add automated deployment workflow`
+
+#### Resources
+
+- **[Gitmoji Guide](https://gitmoji.dev/)**: Complete list of commit emojis
+- **[Conventional Commits](https://www.conventionalcommits.org/)**: Additional formatting guidance
 
 ## 🐛 Reporting Issues
 
