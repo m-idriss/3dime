@@ -19,8 +19,27 @@ async function loadContent() {
       let html = '';
 
       if (section.logo) {
-        html += `<header>`;
+        html += `<header class="profile-header">`;
         html += `<img src="${section.logo}" alt="Logo" class="logo">`;
+        
+        // Add burger menu for profile section
+        if (section.name === 'profile') {
+          html += `
+            <div class="burger-menu">
+              <button class="burger-button" id="burger-btn" aria-label="Profile options">
+                <i class="fas fa-ellipsis-v"></i>
+              </button>
+              <div class="profile-dropdown" id="profile-dropdown">
+                <button class="dropdown-item theme-toggle" id="theme-toggle">
+                  <i class="fas fa-moon"></i>
+                  <span>Dark Mode</span>
+                  <div class="toggle-switch"></div>
+                </button>
+              </div>
+            </div>
+          `;
+        }
+        
         html += `</header>`;
       }
 
@@ -67,6 +86,7 @@ async function loadContent() {
   updateBadge('trakt', 'badge-trakt', 'movies');
   updateBadge('x', 'badge-twitter', 'followers');
   setupLogoReload();
+  setupBurgerMenu();
 }
 
 
@@ -81,6 +101,106 @@ function setupLogoReload() {
       setTimeout(() => location.reload(), 400);
     });
   });
+}
+
+/* =========================
+   Burger Menu & Theme Toggle
+   ========================= */
+function setupBurgerMenu() {
+  const burgerBtn = document.getElementById('burger-btn');
+  const dropdown = document.getElementById('profile-dropdown');
+  const themeToggle = document.getElementById('theme-toggle');
+  
+  if (!burgerBtn || !dropdown || !themeToggle) return;
+  
+  // Initialize theme from localStorage or default to dark
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'light') {
+    document.body.classList.add('light-theme');
+    updateThemeToggleUI(true);
+  } else {
+    updateThemeToggleUI(false);
+  }
+  
+  // Burger button click handler
+  burgerBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleDropdown();
+  });
+  
+  // Theme toggle click handler
+  themeToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleTheme();
+  });
+  
+  // Close dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!dropdown.contains(e.target) && !burgerBtn.contains(e.target)) {
+      closeDropdown();
+    }
+  });
+  
+  // Close dropdown on escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeDropdown();
+    }
+  });
+}
+
+function toggleDropdown() {
+  const burgerBtn = document.getElementById('burger-btn');
+  const dropdown = document.getElementById('profile-dropdown');
+  
+  const isActive = dropdown.classList.contains('active');
+  
+  if (isActive) {
+    closeDropdown();
+  } else {
+    dropdown.classList.add('active');
+    burgerBtn.classList.add('active');
+  }
+}
+
+function closeDropdown() {
+  const burgerBtn = document.getElementById('burger-btn');
+  const dropdown = document.getElementById('profile-dropdown');
+  
+  if (dropdown && burgerBtn) {
+    dropdown.classList.remove('active');
+    burgerBtn.classList.remove('active');
+  }
+}
+
+function toggleTheme() {
+  const isLight = document.body.classList.contains('light-theme');
+  
+  if (isLight) {
+    document.body.classList.remove('light-theme');
+    localStorage.setItem('theme', 'dark');
+    updateThemeToggleUI(false);
+  } else {
+    document.body.classList.add('light-theme');
+    localStorage.setItem('theme', 'light');
+    updateThemeToggleUI(true);
+  }
+}
+
+function updateThemeToggleUI(isLight) {
+  const themeToggle = document.getElementById('theme-toggle');
+  if (!themeToggle) return;
+  
+  const icon = themeToggle.querySelector('i');
+  const text = themeToggle.querySelector('span');
+  
+  if (isLight) {
+    icon.className = 'fas fa-sun';
+    text.textContent = 'Light Mode';
+  } else {
+    icon.className = 'fas fa-moon';
+    text.textContent = 'Dark Mode';
+  }
 }
 
 /* =========================
