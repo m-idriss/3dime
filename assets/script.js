@@ -1,11 +1,57 @@
 /* =========================
+   Language Management
+   ========================= */
+function detectLanguage() {
+  // Check URL parameter first
+  const urlParams = new URLSearchParams(window.location.search);
+  const urlLang = urlParams.get('lang');
+  if (urlLang && ['en', 'fr'].includes(urlLang)) {
+    return urlLang;
+  }
+
+  // Check localStorage
+  const savedLang = localStorage.getItem('language');
+  if (savedLang && ['en', 'fr'].includes(savedLang)) {
+    return savedLang;
+  }
+
+  // Check browser language
+  const browserLang = navigator.language.split('-')[0];
+  if (browserLang === 'fr') {
+    return 'fr';
+  }
+
+  // Default to English
+  return 'en';
+}
+
+function setLanguage(lang) {
+  if (!['en', 'fr'].includes(lang)) return;
+
+  localStorage.setItem('language', lang);
+
+  // Update HTML lang attribute
+  document.documentElement.lang = lang;
+
+  // Update URL without reload
+  const url = new URL(window.location);
+  url.searchParams.set('lang', lang);
+  window.history.replaceState({}, '', url);
+
+  // Reload content
+  loadContent();
+}
+
+/* =========================
    Load content from JSON
    ========================= */
 async function loadContent() {
-  const res = await fetch('content/content.json');
+  const currentLang = detectLanguage();
+  const res = await fetch(`translations/${currentLang}.json`);
   const content = await res.json();
 
   const main = document.querySelector('.cards-container');
+  main.innerHTML = ''; // Clear existing content before loading new content
 
   content.groups.forEach(group => {
     const groupDiv = document.createElement('div');
@@ -32,7 +78,7 @@ async function loadContent() {
               <div class="profile-dropdown" id="profile-dropdown">
                 <button class="dropdown-item theme-toggle" id="theme-toggle">
                   <i class="fas fa-moon"></i>
-                  <span>Dark Mode</span>
+                  <span>${content.ui.darkMode}</span>
                   <div class="toggle-switch"></div>
                 </button>
                 <button class="dropdown-item notifications-toggle" id="notifications-toggle">
@@ -40,6 +86,20 @@ async function loadContent() {
                   <span>Notifications</span>
                   <div class="toggle-switch"></div>
                 </button>
+                <div class="dropdown-separator"></div>
+                <button class="dropdown-item language-toggle" id="language-toggle">
+                  <i class="fas fa-globe"></i>
+                  <span>${content.ui.language}</span>
+                  <i class="fas fa-chevron-right dropdown-arrow"></i>
+                </button>
+                <div class="language-submenu" id="language-submenu">
+                  <button class="dropdown-item language-option" data-lang="en">
+                    <span>${content.ui.english}</span>
+                  </button>
+                  <button class="dropdown-item language-option" data-lang="fr">
+                    <span>${content.ui.french}</span>
+                  </button>
+                </div>
                 <button class="dropdown-item font-size-toggle" id="font-size-toggle">
                   <i class="fas fa-text-height"></i>
                   <span>Font Size: Normal</span>
@@ -119,9 +179,14 @@ function setupBurgerMenu() {
   const burgerBtn = document.getElementById('burger-btn');
   const dropdown = document.getElementById('profile-dropdown');
   const themeToggle = document.getElementById('theme-toggle');
+  const languageToggle = document.getElementById('language-toggle');
+  const languageSubmenu = document.getElementById('language-submenu');
+  const languageOptions = document.querySelectorAll('.language-option');
   const notificationsToggle = document.getElementById('notifications-toggle');
+
+  if (!burgerBtn || !dropdown || !themeToggle || !notificationsToggle) {
   const fontSizeToggle = document.getElementById('font-size-toggle');
-  
+
   if (!burgerBtn || !dropdown || !themeToggle || !notificationsToggle || !fontSizeToggle) {
     console.warn(
       'setupBurgerMenu: Missing DOM elements:',
@@ -151,12 +216,13 @@ function setupBurgerMenu() {
   } else {
     updateNotificationsToggleUI(true);
   }
-  
+
   // Initialize font size from localStorage or default to normal
   const savedFontSize = localStorage.getItem('fontSize') || 'normal';
   applyFontSize(savedFontSize);
   updateFontSizeToggleUI(savedFontSize);
-  
+
+
   // Burger button click handler
   burgerBtn.addEventListener('click', (e) => {
     e.stopPropagation();
@@ -174,13 +240,32 @@ function setupBurgerMenu() {
     e.stopPropagation();
     toggleNotifications();
   });
-  
+
+  // Language toggle click handler
+  if (languageToggle && languageSubmenu) {
+    languageToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleLanguageSubmenu();
+    });
+
+    // Language option click handlers
+    languageOptions.forEach(option => {
+      option.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const lang = option.getAttribute('data-lang');
+        setLanguage(lang);
+        closeDropdown();
+      });
+    });
+  }
+
+
   // Font size toggle click handler
   fontSizeToggle.addEventListener('click', (e) => {
     e.stopPropagation();
     toggleFontSize();
   });
-  
+
   // Close dropdown when clicking outside
   document.addEventListener('click', (e) => {
     if (!dropdown.contains(e.target) && !burgerBtn.contains(e.target)) {
@@ -213,10 +298,22 @@ function toggleDropdown() {
 function closeDropdown() {
   const burgerBtn = document.getElementById('burger-btn');
   const dropdown = document.getElementById('profile-dropdown');
-  
+  const languageSubmenu = document.getElementById('language-submenu');
+
   if (dropdown && burgerBtn) {
     dropdown.classList.remove('active');
     burgerBtn.classList.remove('active');
+  }
+
+  if (languageSubmenu) {
+    languageSubmenu.classList.remove('active');
+  }
+}
+
+function toggleLanguageSubmenu() {
+  const languageSubmenu = document.getElementById('language-submenu');
+  if (languageSubmenu) {
+    languageSubmenu.classList.toggle('active');
   }
 }
 
@@ -243,16 +340,31 @@ function updateThemeToggleUI(isLight) {
   
   if (isLight) {
     icon.className = 'fas fa-sun';
-    text.textContent = 'Light Mode';
+    text.textContent = getCurrentLanguageUI().lightMode;
   } else {
     icon.className = 'fas fa-moon';
-    text.textContent = 'Dark Mode';
+    text.textContent = getCurrentLanguageUI().darkMode;
   }
+}
+
+function getCurrentLanguageUI() {
+  // Return UI strings for current language (fallback to English)
+  const currentLang = detectLanguage();
+  if (currentLang === 'fr') {
+    return {
+      darkMode: "Mode Sombre",
+      lightMode: "Mode Clair"
+    };
+  }
+  return {
+    darkMode: "Dark Mode",
+    lightMode: "Light Mode"
+  };
 }
 
 function toggleNotifications() {
   const isOn = localStorage.getItem('notifications') !== 'off';
-  
+
   if (isOn) {
     localStorage.setItem('notifications', 'off');
     document.body.classList.add('notifications-off');
@@ -267,10 +379,10 @@ function toggleNotifications() {
 function updateNotificationsToggleUI(isOn) {
   const notificationsToggle = document.getElementById('notifications-toggle');
   if (!notificationsToggle) return;
-  
+
   const icon = notificationsToggle.querySelector('i');
   const text = notificationsToggle.querySelector('span');
-  
+
   if (isOn) {
     icon.className = 'fas fa-bell';
     text.textContent = 'Notifications';
@@ -283,13 +395,13 @@ function updateNotificationsToggleUI(isOn) {
 function toggleFontSize() {
   const currentSize = localStorage.getItem('fontSize') || 'normal';
   let nextSize;
-  
+
   // Cycle through: normal -> large -> small -> normal
   const fontSizes = ['normal', 'large', 'small'];
   const currentIndex = fontSizes.indexOf(currentSize);
   const nextIndex = (currentIndex + 1) % fontSizes.length;
   nextSize = fontSizes[nextIndex];
-  
+
   localStorage.setItem('fontSize', nextSize);
   applyFontSize(nextSize);
   updateFontSizeToggleUI(nextSize);
@@ -298,7 +410,7 @@ function toggleFontSize() {
 function applyFontSize(size) {
   // Remove existing font size classes
   document.body.classList.remove('font-small', 'font-large');
-  
+
   // Apply new font size class
   if (size === 'small') {
     document.body.classList.add('font-small');
@@ -311,14 +423,14 @@ function applyFontSize(size) {
 function updateFontSizeToggleUI(size) {
   const fontSizeToggle = document.getElementById('font-size-toggle');
   if (!fontSizeToggle) return;
-  
+
   const text = fontSizeToggle.querySelector('span');
   const sizeNames = {
     'small': 'Small',
-    'normal': 'Normal', 
+    'normal': 'Normal',
     'large': 'Large'
   };
-  
+
   text.textContent = `Font Size: ${sizeNames[size] || 'Normal'}`;
 }
 
@@ -365,6 +477,10 @@ if ('serviceWorker' in navigator) {
    Page Fade-In
    ========================= */
 document.addEventListener('DOMContentLoaded', () => {
+  // Set initial language on HTML element
+  const currentLang = detectLanguage();
+  document.documentElement.lang = currentLang;
+
   document.body.classList.add('loaded'); // fade-in
   loadContent(); // load content & trigger animations after DOM insertion
 });
