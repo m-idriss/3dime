@@ -60,6 +60,26 @@ GET /proxy.php?service=github&type=repo&repo=repository-name
 }
 ```
 
+### Commit Activity (NEW)
+```
+GET /proxy.php?service=github&type=commits
+GET /proxy.php?service=github&type=commits&repo=repository-name
+```
+
+**Returns:**
+```json
+{
+  "commit_activity": {
+    "2024-01-01": 3,
+    "2024-01-02": 0,
+    "2024-01-03": 5,
+    "2024-01-04": 1
+  }
+}
+```
+
+This endpoint fetches GitHub's weekly commit activity stats and transforms them into daily commit counts for heatmap visualization.
+
 ## Badge Integration
 
 ### Repository Stars (Recommended)
