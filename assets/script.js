@@ -111,7 +111,15 @@ function setupBurgerMenu() {
   const dropdown = document.getElementById('profile-dropdown');
   const themeToggle = document.getElementById('theme-toggle');
   
-  if (!burgerBtn || !dropdown || !themeToggle) return;
+  if (!burgerBtn || !dropdown || !themeToggle) {
+    console.warn(
+      'setupBurgerMenu: Missing DOM elements:',
+      !burgerBtn ? '#burger-btn' : '',
+      !dropdown ? '#profile-dropdown' : '',
+      !themeToggle ? '#theme-toggle' : ''
+    );
+    return;
+  }
   
   // Initialize theme from localStorage or default to dark
   const savedTheme = localStorage.getItem('theme');
