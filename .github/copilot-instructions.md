@@ -88,12 +88,13 @@
 ├── assets/
 │   ├── styles.css          # Main stylesheet
 │   ├── script.js           # Main JavaScript functionality
-│   ├── content.json        # Dynamic content configuration
 │   ├── sw.js              # Service worker for PWA
 │   ├── manifest.json      # PWA manifest
 │   ├── background.jpg     # Background image
 │   ├── logo.png           # Site logo
 │   └── icons/             # PWA icons (16, 192, 512px)
+├── content/
+│   └── content.json        # Dynamic content configuration
 ├── .github/
 │   └── workflows/
 │       ├── deploy-on-ftp.yml      # Auto-deployment
@@ -102,7 +103,7 @@
 ```
 
 ### Content Management
-- **Edit content**: Modify `assets/content.json` to update:
+- **Edit content**: Modify `content/content.json` to update:
   - Profile information and social links
   - Technology stack items
   - Experience and project links
@@ -137,7 +138,7 @@ Set these in repository settings:
 ## Development Guidelines
 
 ### Making Changes
-1. **For content updates**: Edit `assets/content.json`
+1. **For content updates**: Edit `content/content.json`
 2. **For styling changes**: Edit `assets/styles.css`
 3. **For functionality changes**: Edit `assets/script.js`
 4. **For PWA updates**: Edit `assets/manifest.json`
@@ -152,9 +153,9 @@ python3 -m http.server 8000
 ```
 
 ### Common File Locations
-- **Profile content**: `assets/content.json` → groups[0].sections[0]
-- **Technology stack**: `assets/content.json` → groups[0].sections[2].items
-- **Social links**: `assets/content.json` → groups[0].sections[0].items
+- **Profile content**: `content/content.json` → groups[0].sections[0]
+- **Technology stack**: `content/content.json` → groups[0].sections[2].items
+- **Social links**: `content/content.json` → groups[0].sections[0].items
 - **Color scheme**: `assets/styles.css` → CSS custom properties
 - **Animations**: `assets/script.js` → scroll animations and interactions
 
@@ -190,7 +191,7 @@ python3 -m http.server 8000
 ## Important Notes
 
 - **No build tools required** - This is intentional, keep it simple
-- **Content is dynamic** - Loaded from `assets/content.json` via JavaScript
+- **Content is dynamic** - Loaded from `content/content.json` via JavaScript
 - **PWA features included** - Service worker, manifest, icons configured
 - **External dependencies** - Font Awesome and Google Fonts (CDN)
 - **Mobile-first design** - Responsive layout with mobile optimizations
@@ -199,15 +200,15 @@ python3 -m http.server 8000
 ## Common Tasks
 
 ### Update Social Links
-Edit `assets/content.json` → groups[0].sections[0].items array
+Edit `content/content.json` → groups[0].sections[0].items array
 
 ### Add New Technology
-Edit `assets/content.json` → groups[0].sections[2].items array
+Edit `content/content.json` → groups[0].sections[2].items array
 
 ### Change Color Scheme  
 Edit `assets/styles.css` → modify RGBA values in CSS rules
 
 ### Update Profile Description
-Edit `assets/content.json` → groups[0].sections[1].description
+Edit `content/content.json` → groups[0].sections[1].description
 
-**Always test changes locally before pushing to production.**
+**Always test changes locally before pushing to production.****

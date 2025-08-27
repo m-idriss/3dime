@@ -4,7 +4,7 @@ Allow: /
 # Block access to sensitive files
 Disallow: /.git/
 Disallow: /.github/
-Disallow: /assets/content.json
+Disallow: /content/content.json
 
 Sitemap: https://3dime.com/sitemap.xml
 

@@ -36,7 +36,7 @@ The current website is well-designed with a clean aesthetic and functional respo
 // Add proper error handling and input sanitization
 async function loadContent() {
   try {
-    const res = await fetch('assets/content.json');
+    const res = await fetch('content/content.json');
     if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
     
     const content = await res.json();
@@ -186,7 +186,7 @@ const STATIC_ASSETS = [
   '/index.html',
   '/assets/styles.css',
   '/assets/script.js',
-  '/assets/content.json',
+  '/content/content.json',
   '/assets/logo.png',
   '/assets/background.jpg',
   '/assets/manifest.json'
@@ -720,7 +720,7 @@ function validateApiResponse(data) {
 // Enhanced content loading with validation
 async function loadContentSecurely() {
   try {
-    const response = await fetch('assets/content.json');
+    const response = await fetch('content/content.json');
     
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -824,7 +824,7 @@ export const CONFIG = {
   GITHUB_USERNAME: 'm-idriss',
   API_ENDPOINTS: {
     GITHUB: 'https://api.github.com/users/m-idriss',
-    CONTENT: 'assets/content.json'
+    CONTENT: 'content/content.json'
   },
   ANIMATION: {
     STAGGER_DELAY: 150,

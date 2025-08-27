@@ -81,12 +81,13 @@ The website will be available at `http://localhost:8000`.
 ├── assets/
 │   ├── styles.css          # Main stylesheet
 │   ├── script.js           # Main JavaScript functionality
-│   ├── content.json        # Dynamic content configuration
 │   ├── sw.js              # Service worker for PWA
 │   ├── manifest.json      # PWA manifest
 │   ├── background.jpg     # Background image
 │   ├── logo.png           # Site logo
 │   └── icons/             # PWA icons (16, 192, 512px)
+├── content/
+│   └── content.json        # Dynamic content configuration
 ├── .github/
 │   └── workflows/         # GitHub Actions (deployment, screenshots)
 ├── favicon.ico            # Site favicon
@@ -96,7 +97,7 @@ The website will be available at `http://localhost:8000`.
 
 ### Key Files Explained
 
-- **`assets/content.json`**: Contains all dynamic content (profile, experience, etc.)
+- **`content/content.json`**: Contains all dynamic content (profile, experience, etc.)
 - **`assets/styles.css`**: All styling rules and responsive design
 - **`assets/script.js`**: JavaScript functionality and animations
 - **`assets/manifest.json`**: Progressive Web App configuration
@@ -106,7 +107,7 @@ The website will be available at `http://localhost:8000`.
 
 ### Types of Contributions
 
-1. **Content Updates**: Edit `assets/content.json`
+1. **Content Updates**: Edit `content/content.json`
 2. **Styling Changes**: Edit `assets/styles.css`
 3. **Functionality**: Edit `assets/script.js`
 4. **PWA Features**: Edit `assets/manifest.json`

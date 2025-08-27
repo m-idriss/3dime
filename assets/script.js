@@ -2,7 +2,7 @@
    Load content from JSON
    ========================= */
 async function loadContent() {
-  const res = await fetch('assets/content.json');
+  const res = await fetch('content/content.json');
   const content = await res.json();
 
   const main = document.querySelector('.cards-container');
