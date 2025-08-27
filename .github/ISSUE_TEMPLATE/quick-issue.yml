@@ -2,8 +2,6 @@ name: Quick Issue
 description: Minimal issue template
 title: "[Issue]"
 labels: []
-assignees: 
-  - copilot
 body:
   - type: textarea
     id: description
