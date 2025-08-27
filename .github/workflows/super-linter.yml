@@ -23,15 +23,6 @@ jobs:
           fetch-depth: 0
 
       # Cache Node.js dependencies (for JS/TS linting)
-      # Cache Composer dependencies (for PHP linting)
-      - name: Cache Composer packages
-        uses: actions/cache@v4
-        with:
-          path: ~/.composer/cache
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-composer-
-
       # Cache Python packages (for YAML + Markdown linters)
       - name: Cache pip
         uses: actions/cache@v4
