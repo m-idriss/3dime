@@ -6,7 +6,7 @@
 ## 🎯 Type of Change
 <!-- Mark with an `x` all the types that apply to this PR -->
 
-- [ ] 🎨 **Content Update** - Changes to `assets/content.json` (profile, links, experience, etc.)
+- [ ] 🎨 **Content Update** - Changes to `content/content.json` (profile, links, experience, etc.)
 - [ ] 💄 **Styling** - Changes to `assets/styles.css` (colors, layout, animations)
 - [ ] ⚡ **Functionality** - Changes to `assets/script.js` or `index.html`
 - [ ] 🔧 **Configuration** - Changes to PWA files (`manifest.json`, service worker)

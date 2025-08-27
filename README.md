@@ -112,7 +112,7 @@ Copy `config.php.example` to `config.php` and update with your API credentials:
 
 ### 🎨 Customization
 
-1. **Edit your content** in `assets/content.json`:
+1. **Edit your content** in `content/content.json`:
 ```json
 {
   "groups": [
@@ -219,7 +219,7 @@ Upload all files to any web server. Works with:
 ```
 
 ### Content Sections
-The `assets/content.json` supports:
+The `content/content.json` supports:
 - **Profile** with social links and badges
 - **About** with personal description
 - **Tech Stack** with technology links
