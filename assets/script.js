@@ -22,8 +22,8 @@ async function loadContent() {
         html += `<header class="profile-header">`;
         html += `<img src="${section.logo}" alt="Logo" class="logo">`;
         
-        // Add burger menu if section hasBurgerMenu property is true
-        if (section.hasBurgerMenu) {
+        // Add burger menu for profile section
+        if (section.name === 'profile') {
           html += `
             <div class="burger-menu">
               <button class="burger-button" id="burger-btn" aria-label="Profile options">
