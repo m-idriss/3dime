@@ -1,0 +1,54 @@
+name: 🔍 Super-Linter
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    name: Lint Code Base
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: read
+      statuses: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      # Cache Node.js dependencies (for JS/TS linting)
+      # Cache Python packages (for YAML + Markdown linters)
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements*.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Run Super-Linter
+        uses: super-linter/super-linter@v8.1.0
+        env:
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+          # Disable all by default
+          VALIDATE_ALL_CODEBASE: false
+
+          # Explicitly enable only needed linters
+          VALIDATE_HTML: true
+          VALIDATE_CSS: true
+          VALIDATE_JAVASCRIPT_ES: true
+          VALIDATE_JSON: true
+          VALIDATE_PHP_BUILTIN: true
+          VALIDATE_YAML: true
+
+          # Config
+          SUPPRESS_POSSUM: true
+          LOG_LEVEL: INFO

@@ -70,6 +70,7 @@
             {"name": "JavaScript", "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript", "linkType": "chip-little"},
             {"name": "HTML5", "url": "https://developer.mozilla.org/en-US/docs/Web/HTML", "linkType": "chip-little"},
             {"name": "CSS3", "url": "https://developer.mozilla.org/en-US/docs/Web/CSS", "linkType": "chip-little"},
+            {"name": "Agile", "url": "https://agilemanifesto.org", "linkType": "chip-little"},
             {"name": "Docker", "url": "https://www.docker.com", "linkType": "chip-little"},
             {"name": "MySQL", "url": "https://www.mysql.com", "linkType": "chip-little"},
             {"name": "PostgreSQL", "url": "https://www.postgresql.org", "linkType": "chip-little"},
