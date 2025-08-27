@@ -1,5 +1,5 @@
 /* ==============================================
-   3DIME - MODERN BASE STYLES (Optimized)
+   3DIME - MODERN BASE STYLES (Refined & Optimized)
    ============================================== */
 
 /* Load Inter efficiently */
@@ -9,9 +9,9 @@
    CSS Variables
    ======================== */
 :root {
-  /* Dark theme colors (default) */
-  --primary-bg: rgba(0, 0, 0, 0.8);
-  --primary-bg-hover: rgba(0, 0, 0, 0.85);
+  /* Dark theme (default) */
+  --primary-bg: rgba(0, 0, 0, 0.65);
+  --primary-bg-hover: rgba(0, 0, 0, 0.7);
   --glass-bg: rgba(255, 255, 255, 0.15);
   --glass-bg-hover: rgba(255, 255, 255, 0.3);
   --glass-border: rgba(255, 255, 255, 0.2);
@@ -22,12 +22,12 @@
   --body-bg: #000;
 
   /* Typography */
-  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  --font-family: 'Inter', system-ui, sans-serif;
   --font-size-base: 1rem;
   --font-size-lg: 1.25rem;
   --font-size-xl: 1.5rem;
-  --font-weight-normal: 400;
-  --font-weight-semibold: 600;
+  --fw-normal: 400;
+  --fw-semibold: 600;
 
   /* Spacing */
   --space-xs: 0.25rem;
@@ -46,15 +46,16 @@
   --shadow-card-hover: 0 12px 28px rgba(0, 0, 0, 0.35);
 
   /* Transitions */
-  --transition-fast: 150ms ease;
-  --transition-medium: 300ms ease;
-  --transition-slow: 600ms ease-in-out;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --t-fast: 150ms var(--ease);
+  --t-medium: 300ms var(--ease);
+  --t-slow: 600ms var(--ease);
 }
 
 /* Light theme */
 body.light-theme {
-  --primary-bg: rgba(255, 255, 255, 0.8);
-  --primary-bg-hover: rgba(255, 255, 255, 0.9);
+  --primary-bg: rgba(255, 255, 255, 0.3);
+  --primary-bg-hover: rgba(255, 255, 255, 0.45);
   --glass-bg: rgba(0, 0, 0, 0.1);
   --glass-bg-hover: rgba(0, 0, 0, 0.2);
   --glass-border: rgba(0, 0, 0, 0.15);
@@ -78,6 +79,7 @@ html, body {
   height: 100%;
   scroll-behavior: smooth;
   font-family: var(--font-family);
+  font-size: var(--font-size-base);
 }
 
 body {
@@ -85,14 +87,12 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  overflow-y: auto;
   overflow-x: hidden;
+  overflow-y: auto;
   color: var(--text-primary);
   background: var(--body-bg);
-
-  /* Fade-in effect */
   opacity: 0;
-  transition: opacity var(--transition-slow);
+  transition: opacity var(--t-slow), background var(--t-medium), color var(--t-medium);
 }
 
 body.loaded {
@@ -105,10 +105,10 @@ body.loaded {
 .bg {
   position: fixed;
   inset: 0;
-  background: url("background.jpg") no-repeat center center / cover;
+  background: url("background.jpg") no-repeat center/cover;
   z-index: -1;
   will-change: transform;
-  transition: transform var(--transition-medium);
+  transition: transform var(--t-medium);
 }
 
 /* ========================
@@ -124,13 +124,8 @@ body.loaded {
   border: 1px solid var(--glass-border);
   box-shadow: var(--shadow-card);
   border-radius: var(--radius-lg);
-  transition: transform var(--transition-medium),
-              box-shadow var(--transition-medium),
-              backdrop-filter var(--transition-medium),
-              background var(--transition-medium);
+  transition: all var(--t-medium);
 }
-
-
 
 .container:hover {
   transform: translateY(-4px) scale(1.02);
@@ -142,7 +137,7 @@ body.loaded {
 .container h2 {
   margin-bottom: var(--space-sm);
   font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--fw-semibold);
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
@@ -165,12 +160,9 @@ body.loaded {
   backdrop-filter: blur(12px);
   box-shadow: var(--shadow-card);
   cursor: pointer;
-  transition: transform var(--transition-medium),
-              box-shadow var(--transition-medium),
-              background var(--transition-medium),
-              backdrop-filter var(--transition-medium);
-  margin: 0 auto var(--space-md) auto;
+  margin: 0 auto var(--space-md);
   display: block;
+  transition: all var(--t-medium);
 }
 
 .logo:hover {
@@ -183,7 +175,7 @@ body.loaded {
 .logo-text {
   margin-top: var(--space-xs);
   font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--fw-semibold);
   color: var(--text-primary);
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
@@ -206,13 +198,12 @@ body.loaded {
   position: absolute;
   top: 0;
   right: 0;
-  z-index: 100;
 }
 
 .burger-button {
   width: 40px;
   height: 40px;
-  border: none;
+  border: 1px solid var(--glass-border);
   background: var(--glass-bg);
   backdrop-filter: blur(12px);
   border-radius: var(--radius-md);
@@ -220,9 +211,8 @@ body.loaded {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all var(--transition-medium);
   box-shadow: var(--shadow-card);
-  border: 1px solid var(--glass-border);
+  transition: all var(--t-medium);
 }
 
 .burger-button:hover {
@@ -235,7 +225,7 @@ body.loaded {
 .burger-button i {
   color: var(--text-primary);
   font-size: 18px;
-  transition: transform var(--transition-medium);
+  transition: transform var(--t-medium);
 }
 
 .burger-button.active i {
@@ -257,8 +247,7 @@ body.loaded {
   opacity: 0;
   visibility: hidden;
   transform: translateY(-10px);
-  transition: all var(--transition-medium);
-  z-index: 1000;
+  transition: all var(--t-medium);
 }
 
 .profile-dropdown.active {
@@ -274,15 +263,14 @@ body.loaded {
   padding: var(--space-sm) var(--space-md);
   color: var(--text-primary);
   text-decoration: none;
-  transition: background var(--transition-medium);
-  border-radius: var(--radius-md);
-  margin: var(--space-xs);
-  cursor: pointer;
   border: none;
   background: transparent;
-  width: calc(100% - calc(var(--space-xs) * 2));
-  font-family: inherit;
+  border-radius: var(--radius-md);
+  margin: var(--space-xs);
   font-size: var(--font-size-base);
+  cursor: pointer;
+  width: calc(100% - (var(--space-xs) * 2));
+  transition: background var(--t-medium);
 }
 
 .dropdown-item:hover {
@@ -295,7 +283,7 @@ body.loaded {
   text-align: center;
 }
 
-/* Theme toggle specific styling */
+/* Theme Toggle */
 .theme-toggle {
   justify-content: space-between;
 }
@@ -305,9 +293,9 @@ body.loaded {
   height: 24px;
   background: var(--glass-bg);
   border-radius: var(--radius-full);
-  position: relative;
-  transition: background var(--transition-medium);
   border: 1px solid var(--glass-border);
+  position: relative;
+  transition: background var(--t-medium);
 }
 
 .theme-toggle .toggle-switch::after {
@@ -319,7 +307,7 @@ body.loaded {
   height: 18px;
   background: var(--text-primary);
   border-radius: var(--radius-full);
-  transition: transform var(--transition-medium);
+  transition: transform var(--t-medium);
 }
 
 body.light-theme .theme-toggle .toggle-switch::after {
@@ -342,14 +330,11 @@ body.light-theme .theme-toggle .toggle-switch {
   background: var(--glass-bg);
   color: var(--text-primary);
   text-decoration: none;
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--fw-semibold);
   font-size: var(--font-size-base);
   letter-spacing: 0.5px;
-  transition: transform var(--transition-medium),
-              background var(--transition-medium),
-              box-shadow var(--transition-medium),
-              backdrop-filter var(--transition-medium);
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  transition: all var(--t-medium);
 }
 
 .link:hover {
@@ -362,7 +347,7 @@ body.light-theme .theme-toggle .toggle-switch {
 .chip-little {
   display: inline-block;
   margin: var(--space-xs);
-  font-weight: var(--font-weight-normal);
+  font-weight: var(--fw-normal);
   font-size: 0.875rem;
 }
 
@@ -382,10 +367,9 @@ body.light-theme .theme-toggle .toggle-switch {
   color: var(--text-primary);
   opacity: 0.65;
   cursor: pointer;
-  transition: transform var(--transition-medium),
-              opacity var(--transition-medium);
   padding: var(--space-xs);
   border-radius: var(--radius-md);
+  transition: all var(--t-medium);
 }
 
 .socials i:hover {
@@ -403,7 +387,7 @@ body.light-theme .theme-toggle .toggle-switch {
   position: absolute;
   top: -6px;
   right: -6px;
-  background-color: var(--badge-color);
+  background: var(--badge-color);
   color: var(--text-primary);
   font-size: 12px;
   font-weight: bold;
