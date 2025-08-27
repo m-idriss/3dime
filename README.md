@@ -155,6 +155,16 @@ Copy `config.php.example` to `config.php` and update with your API credentials:
    ```
 3. **Push to master branch** - Your site deploys automatically! 🎉
 
+### Automated Quality Assurance
+
+3dime includes **automated code quality checks** via GitHub Actions:
+
+- **🔍 Super-Linter**: Validates HTML, CSS, JavaScript, JSON, and PHP code on every push and pull request
+- **📸 Screenshot Updates**: Automatically captures and updates website screenshots daily
+- **🚀 Auto-deployment**: Deploys changes to production when pushed to master branch
+
+All workflows run automatically - no configuration needed!
+
 ### Manual Deployment
 
 Upload all files to any web server. Works with:
