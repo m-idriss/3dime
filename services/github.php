@@ -15,6 +15,8 @@ function fetchGithubData($type = 'user', $repo = null) {
     // Determine API endpoint based on type
     if ($type === 'repo') {
         $apiUrl = "https://api.github.com/repos/$username/$repo";
+    } elseif ($type === 'commits') {
+        $apiUrl = "https://api.github.com/repos/$username/$repo/stats/commit_activity";
     } else {
         $apiUrl = "https://api.github.com/users/$username";
     }
@@ -79,6 +81,23 @@ function fetchGithubData($type = 'user', $repo = null) {
             'language' => $data['language'] ?? '',
             'created_at' => $data['created_at'] ?? '',
             'updated_at' => $data['updated_at'] ?? ''
+        ];
+    } elseif ($type === 'commits') {
+        // Transform GitHub's weekly commit activity data to daily format for heatmap
+        $dailyCommits = [];
+        if (is_array($data)) {
+            foreach ($data as $week) {
+                if (isset($week['week']) && isset($week['days']) && is_array($week['days'])) {
+                    $weekStart = $week['week'];
+                    for ($i = 0; $i < 7; $i++) {
+                        $dayTimestamp = $weekStart + ($i * 86400); // Add days in seconds
+                        $dailyCommits[date('Y-m-d', $dayTimestamp)] = $week['days'][$i] ?? 0;
+                    }
+                }
+            }
+        }
+        return [
+            'commit_activity' => $dailyCommits
         ];
     } else {
         return [

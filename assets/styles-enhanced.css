@@ -297,3 +297,158 @@ body.loaded {
     flex: 1;
   }
 }
+
+/* ========================
+   Heatmap Styling
+   ======================== */
+.heatmap-container {
+  margin: var(--space-lg) 0;
+  overflow-x: auto;
+  padding: var(--space-sm);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Cal-Heatmap customization to match glassmorphism theme */
+.cal-heatmap .graph {
+  background: transparent;
+}
+
+.cal-heatmap .graph-domain {
+  fill: transparent;
+}
+
+.cal-heatmap .graph-subdomain-group rect {
+  stroke: rgba(255, 255, 255, 0.1);
+  stroke-width: 1px;
+}
+
+.cal-heatmap .subdomain-text {
+  fill: var(--text-secondary);
+  font-family: var(--font-family);
+  font-size: 10px;
+}
+
+.cal-heatmap .domain-background {
+  fill: transparent;
+}
+
+.cal-heatmap .qi {
+  fill: #161b22;
+}
+
+.cal-heatmap .q1 {
+  fill: #0e4429;
+}
+
+.cal-heatmap .q2 {
+  fill: #006d32;
+}
+
+.cal-heatmap .q3 {
+  fill: #26a641;
+}
+
+.cal-heatmap .q4 {
+  fill: #39d353;
+}
+
+/* Heatmap fallback message styling */
+.heatmap-fallback {
+  text-align: center;
+  color: var(--text-secondary);
+  font-style: italic;
+  padding: var(--space-lg);
+}
+
+/* Simple heatmap fallback styles */
+.simple-heatmap {
+  padding: var(--space-md);
+}
+
+.simple-heatmap-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 2px;
+  margin-bottom: var(--space-md);
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.simple-heatmap-day {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.simple-heatmap-day.empty {
+  background-color: #161b22;
+}
+
+.simple-heatmap-day.low {
+  background-color: #0e4429;
+}
+
+.simple-heatmap-day.medium {
+  background-color: #006d32;
+}
+
+.simple-heatmap-day.high {
+  background-color: #26a641;
+}
+
+.simple-heatmap-day.very-high {
+  background-color: #39d353;
+}
+
+.simple-heatmap-legend {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  justify-content: center;
+}
+
+.legend-colors {
+  display: flex;
+  gap: 2px;
+}
+
+.legend-color {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+.legend-color.empty {
+  background-color: #161b22;
+}
+
+.legend-color.low {
+  background-color: #0e4429;
+}
+
+.legend-color.medium {
+  background-color: #006d32;
+}
+
+.legend-color.high {
+  background-color: #26a641;
+}
+
+.legend-color.very-high {
+  background-color: #39d353;
+}
+
+/* Responsive heatmap */
+@media (max-width: 768px) {
+  .heatmap-container {
+    margin: var(--space-md) 0;
+    padding: var(--space-xs);
+  }
+  
+  .cal-heatmap .subdomain-text {
+    font-size: 8px;
+  }
+}

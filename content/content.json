@@ -77,6 +77,13 @@
     {
       "sections": [
         {
+          "name": "heatmap",
+          "title": "Commit Activity",
+          "description": "Daily contributions to the 3dime repository over the past year.",
+          "type": "heatmap",
+          "containerId": "commit-heatmap"
+        },
+        {
           "name": "experience",
           "title": "Experience & Projects",
           "description": "Companies I’ve worked with, the projects I’ve contributed to.",
