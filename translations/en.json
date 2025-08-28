@@ -77,6 +77,10 @@
     {
       "sections": [
         {
+          "name": "heatmap",
+          "type": "heatmap"
+        },
+        {
           "name": "experience",
           "title": "Experience & Projects",
           "description": "Companies I've worked with, the projects I've contributed to.",

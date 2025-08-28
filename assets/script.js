@@ -154,6 +154,11 @@ async function loadContent() {
         if (section.itemsClass) html += `</div>`;
       }
 
+      // Handle heatmap section type
+      if (section.type === 'heatmap') {
+        html += `<div id="heatmap-container" class="heatmap-container"></div>`;
+      }
+
       container.innerHTML = html;
       groupDiv.appendChild(container);
     });
@@ -166,6 +171,13 @@ async function loadContent() {
   updateBadge('github', 'badge-github', 'repos', { type: 'user' });
   updateBadge('trakt', 'badge-trakt', 'movies');
   updateBadge('x', 'badge-twitter', 'followers');
+  
+  // Load heatmap if container exists
+  const heatmapContainer = document.getElementById('heatmap-container');
+  if (heatmapContainer) {
+    loadHeatmap();
+  }
+  
   setupLogoReload();
   setupBurgerMenu();
 }
@@ -442,6 +454,92 @@ function updateFontSizeToggleUI(size) {
   };
 
   text.textContent = `Font Size: ${sizeNames[size] || 'Normal'}`;
+}
+
+/* =========================
+   Heatmap Loading
+   ========================= */
+async function loadHeatmap() {
+  try {
+    const response = await fetch('proxy.php?service=github&type=commits&repo=3dime');
+    if (!response.ok) {
+      throw new Error(`Failed to fetch commit data: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    const commitActivity = data.commit_activity;
+    
+    if (!commitActivity || !Array.isArray(commitActivity)) {
+      console.warn('No commit activity data available');
+      return;
+    }
+    
+    // Transform GitHub commit activity data for Cal-Heatmap
+    const heatmapData = {};
+    const now = new Date();
+    
+    // GitHub returns 52 weeks of data, each week has 7 days
+    commitActivity.forEach((week, weekIndex) => {
+      const weekTimestamp = week.week; // Unix timestamp for the start of the week
+      const weekDate = new Date(weekTimestamp * 1000);
+      
+      week.days.forEach((commits, dayIndex) => {
+        const dayDate = new Date(weekDate);
+        dayDate.setDate(dayDate.getDate() + dayIndex);
+        
+        // Convert to timestamp for Cal-Heatmap (in seconds)
+        const timestamp = Math.floor(dayDate.getTime() / 1000);
+        heatmapData[timestamp] = commits;
+      });
+    });
+    
+    // Initialize Cal-Heatmap
+    const cal = new CalHeatmap();
+    cal.paint({
+      itemSelector: '#heatmap-container',
+      domain: {
+        type: 'month',
+        gutter: 4,
+        label: {
+          text: 'MMM',
+          textAlign: 'start',
+          position: 'top'
+        }
+      },
+      subDomain: {
+        type: 'day',
+        radius: 2,
+        width: 11,
+        height: 11,
+        gutter: 1
+      },
+      data: {
+        source: heatmapData,
+        type: 'json'
+      },
+      date: {
+        start: new Date(now.getFullYear(), now.getMonth() - 11, 1),
+        locale: {
+          weekStart: 1 // Monday
+        }
+      },
+      scale: {
+        color: {
+          type: 'threshold',
+          range: ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'],
+          domain: [1, 3, 6, 10]
+        }
+      },
+      theme: 'dark'
+    });
+    
+  } catch (error) {
+    console.error('Error loading heatmap:', error);
+    const container = document.getElementById('heatmap-container');
+    if (container) {
+      container.innerHTML = '<p class="error-message">Unable to load commit activity</p>';
+    }
+  }
 }
 
 /* =========================
