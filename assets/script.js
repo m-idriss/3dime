@@ -183,8 +183,6 @@ function setupBurgerMenu() {
   const languageSubmenu = document.getElementById('language-submenu');
   const languageOptions = document.querySelectorAll('.language-option');
   const notificationsToggle = document.getElementById('notifications-toggle');
-
-  if (!burgerBtn || !dropdown || !themeToggle || !notificationsToggle) {
   const fontSizeToggle = document.getElementById('font-size-toggle');
 
   if (!burgerBtn || !dropdown || !themeToggle || !notificationsToggle || !fontSizeToggle) {
