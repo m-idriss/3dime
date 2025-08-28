@@ -545,8 +545,8 @@ body.notifications-off .badge {
    Heatmap
    ======================== */
 .heatmap-container {
-  margin: var(--space-lg) 0;
-  padding: var(--space-lg);
+  margin: 0;
+  padding: var(--space-md);
   border-radius: var(--radius-md);
   background: var(--glass-bg);
   backdrop-filter: blur(8px);
@@ -576,6 +576,12 @@ body.notifications-off .badge {
 .ch-subdomain {
   stroke: var(--glass-border);
   stroke-width: 1px;
+}
+
+#ch-tooltip {
+  background: var(--primary-bg) !important;
+  color: var(--text-primary) !important;
+  z-index: 10;
 }
 
 /* Dark theme adjustments for Cal-Heatmap */

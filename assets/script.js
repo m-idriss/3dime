@@ -49,7 +49,7 @@ async function loadContent() {
   const currentLang = detectLanguage();
   let content;
   try {
-    const res = await fetch(`translations/${currentLang}.json`);
+    const res = await fetch(`i18n/${currentLang}.json`);
     if (!res.ok) {
       throw new Error(`Failed to load translation file: ${res.status} ${res.statusText}`);
     }
@@ -461,7 +461,7 @@ function updateFontSizeToggleUI(size) {
    ========================= */
 async function loadHeatmap() {
   try {
-    const response = await fetch('proxy.php?service=github&type=commits&repo=3dime');
+    const response = await fetch('proxy.php?service=github&type=commits');
     if (!response.ok) {
       throw new Error(`Failed to fetch commit data: ${response.status}`);
     }
@@ -473,66 +473,71 @@ async function loadHeatmap() {
       console.warn('No commit activity data available');
       return;
     }
-    
-    // Transform GitHub commit activity data for Cal-Heatmap
-    const heatmapData = {};
-    const now = new Date();
-    
-    // GitHub returns 52 weeks of data, each week has 7 days
-    commitActivity.forEach((week, weekIndex) => {
-      const weekTimestamp = week.week; // Unix timestamp for the start of the week
-      const weekDate = new Date(weekTimestamp * 1000);
-      
-      week.days.forEach((commits, dayIndex) => {
-        const dayDate = new Date(weekDate);
-        dayDate.setDate(dayDate.getDate() + dayIndex);
-        
-        // Convert to timestamp for Cal-Heatmap (in seconds)
-        const timestamp = Math.floor(dayDate.getTime() / 1000);
-        heatmapData[timestamp] = commits;
-      });
-    });
-    
-    // Initialize Cal-Heatmap
-    const cal = new CalHeatmap();
-    cal.paint({
-      itemSelector: '#heatmap-container',
-      domain: {
-        type: 'month',
-        gutter: 4,
-        label: {
-          text: 'MMM',
-          textAlign: 'start',
-          position: 'top'
-        }
+
+  const commitSource = commitActivity.flatMap(week =>
+    week.days.map((value, i) => {
+      const date = new Date((week.week + i * 86400) * 1000)
+        .toISOString()
+        .split("T")[0];
+      return { date, value };
+    })
+  );
+
+  const cal = new CalHeatmap();
+  cal.paint({
+    itemSelector: '#heatmap-container',
+    domain: {
+      type: 'month',
+      label: { text: 'MMM', textAlign: 'start', position: 'top'}
+    },
+  subDomain: { type: 'ghDay', radius: 2, width: 9, height: 9, gutter: 1, },
+    data: {
+      source: commitSource,
+      x: d => new Date(d.date).getTime(),
+      y: d => d.value
+    },
+    date: {
+      start: new Date(new Date().setMonth(new Date().getMonth() - 3)),
+      locale: { weekStart: 1 },
+      highlight: [new Date()]
+    },
+    range: 7,
+    scale: {
+      color: {
+        range: ['rgba(255, 255, 255, 0.2)', 'green'],
+        interpolate: 'hsl',
+        type: 'linear',
+        domain: [0, 30],
       },
-      subDomain: {
-        type: 'day',
-        radius: 2,
-        width: 11,
-        height: 11,
-        gutter: 1
+    },
+    theme: 'dark'
+  },
+     [
+       [
+         CalendarLabel,
+         {
+           position: 'left',
+           key: 'left',
+           text: () => ['Mon', '', '', 'Thu', '', '', 'Sun'],
+           textAlign: 'end',
+           width: 20,
+           padding: [25, 5, 0, 0],
+         },
+       ],
+    [
+      Tooltip,
+      {
+        text: function (date, value, dayjsDate) {
+          return (
+            (value ? value + ' commits' : 'No commits') +
+            ' on ' +
+            dayjsDate.format('LL')
+          );
+        },
       },
-      data: {
-        source: heatmapData,
-        type: 'json'
-      },
-      date: {
-        start: new Date(now.getFullYear(), now.getMonth() - 11, 1),
-        locale: {
-          weekStart: 1 // Monday
-        }
-      },
-      scale: {
-        color: {
-          type: 'threshold',
-          range: ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'],
-          domain: [1, 3, 6, 10]
-        }
-      },
-      theme: 'dark'
-    });
-    
+    ]
+     ]);
+
   } catch (error) {
     console.error('Error loading heatmap:', error);
     const container = document.getElementById('heatmap-container');
