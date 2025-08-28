@@ -47,8 +47,20 @@ function setLanguage(lang) {
    ========================= */
 async function loadContent() {
   const currentLang = detectLanguage();
-  const res = await fetch(`translations/${currentLang}.json`);
-  const content = await res.json();
+  let content;
+  try {
+    const res = await fetch(`translations/${currentLang}.json`);
+    if (!res.ok) {
+      throw new Error(`Failed to load translation file: ${res.status} ${res.statusText}`);
+    }
+    content = await res.json();
+  } catch (error) {
+    // Display a user-friendly error message or fallback content
+    const main = document.querySelector('.cards-container');
+    main.innerHTML = '<div class="error-message">Failed to load content. Please try again later.</div>';
+    console.error('Error loading translation file:', error);
+    return;
+  }
 
   const main = document.querySelector('.cards-container');
   main.innerHTML = ''; // Clear existing content before loading new content
