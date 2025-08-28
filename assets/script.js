@@ -285,19 +285,10 @@ function toggleFontSize() {
   let nextSize;
   
   // Cycle through: normal -> large -> small -> normal
-  switch (currentSize) {
-    case 'normal':
-      nextSize = 'large';
-      break;
-    case 'large':
-      nextSize = 'small';
-      break;
-    case 'small':
-      nextSize = 'normal';
-      break;
-    default:
-      nextSize = 'normal';
-  }
+  const fontSizes = ['normal', 'large', 'small'];
+  const currentIndex = fontSizes.indexOf(currentSize);
+  const nextIndex = (currentIndex + 1) % fontSizes.length;
+  nextSize = fontSizes[nextIndex];
   
   localStorage.setItem('fontSize', nextSize);
   applyFontSize(nextSize);
