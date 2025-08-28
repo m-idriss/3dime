@@ -40,6 +40,10 @@ async function loadContent() {
                   <span>Notifications</span>
                   <div class="toggle-switch"></div>
                 </button>
+                <button class="dropdown-item font-size-toggle" id="font-size-toggle">
+                  <i class="fas fa-text-height"></i>
+                  <span>Font Size: Normal</span>
+                </button>
               </div>
             </div>
           `;
@@ -116,14 +120,16 @@ function setupBurgerMenu() {
   const dropdown = document.getElementById('profile-dropdown');
   const themeToggle = document.getElementById('theme-toggle');
   const notificationsToggle = document.getElementById('notifications-toggle');
+  const fontSizeToggle = document.getElementById('font-size-toggle');
   
-  if (!burgerBtn || !dropdown || !themeToggle || !notificationsToggle) {
+  if (!burgerBtn || !dropdown || !themeToggle || !notificationsToggle || !fontSizeToggle) {
     console.warn(
       'setupBurgerMenu: Missing DOM elements:',
       !burgerBtn ? '#burger-btn' : '',
       !dropdown ? '#profile-dropdown' : '',
       !themeToggle ? '#theme-toggle' : '',
-      !notificationsToggle ? '#notifications-toggle' : ''
+      !notificationsToggle ? '#notifications-toggle' : '',
+      !fontSizeToggle ? '#font-size-toggle' : ''
     );
     return;
   }
@@ -146,6 +152,11 @@ function setupBurgerMenu() {
     updateNotificationsToggleUI(true);
   }
   
+  // Initialize font size from localStorage or default to normal
+  const savedFontSize = localStorage.getItem('fontSize') || 'normal';
+  applyFontSize(savedFontSize);
+  updateFontSizeToggleUI(savedFontSize);
+  
   // Burger button click handler
   burgerBtn.addEventListener('click', (e) => {
     e.stopPropagation();
@@ -162,6 +173,12 @@ function setupBurgerMenu() {
   notificationsToggle.addEventListener('click', (e) => {
     e.stopPropagation();
     toggleNotifications();
+  });
+  
+  // Font size toggle click handler
+  fontSizeToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleFontSize();
   });
   
   // Close dropdown when clicking outside
@@ -261,6 +278,48 @@ function updateNotificationsToggleUI(isOn) {
     icon.className = 'fas fa-bell-slash';
     text.textContent = 'Notifications';
   }
+}
+
+function toggleFontSize() {
+  const currentSize = localStorage.getItem('fontSize') || 'normal';
+  let nextSize;
+  
+  // Cycle through: normal -> large -> small -> normal
+  const fontSizes = ['normal', 'large', 'small'];
+  const currentIndex = fontSizes.indexOf(currentSize);
+  const nextIndex = (currentIndex + 1) % fontSizes.length;
+  nextSize = fontSizes[nextIndex];
+  
+  localStorage.setItem('fontSize', nextSize);
+  applyFontSize(nextSize);
+  updateFontSizeToggleUI(nextSize);
+}
+
+function applyFontSize(size) {
+  // Remove existing font size classes
+  document.body.classList.remove('font-small', 'font-large');
+  
+  // Apply new font size class
+  if (size === 'small') {
+    document.body.classList.add('font-small');
+  } else if (size === 'large') {
+    document.body.classList.add('font-large');
+  }
+  // Normal size doesn't need a class (uses default CSS variables)
+}
+
+function updateFontSizeToggleUI(size) {
+  const fontSizeToggle = document.getElementById('font-size-toggle');
+  if (!fontSizeToggle) return;
+  
+  const text = fontSizeToggle.querySelector('span');
+  const sizeNames = {
+    'small': 'Small',
+    'normal': 'Normal', 
+    'large': 'Large'
+  };
+  
+  text.textContent = `Font Size: ${sizeNames[size] || 'Normal'}`;
 }
 
 /* =========================
