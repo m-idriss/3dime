@@ -501,7 +501,7 @@ async function loadHeatmap() {
       locale: { weekStart: 1 },
       highlight: [new Date()]
     },
-    range: 7,
+    range: 6,
     scale: {
       color: {
         range: ['rgba(255, 255, 255, 0.2)', 'green'],
