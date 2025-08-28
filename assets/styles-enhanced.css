@@ -540,3 +540,63 @@ body.notifications-off .badge {
     flex: 1;
   }
 }
+
+/* ========================
+   Heatmap
+   ======================== */
+.heatmap-container {
+  margin: 0;
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  background: var(--glass-bg);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--glass-border);
+  overflow-x: auto;
+}
+
+.heatmap-container .error-message {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  text-align: center;
+  padding: var(--space-lg);
+  opacity: 0.7;
+}
+
+/* Cal-Heatmap custom styling */
+.ch-domain {
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-family: var(--font-family);
+}
+
+.ch-domain text {
+  fill: var(--text-secondary);
+}
+
+.ch-subdomain {
+  stroke: var(--glass-border);
+  stroke-width: 1px;
+}
+
+#ch-tooltip {
+  background: var(--primary-bg) !important;
+  color: var(--text-primary) !important;
+  z-index: 10;
+}
+
+/* Dark theme adjustments for Cal-Heatmap */
+[data-theme="dark"] .ch-domain text {
+  fill: var(--text-secondary);
+}
+
+[data-theme="dark"] .ch-subdomain {
+  stroke: rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive heatmap */
+@media (max-width: 768px) {
+  .heatmap-container {
+    padding: var(--space-md);
+    margin: var(--space-md) 0;
+  }
+}

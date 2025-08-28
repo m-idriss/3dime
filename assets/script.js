@@ -49,7 +49,7 @@ async function loadContent() {
   const currentLang = detectLanguage();
   let content;
   try {
-    const res = await fetch(`translations/${currentLang}.json`);
+    const res = await fetch(`i18n/${currentLang}.json`);
     if (!res.ok) {
       throw new Error(`Failed to load translation file: ${res.status} ${res.statusText}`);
     }
@@ -154,6 +154,11 @@ async function loadContent() {
         if (section.itemsClass) html += `</div>`;
       }
 
+      // Handle heatmap section type
+      if (section.type === 'heatmap') {
+        html += `<div id="heatmap-container" class="heatmap-container"></div>`;
+      }
+
       container.innerHTML = html;
       groupDiv.appendChild(container);
     });
@@ -166,6 +171,13 @@ async function loadContent() {
   updateBadge('github', 'badge-github', 'repos', { type: 'user' });
   updateBadge('trakt', 'badge-trakt', 'movies');
   updateBadge('x', 'badge-twitter', 'followers');
+  
+  // Load heatmap if container exists
+  const heatmapContainer = document.getElementById('heatmap-container');
+  if (heatmapContainer) {
+    loadHeatmap();
+  }
+  
   setupLogoReload();
   setupBurgerMenu();
 }
@@ -442,6 +454,97 @@ function updateFontSizeToggleUI(size) {
   };
 
   text.textContent = `Font Size: ${sizeNames[size] || 'Normal'}`;
+}
+
+/* =========================
+   Heatmap Loading
+   ========================= */
+async function loadHeatmap() {
+  try {
+    const response = await fetch('proxy.php?service=github&type=commits');
+    if (!response.ok) {
+      throw new Error(`Failed to fetch commit data: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    const commitActivity = data.commit_activity;
+    
+    if (!commitActivity || !Array.isArray(commitActivity)) {
+      console.warn('No commit activity data available');
+      return;
+    }
+
+  const commitSource = commitActivity.flatMap(week =>
+    week.days.map((value, i) => {
+      const date = new Date((week.week + i * 86400) * 1000)
+        .toISOString()
+        .split("T")[0];
+      return { date, value };
+    })
+  );
+
+  const cal = new CalHeatmap();
+  cal.paint({
+    itemSelector: '#heatmap-container',
+    domain: {
+      type: 'month',
+      label: { text: 'MMM', textAlign: 'start', position: 'top'}
+    },
+  subDomain: { type: 'ghDay', radius: 2, width: 9, height: 9, gutter: 1, },
+    data: {
+      source: commitSource,
+      x: d => new Date(d.date).getTime(),
+      y: d => d.value
+    },
+    date: {
+      start: new Date(new Date().setMonth(new Date().getMonth() - 3)),
+      locale: { weekStart: 1 },
+      highlight: [new Date()]
+    },
+    range: 7,
+    scale: {
+      color: {
+        range: ['rgba(255, 255, 255, 0.2)', 'green'],
+        interpolate: 'hsl',
+        type: 'linear',
+        domain: [0, 30],
+      },
+    },
+    theme: 'dark'
+  },
+     [
+       [
+         CalendarLabel,
+         {
+           position: 'left',
+           key: 'left',
+           text: () => ['Mon', '', '', 'Thu', '', '', 'Sun'],
+           textAlign: 'end',
+           width: 20,
+           padding: [25, 5, 0, 0],
+         },
+       ],
+    [
+      Tooltip,
+      {
+        text: function (date, value, dayjsDate) {
+          return (
+            (value ? value + ' commits' : 'No commits') +
+            ' on ' +
+            dayjsDate.format('LL')
+          );
+        },
+      },
+    ]
+     ]);
+
+  } catch (error) {
+    console.error('Error loading heatmap:', error);
+    const container = document.getElementById('heatmap-container');
+    if (container) {
+      container.innerHTML = '<p class="error-message">Unable to load commit activity</p>';
+    }
+  }
 }
 
 /* =========================

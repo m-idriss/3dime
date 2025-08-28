@@ -15,6 +15,8 @@ function fetchGithubData($type = 'user', $repo = null) {
     // Determine API endpoint based on type
     if ($type === 'repo') {
         $apiUrl = "https://api.github.com/repos/$username/$repo";
+    } elseif ($type === 'commits') {
+        $apiUrl = "https://api.github.com/repos/$username/$repo/stats/commit_activity";
     } else {
         $apiUrl = "https://api.github.com/users/$username";
     }
@@ -79,6 +81,11 @@ function fetchGithubData($type = 'user', $repo = null) {
             'language' => $data['language'] ?? '',
             'created_at' => $data['created_at'] ?? '',
             'updated_at' => $data['updated_at'] ?? ''
+        ];
+    } elseif ($type === 'commits') {
+        // Return commit activity data for heatmap
+        return [
+            'commit_activity' => $data
         ];
     } else {
         return [
