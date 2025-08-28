@@ -331,6 +331,55 @@ body.light-theme .theme-toggle .toggle-switch {
   background: var(--accent-color);
 }
 
+/* Language Submenu */
+.dropdown-separator {
+  height: 1px;
+  background: var(--glass-border);
+  margin: var(--space-xs) var(--space-md);
+}
+
+.language-toggle {
+  justify-content: space-between;
+  position: relative;
+}
+
+.language-toggle .dropdown-arrow {
+  font-size: 12px;
+  margin-left: auto;
+  transition: transform var(--t-medium);
+}
+
+.language-submenu {
+  position: static;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: all var(--t-medium);
+}
+
+.language-submenu.active {
+  opacity: 1;
+  max-height: 120px;
+  margin: var(--space-xs) 0;
+}
+
+.language-option {
+  padding-left: var(--space-lg);
+  margin-left: var(--space-xs);
+  margin-right: var(--space-xs);
+  font-size: var(--font-size-sm);
+  border-left: 2px solid var(--glass-border);
+  position: relative;
+}
+
+.language-option:hover {
+  border-left-color: var(--accent-color);
+}
+
 /* Notifications Toggle */
 .notifications-toggle {
   justify-content: space-between;
