@@ -157,9 +157,8 @@ Copy `config.php.example` to `config.php` and update with your API credentials:
 
 ### Automated Quality Assurance
 
-3dime includes **automated code quality checks** via GitHub Actions:
+3dime includes **automated workflows** via GitHub Actions:
 
-- **🔍 Super-Linter**: Validates HTML, CSS, JavaScript, JSON, and PHP code on every push and pull request
 - **📸 Screenshot Updates**: Automatically captures and updates website screenshots daily
 - **🚀 Auto-deployment**: Deploys changes to production when pushed to master branch
 
