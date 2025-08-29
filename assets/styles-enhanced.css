@@ -261,6 +261,7 @@ body.loaded {
   visibility: hidden;
   transform: translateY(-10px);
   transition: all var(--t-medium);
+  z-index: 100;
 }
 
 .profile-dropdown.active {
