@@ -175,7 +175,7 @@ async function loadContent() {
   // Load heatmap if container exists
   const heatmapContainer = document.getElementById('heatmap-container');
   if (heatmapContainer) {
-    loadHeatmap();
+    loadHeatmapWithRetry();
   }
   
   setupLogoReload();
@@ -454,6 +454,43 @@ function updateFontSizeToggleUI(size) {
   };
 
   text.textContent = `Font Size: ${sizeNames[size] || 'Normal'}`;
+}
+
+/* =========================
+   Heatmap Loading with Retry
+   ========================= */
+async function loadHeatmapWithRetry(retries = 3, delay = 1000) {
+  // Check if CalHeatmap is available
+  if (typeof CalHeatmap === 'undefined') {
+    console.warn('CalHeatmap not yet available, waiting...');
+    await new Promise(resolve => setTimeout(resolve, delay));
+    if (typeof CalHeatmap === 'undefined') {
+      console.error('CalHeatmap library failed to load');
+      const container = document.getElementById('heatmap-container');
+      if (container) {
+        container.innerHTML = '<p class="error-message">Unable to load commit activity</p>';
+      }
+      return;
+    }
+  }
+
+  for (let i = 0; i < retries; i++) {
+    try {
+      await loadHeatmap();
+      return; // Success, stop retrying
+    } catch (err) {
+      console.warn(`Heatmap load failed (attempt ${i + 1}/${retries})`, err);
+      if (i < retries - 1) {
+        await new Promise(resolve => setTimeout(resolve, delay));
+      }
+    }
+  }
+  
+  // All retries failed, show fallback message
+  const container = document.getElementById('heatmap-container');
+  if (container) {
+    container.innerHTML = '<p class="error-message">Unable to load commit activity</p>';
+  }
 }
 
 /* =========================
