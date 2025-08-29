@@ -14,6 +14,7 @@ const CACHE_ASSETS = [
   '/assets/js/ui.js',
   '/assets/js/badges.js',
   '/assets/js/heatmap.js',
+  '/assets/js/fallbacks.js',
   '/assets/manifest.json',
   '/assets/logo.png',
   '/assets/icons/icon-192.png',

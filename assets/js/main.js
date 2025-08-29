@@ -4,6 +4,7 @@
 
 import { detectLanguage } from './language.js';
 import { loadContent } from './content.js';
+import { FallbackManager } from './fallbacks.js';
 
 /* =========================
    Service Worker Registration
@@ -21,12 +22,22 @@ function registerServiceWorker() {
    ========================= */
 async function initializeApp() {
   try {
+    // Initialize CDN fallback manager
+    const fallbackManager = new FallbackManager();
+    fallbackManager.init();
+    
     // Set initial language on HTML element
     const currentLang = detectLanguage();
     document.documentElement.lang = currentLang;
 
     document.body.classList.add('loaded'); // fade-in
     await loadContent(); // load content & trigger animations after DOM insertion
+    
+    // Check fallbacks after content is loaded
+    setTimeout(() => {
+      fallbackManager.checkAllFallbacks();
+    }, 2000);
+    
   } catch (error) {
     console.error('Application initialization failed:', error);
     // Show user-friendly error message
