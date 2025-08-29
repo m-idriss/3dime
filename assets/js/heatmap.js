@@ -47,12 +47,22 @@ export async function loadHeatmapWithRetry(retries = 3, delay = 1000) {
     }
   } catch (err) {
     console.warn('Heatmap initialization failed:', err.message);
+    // Show user-friendly fallback message
+    showHeatmapFallback();
   }
-  
-  // All retries failed or libraries timeout, show fallback message
+}
+
+function showHeatmapFallback() {
   const container = document.getElementById(CONFIG.SELECTORS.HEATMAP_CONTAINER.slice(1));
   if (container) {
-    container.innerHTML = '<p class="error-message">Unable to load commit activity</p>';
+    container.innerHTML = `
+      <div class="heatmap-fallback" role="alert" aria-live="polite">
+        <p>🔗 <a href="https://github.com/m-idriss" target="_blank" rel="noopener noreferrer" 
+           aria-label="View GitHub profile for commit activity">
+           View GitHub activity
+        </a></p>
+      </div>
+    `;
   }
 }
 
@@ -137,9 +147,6 @@ export async function loadHeatmap() {
 
   } catch (error) {
     console.error('Error loading heatmap:', error);
-    const container = document.getElementById(CONFIG.SELECTORS.HEATMAP_CONTAINER.slice(1));
-    if (container) {
-      container.innerHTML = '<p class="error-message">Unable to load commit activity</p>';
-    }
+    showHeatmapFallback();
   }
 }
