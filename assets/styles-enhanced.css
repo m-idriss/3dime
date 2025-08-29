@@ -134,7 +134,55 @@ body.loaded {
 }
 
 /* ========================
-   Error Messages
+   Focus Indicators (Accessibility)
+   ======================== */
+/* Comprehensive focus indicators for WCAG AA compliance */
+a:focus,
+button:focus,
+input:focus,
+select:focus,
+textarea:focus,
+[tabindex]:focus {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
+  border-radius: var(--radius-md);
+  transition: outline var(--t-fast);
+}
+
+/* Enhanced focus for interactive elements */
+.logo:focus,
+.burger-button:focus,
+.dropdown-item:focus,
+.language-option:focus {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+  transition: all var(--t-fast);
+}
+
+/* Focus for technology links */
+.tech-item:focus,
+.item:focus {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
+  background: var(--glass-bg-hover);
+  transform: translateY(-2px);
+  transition: all var(--t-fast);
+}
+
+/* Remove default browser focus outline that's less accessible */
+*:focus {
+  outline: none;
+}
+
+/* Re-apply focus for our custom implementation */
+*:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
+}
+
+/* ========================
+   Error Messages & Fallbacks
    ======================== */
 .error-message {
   background: rgba(239, 68, 68, 0.1);
@@ -143,6 +191,37 @@ body.loaded {
   padding: var(--space-lg);
   border-radius: var(--radius-md);
   text-align: center;
+  font-size: var(--font-size-base);
+  margin: var(--space-lg) 0;
+}
+
+/* Fallback styling for graceful degradation */
+.heatmap-fallback {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  text-align: center;
+  margin: var(--space-lg) 0;
+}
+
+.heatmap-fallback p {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.heatmap-fallback a {
+  color: var(--accent-color);
+  text-decoration: none;
+  font-weight: var(--fw-semibold);
+  transition: color var(--t-fast);
+}
+
+.heatmap-fallback a:hover,
+.heatmap-fallback a:focus {
+  color: rgba(59, 130, 246, 0.8);
+  text-decoration: underline;
+}
   margin: var(--space-lg);
   font-weight: var(--fw-semibold);
 }
