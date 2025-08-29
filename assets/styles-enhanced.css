@@ -480,9 +480,9 @@ body:not(.notifications-off) .notifications-toggle .toggle-switch {
 
 .chip-little {
   display: inline-block;
-  margin: var(--space-xs);
+  margin: calc(var(--space-xs) * 0.5);
   font-weight: var(--fw-normal);
-  font-size: 0.875rem;
+  font-size: calc(var(--font-size-base) * 0.875);
 }
 
 /* ========================
