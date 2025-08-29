@@ -129,12 +129,12 @@
           "description": "Choses que j'aime regarder/faire.",
           "items": [
             {"name": "Olympique de Marseille", "url": "https://www.om.fr", "linkType": "chip-little"},
-            {"name": "Échecs", "url": "https://www.chess.com/member/idriss33345", "linkType": "chip-little"},
-            {"name": "Pizza", "url": "https://www.instagram.com/chateaupizza/", "linkType": "chip-little"},
             {"name": "Age of Empires 2", "url": "https://www.ageofempires.com/games/aoe2de/", "linkType": "chip-little"},
+            {"name": "One Piece", "url": "https://mangaplus.shueisha.co.jp/titles/700005", "linkType": "chip-little"},
+            {"name": "Pizza", "url": "https://www.instagram.com/chateaupizza/", "linkType": "chip-little"},
+            {"name": "Échecs", "url": "https://www.chess.com/member/idriss33345", "linkType": "chip-little"},
             {"name": "Scrabble", "url": "https://www.clicmouse.fr/scra/", "linkType": "chip-little"},
-            {"name": "Basic-Fit", "url": "https://www.basic-fit.com", "linkType": "chip-little"},
-            {"name": "One Piece", "url": "https://mangaplus.shueisha.co.jp/titles/700005", "linkType": "chip-little"}
+            {"name": "Basic-Fit", "url": "https://www.basic-fit.com", "linkType": "chip-little"}
           ]
         },
         {
