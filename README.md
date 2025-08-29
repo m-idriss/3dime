@@ -228,15 +228,27 @@ The `content/content.json` supports:
 - **Hobbies** with interests and activities
 - **Contact** information
 
+## 🗺️ Development Roadmap
+
+3dime follows a structured development roadmap focusing on security, performance, and user experience. Our roadmap is organized into phases with clear priorities:
+
+- **Phase 1**: Security & Accessibility (Critical fixes, WCAG compliance)
+- **Phase 2**: Performance & SEO (Lighthouse optimization, enhanced metadata)  
+- **Phase 3**: Modern Features & UX (Advanced theming, micro-interactions)
+- **Phase 4**: Innovation & Future (Advanced integrations, scalability)
+
+📋 **[View Complete Roadmap](ROADMAP.md)** - Detailed timeline, priorities, and implementation guidelines
+
 ## 🤝 Contributing
 
-1. **Fork** the repository
-2. **Create** a feature branch: `git checkout -b feature/amazing-feature`
-3. **Commit** your changes: `git commit -m '✨ [feature/amazing] add amazing feature'`
-4. **Push** to the branch: `git push origin feature/amazing-feature`
-5. **Open** a Pull Request
+1. **Check the [Roadmap](ROADMAP.md)** to see current priorities and find tasks that match your skills
+2. **Fork** the repository
+3. **Create** a feature branch: `git checkout -b feature/amazing-feature`
+4. **Commit** your changes: `git commit -m '✨ [feature/amazing] add amazing feature'`
+5. **Push** to the branch: `git push origin feature/amazing-feature`
+6. **Open** a Pull Request
 
-See our [contribution guidelines](CONTRIBUTING.md) for more details.
+See our [contribution guidelines](CONTRIBUTING.md) and [development roadmap](ROADMAP.md) for more details.
 
 ## 📊 Performance
 
