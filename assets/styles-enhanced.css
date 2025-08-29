@@ -222,9 +222,6 @@ textarea:focus,
   color: rgba(59, 130, 246, 0.8);
   text-decoration: underline;
 }
-  margin: var(--space-lg);
-  font-weight: var(--fw-semibold);
-}
 
 /* ========================
    Background
