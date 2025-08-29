@@ -5,7 +5,7 @@
 import { CONFIG } from './config.js';
 import { detectLanguage } from './language.js';
 import { updateBadge } from './badges.js';
-import { loadHeatmap } from './heatmap.js';
+import { loadHeatmapWithRetry } from './heatmap.js';
 import { setupLogoReload, setupBurgerMenu } from './ui.js';
 
 export async function loadContent() {
@@ -138,7 +138,7 @@ export async function loadContent() {
   // Load heatmap if container exists
   const heatmapContainer = document.getElementById(CONFIG.SELECTORS.HEATMAP_CONTAINER.slice(1));
   if (heatmapContainer) {
-    loadHeatmap();
+    loadHeatmapWithRetry();
   }
   
   setupLogoReload();
