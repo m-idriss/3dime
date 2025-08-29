@@ -4,6 +4,58 @@
 
 import { CONFIG } from './config.js';
 
+/* =========================
+   Library Readiness Check
+   ========================= */
+function waitForLibraries(timeout = 10000) {
+  return new Promise((resolve, reject) => {
+    const startTime = Date.now();
+    
+    const checkLibraries = () => {
+      if (typeof CalHeatmap !== 'undefined' && 
+          typeof CalendarLabel !== 'undefined' && 
+          typeof Tooltip !== 'undefined') {
+        resolve();
+      } else if (Date.now() - startTime > timeout) {
+        reject(new Error('Timeout waiting for libraries to load'));
+      } else {
+        setTimeout(checkLibraries, 100);
+      }
+    };
+    checkLibraries();
+  });
+}
+
+/* =========================
+   Heatmap Loading with Retry
+   ========================= */
+export async function loadHeatmapWithRetry(retries = 3, delay = 1000) {
+  try {
+    // Wait for external libraries to be ready
+    await waitForLibraries();
+    
+    for (let i = 0; i < retries; i++) {
+      try {
+        await loadHeatmap();
+        return; // success → stop retrying
+      } catch (err) {
+        console.warn(`Heatmap load failed (attempt ${i + 1}/${retries})`, err);
+        if (i < retries - 1) {
+          await new Promise(res => setTimeout(res, delay));
+        }
+      }
+    }
+  } catch (err) {
+    console.warn('Heatmap initialization failed:', err.message);
+  }
+  
+  // All retries failed or libraries timeout, show fallback message
+  const container = document.getElementById(CONFIG.SELECTORS.HEATMAP_CONTAINER.slice(1));
+  if (container) {
+    container.innerHTML = '<p class="error-message">Unable to load commit activity</p>';
+  }
+}
+
 export async function loadHeatmap() {
   try {
     const response = await fetch(`${CONFIG.ENDPOINTS.PROXY}?service=github&type=commits`);
