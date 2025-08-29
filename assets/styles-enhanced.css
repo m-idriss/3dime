@@ -113,6 +113,41 @@ body.loaded {
 }
 
 /* ========================
+   Skip Links for Accessibility
+   ======================== */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: var(--accent-color);
+  color: white;
+  padding: 8px;
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  font-weight: var(--fw-semibold);
+  z-index: 9999;
+  transition: top var(--t-fast);
+}
+
+.skip-link:focus {
+  top: 6px;
+}
+
+/* ========================
+   Error Messages
+   ======================== */
+.error-message {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #fca5a5;
+  padding: var(--space-lg);
+  border-radius: var(--radius-md);
+  text-align: center;
+  margin: var(--space-lg);
+  font-weight: var(--fw-semibold);
+}
+
+/* ========================
    Background
    ======================== */
 .bg {

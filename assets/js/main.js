@@ -19,19 +19,28 @@ function registerServiceWorker() {
 /* =========================
    Application Initialization
    ========================= */
-function initializeApp() {
-  // Set initial language on HTML element
-  const currentLang = detectLanguage();
-  document.documentElement.lang = currentLang;
+async function initializeApp() {
+  try {
+    // Set initial language on HTML element
+    const currentLang = detectLanguage();
+    document.documentElement.lang = currentLang;
 
-  document.body.classList.add('loaded'); // fade-in
-  loadContent(); // load content & trigger animations after DOM insertion
+    document.body.classList.add('loaded'); // fade-in
+    await loadContent(); // load content & trigger animations after DOM insertion
+  } catch (error) {
+    console.error('Application initialization failed:', error);
+    // Show user-friendly error message
+    const main = document.querySelector('.cards-container');
+    if (main) {
+      main.innerHTML = '<div class="error-message" role="alert">Unable to load the application. Please refresh the page or try again later.</div>';
+    }
+  }
 }
 
 /* =========================
    Page Fade-In and Bootstrap
    ========================= */
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   registerServiceWorker();
-  initializeApp();
+  await initializeApp();
 });

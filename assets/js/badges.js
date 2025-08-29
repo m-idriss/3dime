@@ -26,7 +26,16 @@ export function updateBadge(service, badgeId, field, params = {}) {
       if (badge) {
         badge.textContent = count;
         badge.style.display = count > 0 ? "flex" : "none";
+        badge.setAttribute('aria-label', `${service} count: ${count}`);
       }
     })
-    .catch(err => console.error(`Erreur ${service}:`, err));
+    .catch(err => {
+      console.warn(`Unable to load ${service} data:`, err.message);
+      // Gracefully handle the error - hide the badge instead of showing error to user
+      const badge = document.getElementById(badgeId);
+      if (badge) {
+        badge.style.display = "none";
+        badge.setAttribute('aria-label', `${service} data unavailable`);
+      }
+    });
 }
