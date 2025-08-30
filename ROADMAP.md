@@ -68,7 +68,7 @@ This roadmap outlines the development priorities for the 3dime personal social h
 #### 🔍 SEO & Metadata Complete
 - [x] **Enhanced Meta Tags** - Open Graph, Twitter Cards
   ```html
-  <meta property="og:title" content="Idriss Mohamady - Full Stack Developer | 3dime">
+  <meta property="og:title" content="Idriss Mohamady - Developer | 3dime">
   <meta property="og:description" content="Tech enthusiast building elegant solutions with Java, JavaScript, and modern web technologies.">
   <meta property="og:image" content="https://3dime.com/assets/logo.png">
   ```

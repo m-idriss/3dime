@@ -520,17 +520,17 @@ function showErrorMessage(message) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <!-- Primary Meta Tags -->
-  <title>Idriss Mohamady - Full Stack Developer | 3dime</title>
-  <meta name="title" content="Idriss Mohamady - Full Stack Developer | 3dime">
+  <title>Idriss Mohamady - Developer | 3dime</title>
+  <meta name="title" content="Idriss Mohamady - Developer | 3dime">
   <meta name="description" content="Tech enthusiast and lifelong learner. French of Malagasy origin, living in Nice. I love building elegant solutions that keep things simple. Java, JavaScript, Spring Boot, Quarkus developer.">
-  <meta name="keywords" content="Full Stack Developer, Java Developer, JavaScript, Spring Boot, Quarkus, Nice France, Software Engineer, Web Development">
+  <meta name="keywords" content="Back End Developer, Java Developer, JavaScript, Spring Boot, Quarkus, Nice France, Software Engineer, Web Development">
   <meta name="author" content="Idriss Mohamady">
   <link rel="canonical" href="https://3dime.com">
   
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="profile">
   <meta property="og:url" content="https://3dime.com">
-  <meta property="og:title" content="Idriss Mohamady - Full Stack Developer | 3dime">
+  <meta property="og:title" content="Idriss Mohamady - Developer | 3dime">
   <meta property="og:description" content="Tech enthusiast and lifelong learner. Building elegant solutions with Java, JavaScript, and modern web technologies.">
   <meta property="og:image" content="https://3dime.com/assets/logo.png">
   <meta property="og:image:alt" content="3dime logo">
@@ -540,7 +540,7 @@ function showErrorMessage(message) {
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://3dime.com">
-  <meta property="twitter:title" content="Idriss Mohamady - Full Stack Developer | 3dime">
+  <meta property="twitter:title" content="Idriss Mohamady - Developer | 3dime">
   <meta property="twitter:description" content="Tech enthusiast and lifelong learner. Building elegant solutions with Java, JavaScript, and modern web technologies.">
   <meta property="twitter:image" content="https://3dime.com/assets/logo.png">
   <meta property="twitter:creator" content="@3dime13">
@@ -564,7 +564,7 @@ function showErrorMessage(message) {
   "name": "Idriss Mohamady",
   "url": "https://3dime.com",
   "image": "https://3dime.com/assets/logo.png",
-  "jobTitle": "Full Stack Developer",
+  "jobTitle": "Back End Developer",
   "description": "Tech enthusiast and lifelong learner. French of Malagasy origin, living in Nice with my wife and children. I love building elegant solutions that keep things simple.",
   "address": {
     "@type": "PostalAddress",
@@ -899,7 +899,7 @@ document.addEventListener('DOMContentLoaded', () => new App());
 {
   "name": "3dime - Personal Social Hub",
   "short_name": "3dime",
-  "description": "Personal social hub for Idriss Mohamady - Full Stack Developer",
+  "description": "Personal social hub for Idriss Mohamady - Developer",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#000000",
