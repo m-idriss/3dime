@@ -2,7 +2,6 @@
    Main Application
    ========================= */
 
-import { detectLanguage } from './language.js';
 import { loadContent } from './content.js';
 import { FallbackManager } from './fallbacks.js';
 
@@ -26,9 +25,8 @@ async function initializeApp() {
     const fallbackManager = new FallbackManager();
     fallbackManager.init();
     
-    // Set initial language on HTML element
-    const currentLang = detectLanguage();
-    document.documentElement.lang = currentLang;
+    // Set English as the default language
+    document.documentElement.lang = 'en';
 
     document.body.classList.add('loaded'); // fade-in
     await loadContent(); // load content & trigger animations after DOM insertion
