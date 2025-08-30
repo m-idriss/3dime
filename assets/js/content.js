@@ -36,16 +36,23 @@ export async function loadContent() {
   const currentLang = detectLanguage();
   let content;
   try {
-    const res = await fetch(`${CONFIG.ENDPOINTS.I18N}/${currentLang}.json`);
-    if (!res.ok) {
-      throw new Error(`Failed to load translation file: ${res.status} ${res.statusText}`);
+    // Parse JSON-LD structured data from the document head
+    const ldJsonScript = document.querySelector('script[type="application/ld+json"]');
+    if (!ldJsonScript) {
+      throw new Error('JSON-LD structured data not found');
     }
-    content = await res.json();
+    const ldData = JSON.parse(ldJsonScript.textContent);
+    
+    // Extract content for the current language from the JSON-LD
+    if (!ldData._siteContent || !ldData._siteContent.languages || !ldData._siteContent.languages[currentLang]) {
+      throw new Error(`Content for language '${currentLang}' not found in JSON-LD`);
+    }
+    content = ldData._siteContent.languages[currentLang];
   } catch (error) {
     // Display a user-friendly error message or fallback content
     const main = document.querySelector(CONFIG.SELECTORS.CARDS_CONTAINER);
     main.innerHTML = '<div class="error-message">Failed to load content. Please try again later.</div>';
-    console.error('Error loading translation file:', error);
+    console.error('Error loading content from JSON-LD:', error);
     return;
   }
 
