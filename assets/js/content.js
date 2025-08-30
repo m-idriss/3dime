@@ -33,17 +33,29 @@ function sanitizeText(text) {
 export async function loadContent() {
   let ldData;
   try {
-    // Parse JSON-LD structured data from the document head
-    const ldJsonScript = document.querySelector('script[type="application/ld+json"]');
-    if (!ldJsonScript) {
-      throw new Error('JSON-LD structured data not found');
+    // Try to load from external .jsonld file first
+    try {
+      const response = await fetch('./structured-data.jsonld');
+      if (response.ok) {
+        ldData = await response.json();
+      } else {
+        throw new Error(`Failed to fetch .jsonld file: ${response.status}`);
+      }
+    } catch (fetchError) {
+      console.warn('Failed to load external .jsonld file, falling back to embedded JSON-LD:', fetchError);
+      
+      // Fallback to embedded JSON-LD structured data
+      const ldJsonScript = document.querySelector('script[type="application/ld+json"]');
+      if (!ldJsonScript) {
+        throw new Error('Neither external .jsonld file nor embedded JSON-LD found');
+      }
+      ldData = JSON.parse(ldJsonScript.textContent);
     }
-    ldData = JSON.parse(ldJsonScript.textContent);
   } catch (error) {
     // Display a user-friendly error message or fallback content
     const main = document.querySelector(CONFIG.SELECTORS.CARDS_CONTAINER);
     main.innerHTML = '<div class="error-message">Failed to load content. Please try again later.</div>';
-    console.error('Error loading content from JSON-LD:', error);
+    console.error('Error loading content:', error);
     return;
   }
 

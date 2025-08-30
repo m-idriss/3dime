@@ -556,9 +556,22 @@ body:not(.notifications-off) .notifications-toggle .toggle-switch {
 
 .chip-little {
   display: inline-block;
-  margin: calc(var(--space-xs) * 0.5);
+  margin: var(--space-sm);
+  padding: calc(var(--space-xs) * 0.75) var(--space-sm);
   font-weight: var(--fw-normal);
   font-size: calc(var(--font-size-base) * 0.875);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-full);
+  transition: all var(--t-fast);
+  text-decoration: none;
+  color: var(--text-primary);
+}
+
+.chip-little:hover {
+  background: var(--glass-bg-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-card);
 }
 
 /* ========================
