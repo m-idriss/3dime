@@ -3,7 +3,7 @@
    ========================= */
 
 export const CONFIG = {
-  SUPPORTED_LANGUAGES: ['en', 'fr'],
+  SUPPORTED_LANGUAGES: ['en'],
   DEFAULT_LANGUAGE: 'en',
   FONT_SIZES: ['normal', 'large', 'small'],
   DEFAULT_FONT_SIZE: 'normal',
@@ -13,7 +13,6 @@ export const CONFIG = {
   
   // API endpoints
   ENDPOINTS: {
-    I18N: 'i18n',
     PROXY: 'proxy.php'
   },
   
@@ -23,8 +22,6 @@ export const CONFIG = {
     BURGER_BTN: '#burger-btn',
     PROFILE_DROPDOWN: '#profile-dropdown',
     THEME_TOGGLE: '#theme-toggle',
-    LANGUAGE_TOGGLE: '#language-toggle',
-    LANGUAGE_SUBMENU: '#language-submenu',
     FONT_SIZE_TOGGLE: '#font-size-toggle',
     HEATMAP_CONTAINER: '#heatmap-container'
   }
