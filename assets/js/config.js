@@ -8,7 +8,6 @@ export const CONFIG = {
   FONT_SIZES: ['normal', 'large', 'small'],
   DEFAULT_FONT_SIZE: 'normal',
   DEFAULT_THEME: 'dark',
-  DEFAULT_NOTIFICATIONS: 'on',
   
   FADE_TIMEOUT: 400,
   
@@ -26,7 +25,6 @@ export const CONFIG = {
     THEME_TOGGLE: '#theme-toggle',
     LANGUAGE_TOGGLE: '#language-toggle',
     LANGUAGE_SUBMENU: '#language-submenu',
-    NOTIFICATIONS_TOGGLE: '#notifications-toggle',
     FONT_SIZE_TOGGLE: '#font-size-toggle',
     HEATMAP_CONTAINER: '#heatmap-container'
   }

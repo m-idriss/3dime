@@ -19,14 +19,11 @@ const CACHE_ASSETS = [
   '/assets/logo.png',
   '/assets/icons/icon-192.png',
   '/assets/icons/icon.png',
-  '/i18n/en.json',
-  '/i18n/fr.json',
   '/favicon.ico'
 ];
 
 // Network-first resources (always fresh when online)
 const NETWORK_FIRST = [
-  '/i18n/',
   'api.github.com'
 ];
 
