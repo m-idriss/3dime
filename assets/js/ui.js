@@ -3,15 +3,12 @@
    ========================= */
 
 import { CONFIG } from './config.js';
-import { getCurrentLanguageUI, setLanguage } from './language.js';
+import { getCurrentLanguageUI } from './language.js';
 
 export function setupBurgerMenu() {
   const burgerBtn = document.getElementById(CONFIG.SELECTORS.BURGER_BTN.slice(1));
   const dropdown = document.getElementById(CONFIG.SELECTORS.PROFILE_DROPDOWN.slice(1));
   const themeToggle = document.getElementById(CONFIG.SELECTORS.THEME_TOGGLE.slice(1));
-  const languageToggle = document.getElementById(CONFIG.SELECTORS.LANGUAGE_TOGGLE.slice(1));
-  const languageSubmenu = document.getElementById(CONFIG.SELECTORS.LANGUAGE_SUBMENU.slice(1));
-  const languageOptions = document.querySelectorAll('.language-option');
   const fontSizeToggle = document.getElementById(CONFIG.SELECTORS.FONT_SIZE_TOGGLE.slice(1));
 
   if (!burgerBtn || !dropdown || !themeToggle || !fontSizeToggle) {
@@ -53,25 +50,7 @@ export function setupBurgerMenu() {
   });
   
   // Notifications toggle click handler
-// Language toggle click handler
-  if (languageToggle && languageSubmenu) {
-    languageToggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      toggleLanguageSubmenu();
-    });
-
-    // Language option click handlers
-    languageOptions.forEach(option => {
-      option.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const lang = option.getAttribute('data-lang');
-        setLanguage(lang);
-        closeDropdown();
-      });
-    });
-  }
-
-  // Font size toggle click handler
+// Font size toggle click handler
   fontSizeToggle.addEventListener('click', (e) => {
     e.stopPropagation();
     toggleFontSize();
@@ -109,24 +88,13 @@ export function toggleDropdown() {
 export function closeDropdown() {
   const burgerBtn = document.getElementById(CONFIG.SELECTORS.BURGER_BTN.slice(1));
   const dropdown = document.getElementById(CONFIG.SELECTORS.PROFILE_DROPDOWN.slice(1));
-  const languageSubmenu = document.getElementById(CONFIG.SELECTORS.LANGUAGE_SUBMENU.slice(1));
 
   if (dropdown && burgerBtn) {
     dropdown.classList.remove('active');
     burgerBtn.classList.remove('active');
   }
-
-  if (languageSubmenu) {
-    languageSubmenu.classList.remove('active');
-  }
 }
 
-export function toggleLanguageSubmenu() {
-  const languageSubmenu = document.getElementById(CONFIG.SELECTORS.LANGUAGE_SUBMENU.slice(1));
-  if (languageSubmenu) {
-    languageSubmenu.classList.toggle('active');
-  }
-}
 
 export function toggleTheme() {
   const isLight = document.body.classList.contains('light-theme');
