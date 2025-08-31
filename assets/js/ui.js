@@ -12,16 +12,14 @@ export function setupBurgerMenu() {
   const languageToggle = document.getElementById(CONFIG.SELECTORS.LANGUAGE_TOGGLE.slice(1));
   const languageSubmenu = document.getElementById(CONFIG.SELECTORS.LANGUAGE_SUBMENU.slice(1));
   const languageOptions = document.querySelectorAll('.language-option');
-  const notificationsToggle = document.getElementById(CONFIG.SELECTORS.NOTIFICATIONS_TOGGLE.slice(1));
   const fontSizeToggle = document.getElementById(CONFIG.SELECTORS.FONT_SIZE_TOGGLE.slice(1));
 
-  if (!burgerBtn || !dropdown || !themeToggle || !notificationsToggle || !fontSizeToggle) {
+  if (!burgerBtn || !dropdown || !themeToggle || !fontSizeToggle) {
     console.warn(
       'setupBurgerMenu: Missing DOM elements:',
       !burgerBtn ? CONFIG.SELECTORS.BURGER_BTN : '',
       !dropdown ? CONFIG.SELECTORS.PROFILE_DROPDOWN : '',
       !themeToggle ? CONFIG.SELECTORS.THEME_TOGGLE : '',
-      !notificationsToggle ? CONFIG.SELECTORS.NOTIFICATIONS_TOGGLE : '',
       !fontSizeToggle ? CONFIG.SELECTORS.FONT_SIZE_TOGGLE : ''
     );
     return;
@@ -35,15 +33,7 @@ export function setupBurgerMenu() {
   } else {
     updateThemeToggleUI(false);
   }
-  
-  // Initialize notifications from localStorage or default to on
-  const savedNotifications = localStorage.getItem('notifications');
-  if (savedNotifications === 'off') {
-    document.body.classList.add('notifications-off');
-    updateNotificationsToggleUI(false);
-  } else {
-    updateNotificationsToggleUI(true);
-  }
+
 
   // Initialize font size from localStorage or default to normal
   const savedFontSize = localStorage.getItem('fontSize') || CONFIG.DEFAULT_FONT_SIZE;
@@ -63,12 +53,7 @@ export function setupBurgerMenu() {
   });
   
   // Notifications toggle click handler
-  notificationsToggle.addEventListener('click', (e) => {
-    e.stopPropagation();
-    toggleNotifications();
-  });
-
-  // Language toggle click handler
+// Language toggle click handler
   if (languageToggle && languageSubmenu) {
     languageToggle.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -173,35 +158,6 @@ export function updateThemeToggleUI(isLight) {
   }
 }
 
-export function toggleNotifications() {
-  const isOn = localStorage.getItem('notifications') !== 'off';
-
-  if (isOn) {
-    localStorage.setItem('notifications', 'off');
-    document.body.classList.add('notifications-off');
-    updateNotificationsToggleUI(false);
-  } else {
-    localStorage.setItem('notifications', CONFIG.DEFAULT_NOTIFICATIONS);
-    document.body.classList.remove('notifications-off');
-    updateNotificationsToggleUI(true);
-  }
-}
-
-export function updateNotificationsToggleUI(isOn) {
-  const notificationsToggle = document.getElementById(CONFIG.SELECTORS.NOTIFICATIONS_TOGGLE.slice(1));
-  if (!notificationsToggle) return;
-
-  const icon = notificationsToggle.querySelector('i');
-  const text = notificationsToggle.querySelector('span');
-
-  if (isOn) {
-    icon.className = 'fas fa-bell';
-    text.textContent = 'Notifications';
-  } else {
-    icon.className = 'fas fa-bell-slash';
-    text.textContent = 'Notifications';
-  }
-}
 
 export function toggleFontSize() {
   const currentSize = localStorage.getItem('fontSize') || CONFIG.DEFAULT_FONT_SIZE;

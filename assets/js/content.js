@@ -147,11 +147,7 @@ function createProfileSection(ldData) {
           <span>Dark Mode</span>
           <div class="toggle-switch" aria-hidden="true"></div>
         </button>
-        <button class="dropdown-item notifications-toggle" id="notifications-toggle" role="menuitem" aria-label="Toggle notifications">
-          <i class="fas fa-bell" aria-hidden="true"></i>
-          <span>Notifications</span>
-          <div class="toggle-switch" aria-hidden="true"></div>
-        </button>
+
         <div class="dropdown-separator" role="separator"></div>
         <button class="dropdown-item font-size-toggle" id="font-size-toggle" role="menuitem" aria-label="Change font size">
           <i class="fas fa-text-height" aria-hidden="true"></i>
