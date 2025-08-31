@@ -300,7 +300,10 @@ function createContactSection(ldData) {
   container.classList.add('container');
   container.setAttribute('aria-label', 'contact');
 
-  let html = `<a href="mailto:${ldData.email}" class="link">${ldData.email}</a>`;
+  // Safely encode in both attribute and text contexts
+  const safeEmailHref = 'mailto:' + encodeURIComponent(ldData.email);
+  const safeEmailText = sanitizeText(ldData.email);
+  let html = `<a href="${safeEmailHref}" class="link">${safeEmailText}</a>`;
   
   container.innerHTML = html;
   return container;
