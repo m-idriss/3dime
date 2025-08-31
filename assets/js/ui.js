@@ -3,21 +3,20 @@
    ========================= */
 
 import { CONFIG } from './config.js';
-import { getCurrentLanguageUI } from './language.js';
 
 export function setupBurgerMenu() {
-  const burgerBtn = document.getElementById(CONFIG.SELECTORS.BURGER_BTN.slice(1));
-  const dropdown = document.getElementById(CONFIG.SELECTORS.PROFILE_DROPDOWN.slice(1));
-  const themeToggle = document.getElementById(CONFIG.SELECTORS.THEME_TOGGLE.slice(1));
-  const fontSizeToggle = document.getElementById(CONFIG.SELECTORS.FONT_SIZE_TOGGLE.slice(1));
+  const burgerBtn = document.getElementById(CONFIG.IDS.BURGER_BTN);
+  const dropdown = document.getElementById(CONFIG.IDS.PROFILE_DROPDOWN);
+  const themeToggle = document.getElementById(CONFIG.IDS.THEME_TOGGLE);
+  const fontSizeToggle = document.getElementById(CONFIG.IDS.FONT_SIZE_TOGGLE);
 
   if (!burgerBtn || !dropdown || !themeToggle || !fontSizeToggle) {
     console.warn(
       'setupBurgerMenu: Missing DOM elements:',
-      !burgerBtn ? CONFIG.SELECTORS.BURGER_BTN : '',
-      !dropdown ? CONFIG.SELECTORS.PROFILE_DROPDOWN : '',
-      !themeToggle ? CONFIG.SELECTORS.THEME_TOGGLE : '',
-      !fontSizeToggle ? CONFIG.SELECTORS.FONT_SIZE_TOGGLE : ''
+      !burgerBtn ? CONFIG.IDS.BURGER_BTN : '',
+      !dropdown ? CONFIG.IDS.PROFILE_DROPDOWN : '',
+      !themeToggle ? CONFIG.IDS.THEME_TOGGLE : '',
+      !fontSizeToggle ? CONFIG.IDS.FONT_SIZE_TOGGLE : ''
     );
     return;
   }
@@ -72,8 +71,8 @@ export function setupBurgerMenu() {
 }
 
 export function toggleDropdown() {
-  const burgerBtn = document.getElementById(CONFIG.SELECTORS.BURGER_BTN.slice(1));
-  const dropdown = document.getElementById(CONFIG.SELECTORS.PROFILE_DROPDOWN.slice(1));
+  const burgerBtn = document.getElementById(CONFIG.IDS.BURGER_BTN);
+  const dropdown = document.getElementById(CONFIG.IDS.PROFILE_DROPDOWN);
   
   const isActive = dropdown.classList.contains('active');
   
@@ -86,8 +85,8 @@ export function toggleDropdown() {
 }
 
 export function closeDropdown() {
-  const burgerBtn = document.getElementById(CONFIG.SELECTORS.BURGER_BTN.slice(1));
-  const dropdown = document.getElementById(CONFIG.SELECTORS.PROFILE_DROPDOWN.slice(1));
+  const burgerBtn = document.getElementById(CONFIG.IDS.BURGER_BTN);
+  const dropdown = document.getElementById(CONFIG.IDS.PROFILE_DROPDOWN);
 
   if (dropdown && burgerBtn) {
     dropdown.classList.remove('active');
@@ -111,7 +110,7 @@ export function toggleTheme() {
 }
 
 export function updateThemeToggleUI(isLight) {
-  const themeToggle = document.getElementById(CONFIG.SELECTORS.THEME_TOGGLE.slice(1));
+  const themeToggle = document.getElementById(CONFIG.IDS.THEME_TOGGLE);
   if (!themeToggle) return;
   
   const icon = themeToggle.querySelector('i');
@@ -119,10 +118,10 @@ export function updateThemeToggleUI(isLight) {
   
   if (isLight) {
     icon.className = 'fas fa-sun';
-    text.textContent = getCurrentLanguageUI().lightMode;
+    text.textContent = 'Light Mode';
   } else {
     icon.className = 'fas fa-moon';
-    text.textContent = getCurrentLanguageUI().darkMode;
+    text.textContent = 'Dark Mode';
   }
 }
 
@@ -155,7 +154,7 @@ export function applyFontSize(size) {
 }
 
 export function updateFontSizeToggleUI(size) {
-  const fontSizeToggle = document.getElementById(CONFIG.SELECTORS.FONT_SIZE_TOGGLE.slice(1));
+  const fontSizeToggle = document.getElementById(CONFIG.IDS.FONT_SIZE_TOGGLE);
   if (!fontSizeToggle) return;
 
   const text = fontSizeToggle.querySelector('span');

@@ -19,10 +19,15 @@ export const CONFIG = {
   // DOM selectors
   SELECTORS: {
     CARDS_CONTAINER: '.cards-container',
-    BURGER_BTN: '#burger-btn',
-    PROFILE_DROPDOWN: '#profile-dropdown',
-    THEME_TOGGLE: '#theme-toggle',
-    FONT_SIZE_TOGGLE: '#font-size-toggle',
     HEATMAP_CONTAINER: '#heatmap-container'
+  },
+  
+  // Element IDs (without # prefix)
+  IDS: {
+    BURGER_BTN: 'burger-btn',
+    PROFILE_DROPDOWN: 'profile-dropdown',
+    THEME_TOGGLE: 'theme-toggle',
+    FONT_SIZE_TOGGLE: 'font-size-toggle',
+    HEATMAP_CONTAINER: 'heatmap-container'
   }
 };
