@@ -208,7 +208,7 @@ function createTechStackSection(ldData) {
   html += `<p>Some of the technologies I worked with.</p>`;
 
   html += ldData.knowsAbout.map(tech => {
-    return `<a href="${sanitizeUrl(tech.url)}" target="_blank" rel="noopener noreferrer" class="chip-little">${sanitizeText(tech.name)}</a>`;
+    return `<a href="${sanitizeUrl(tech.url)}" target="_blank" rel="noopener noreferrer" class="chip-little link">${sanitizeText(tech.name)}</a>`;
   }).join('');
   
   container.innerHTML = html;
@@ -284,7 +284,7 @@ function createHobbiesSection(ldData) {
   html += `<p>Things I enjoy watching/doing.</p>`;
 
   html += ldData.hobbies.map(item => {
-    return `<a href="${sanitizeUrl(item.url)}" target="_blank" rel="noopener noreferrer" class="chip-little">${sanitizeText(item.name)}</a>`;
+    return `<a href="${sanitizeUrl(item.url)}" target="_blank" rel="noopener noreferrer" class="chip-little link">${sanitizeText(item.name)}</a>`;
   }).join('');
   
   container.innerHTML = html;
