@@ -53,7 +53,7 @@ export async function loadHeatmapWithRetry(retries = 3, delay = 1000) {
 }
 
 function showHeatmapFallback() {
-  const container = document.getElementById(CONFIG.SELECTORS.HEATMAP_CONTAINER.slice(1));
+  const container = document.getElementById(CONFIG.IDS.HEATMAP_CONTAINER);
   if (container) {
     container.innerHTML = `
       <div class="heatmap-fallback" role="alert" aria-live="polite">
@@ -92,7 +92,7 @@ export async function loadHeatmap() {
     );
 
     // Clear loading state before rendering heatmap
-    const container = document.getElementById(CONFIG.SELECTORS.HEATMAP_CONTAINER.slice(1));
+    const container = document.getElementById(CONFIG.IDS.HEATMAP_CONTAINER);
     if (container) {
       container.innerHTML = ''; // Clear loading indicator
     }

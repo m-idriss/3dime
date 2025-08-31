@@ -3,6 +3,8 @@
    Provides local fallbacks for external dependencies
    ========================= */
 
+import { CONFIG } from './config.js';
+
 /* =========================
    Configuration
    ========================= */
@@ -59,7 +61,7 @@ const CDN_FALLBACKS = {
     fallback: () => {
       console.log('CDN Fallback: D3.js failed, disabling heatmap');
       // Gracefully disable heatmap functionality
-      const heatmapContainer = document.getElementById('heatmap-container');
+      const heatmapContainer = document.getElementById(CONFIG.IDS.HEATMAP_CONTAINER);
       if (heatmapContainer) {
         heatmapContainer.innerHTML = '<p>GitHub Activity heatmap unavailable offline</p>';
       }
@@ -72,7 +74,7 @@ const CDN_FALLBACKS = {
     check: () => typeof window.CalHeatmap !== 'undefined',
     fallback: () => {
       console.log('CDN Fallback: Cal-heatmap failed, using placeholder');
-      const heatmapContainer = document.getElementById('heatmap-container');
+      const heatmapContainer = document.getElementById(CONFIG.IDS.HEATMAP_CONTAINER);
       if (heatmapContainer) {
         heatmapContainer.innerHTML = `
           <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; text-align: center;">
