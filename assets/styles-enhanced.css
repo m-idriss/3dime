@@ -635,6 +635,9 @@ body.notifications-off .badge {
   gap: var(--space-lg);
   flex: 1;
   color: var(--text-primary);
+  width: 100%;
+  min-width: 400px;
+  align-items: center;
 }
 
 /* ========================
