@@ -4,8 +4,6 @@
 
 import { loadContent } from './content.js';
 import { FallbackManager } from './fallbacks.js';
-import { SitemapGenerator } from './sitemap-generator.js';
-import { MobileUXManager } from './mobile-ux.js';
 
 /* =========================
    Service Worker Registration
@@ -37,18 +35,6 @@ async function initializeApp() {
     setTimeout(() => {
       fallbackManager.checkAllFallbacks();
     }, 2000);
-    
-    // Initialize sitemap generator for development/SEO purposes
-    const sitemapGenerator = new SitemapGenerator();
-    setTimeout(() => {
-      sitemapGenerator.logSitemapInfo();
-    }, 3000);
-    
-    // Initialize mobile UX enhancements after content is loaded
-    setTimeout(() => {
-      const mobileUX = new MobileUXManager();
-      console.log('Mobile UX: Enhancements initialized', mobileUX.getCollapsedInfo());
-    }, 1000);
     
   } catch (error) {
     console.error('Application initialization failed:', error);

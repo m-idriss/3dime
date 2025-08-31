@@ -3,10 +3,6 @@
    ========================= */
 
 import { CONFIG } from './config.js';
-import { ThemeManager } from './theme-manager.js';
-
-// Initialize theme manager
-let themeManager;
 
 export function setupBurgerMenu() {
   const burgerBtn = document.getElementById(CONFIG.IDS.BURGER_BTN);
@@ -25,11 +21,15 @@ export function setupBurgerMenu() {
     return;
   }
   
-  // Initialize advanced theme manager
-  themeManager = new ThemeManager();
-  
-  // Update theme toggle to use advanced theme system
-  updateThemeToggleUI(themeManager.currentTheme !== 'dark');
+  // Initialize theme from localStorage or default to dark
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'light') {
+    document.body.classList.add('light-theme');
+    updateThemeToggleUI(true);
+  } else {
+    updateThemeToggleUI(false);
+  }
+
 
   // Initialize font size from localStorage or default to normal
   const savedFontSize = localStorage.getItem('fontSize') || CONFIG.DEFAULT_FONT_SIZE;
@@ -42,14 +42,10 @@ export function setupBurgerMenu() {
     toggleDropdown();
   });
   
-  // Enhanced theme toggle - cycles through all themes
+  // Theme toggle click handler
   themeToggle.addEventListener('click', (e) => {
     e.stopPropagation();
-    const newTheme = themeManager.switchToNext();
-    updateThemeToggleUI(newTheme.name !== 'Dark');
-    
-    // Show theme notification
-    showThemeNotification(newTheme);
+    toggleTheme();
   });
   
   // Notifications toggle click handler
@@ -179,43 +175,4 @@ export function setupLogoReload() {
       setTimeout(() => location.reload(), CONFIG.FADE_TIMEOUT);
     });
   });
-}
-
-/**
- * Show theme change notification
- */
-function showThemeNotification(theme) {
-  // Remove existing notifications
-  const existing = document.querySelector('.theme-notification');
-  if (existing) existing.remove();
-  
-  const notification = document.createElement('div');
-  notification.className = 'theme-notification';
-  notification.innerHTML = `
-    <span class="theme-icon">${theme.icon}</span>
-    <span class="theme-text">${theme.name} theme</span>
-  `;
-  
-  document.body.appendChild(notification);
-  
-  // Animate in
-  setTimeout(() => notification.classList.add('show'), 10);
-  
-  // Remove after 2 seconds
-  setTimeout(() => {
-    notification.classList.remove('show');
-    setTimeout(() => notification.remove(), 300);
-  }, 2000);
-}
-
-/**
- * Get theme manager instance
- */
-export function getThemeManager() {
-  return themeManager;
-}
-
-// Make getThemeManager globally available for mobile UX
-if (typeof window !== 'undefined') {
-  window.getThemeManager = getThemeManager;
 }
