@@ -78,6 +78,7 @@ export async function loadHeatmap() {
     
     if (!commitActivity || !Array.isArray(commitActivity)) {
       console.warn('No commit activity data available');
+      showHeatmapFallback();
       return;
     }
 
@@ -89,6 +90,12 @@ export async function loadHeatmap() {
         return { date, value };
       })
     );
+
+    // Clear loading state before rendering heatmap
+    const container = document.getElementById(CONFIG.SELECTORS.HEATMAP_CONTAINER.slice(1));
+    if (container) {
+      container.innerHTML = ''; // Clear loading indicator
+    }
 
     const cal = new CalHeatmap();
     cal.paint({

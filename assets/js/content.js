@@ -221,7 +221,14 @@ function createHeatmapSection() {
   container.setAttribute('aria-label', 'heatmap');
 
   let html = `<h2>Github Activity</h2>`;
-  html += `<div id="heatmap-container" class="heatmap-container"></div>`;
+  html += `<div id="heatmap-container" class="heatmap-container">
+    <div class="loading-container" role="status" aria-live="polite">
+      <div class="spinner" aria-label="Loading heatmap">
+        <div class="spinner-circle"></div>
+      </div>
+      <p>Loading GitHub activity...</p>
+    </div>
+  </div>`;
   
   container.innerHTML = html;
   return container;
