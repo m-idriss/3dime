@@ -158,7 +158,7 @@ function createProfileSection(ldData) {
   `;
   
   html += `</header>`;
-  html += `<h2>✨ Hello, I'm @Idriss ✨</h2>`;
+  html += `<h2>✨ ${sanitizeText(ldData.givenName)} ✨</h2>`;
 
   // Create social links from sameAs array
   html += `<div class="socials">`;
@@ -229,7 +229,7 @@ function createHeatmapSection() {
       <p>Loading GitHub activity...</p>
     </div>
   </div>`;
-  
+
   container.innerHTML = html;
   return container;
 }
@@ -240,7 +240,7 @@ function createExperienceSection(ldData) {
   container.setAttribute('aria-label', 'experience');
 
   let html = `<h2>Experience & Projects</h2>`;
-  html += `<p>Companies I've worked with, the projects I've contributed to.</p>`;
+  html += `<p>Companies and projects I've contributed to.</p>`;
 
   html += ldData.workExperience.map(item => {
     return `<a href="${sanitizeUrl(item.url)}" target="_blank" rel="noopener noreferrer" class="link">${sanitizeText(item.name)}</a>`;

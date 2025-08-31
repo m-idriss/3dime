@@ -2,6 +2,8 @@
   "@context": "https://schema.org",
   "@type": "Person",
   "name": "Idriss Mohamady",
+  "givenName": "Idriss",
+  "familyName": "Mohamady",
   "alternateName": "3dime",
   "description": "Tech enthusiast and lifelong learner. French of Malagasy origin, living in Nice with my wife and children. I love building elegant solutions that keep things simple.",
   "url": "https://3dime.com",
