@@ -1,0 +1,184 @@
+/* ==============================================
+   3DIME - ACCESSIBILITY COMPONENTS
+   
+   Skip links, focus indicators, and accessibility-focused
+   UI components following WCAG AA guidelines.
+   
+   @module accessibility
+   @version 2.0
+   ============================================== */
+
+/* ========================
+   Skip Links
+   
+   Provide keyboard navigation shortcuts for screen readers
+   and keyboard-only users
+   ======================== */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: var(--accent-color);
+  color: white;
+  padding: 8px;
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  font-weight: var(--fw-semibold);
+  z-index: 9999;
+  transition: top var(--t-fast);
+}
+
+.skip-link:focus {
+  top: 6px;
+}
+
+/* ========================
+   Focus Indicators
+   
+   Comprehensive focus management for WCAG AA compliance.
+   Ensures all interactive elements have visible focus states.
+   ======================== */
+
+/* Base focus styles for form elements */
+a:focus,
+button:focus,
+input:focus,
+select:focus,
+textarea:focus,
+[tabindex]:focus {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
+  border-radius: var(--radius-md);
+  transition: outline var(--t-fast);
+}
+
+/* Enhanced focus for interactive UI elements */
+.logo:focus,
+.burger-button:focus,
+.dropdown-item:focus {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+  transition: all var(--t-fast);
+}
+
+/* Focus for technology links and interactive items */
+.tech-item:focus,
+.item:focus {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
+  background: var(--glass-bg-hover);
+  transform: translateY(-2px);
+  transition: all var(--t-fast);
+}
+
+/* ========================
+   Error States & Messages
+   
+   User-friendly error messaging with proper ARIA support
+   ======================== */
+.error-message {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #fca5a5;
+  padding: var(--space-lg);
+  border-radius: var(--radius-md);
+  text-align: center;
+  font-size: var(--font-size-base);
+  margin: var(--space-lg) 0;
+}
+
+/* ========================
+   Loading States
+   
+   Accessible loading indicators with ARIA support
+   ======================== */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xl);
+  min-height: 200px;
+  text-align: center;
+}
+
+.loading-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--glass-border);
+  border-top: 3px solid var(--accent-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: var(--space-lg);
+}
+
+.loading-text {
+  color: var(--text-secondary);
+  font-size: var(--font-size-base);
+}
+
+/* ========================
+   Screen Reader Only Content
+   
+   Content visible only to screen readers
+   ======================== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ========================
+   Animations
+   ======================== */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ========================
+   High Contrast Mode Support
+   ======================== */
+@media (prefers-contrast: high) {
+  .skip-link {
+    background: #000000;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+  }
+  
+  .error-message {
+    background: rgba(255, 0, 0, 0.2);
+    border: 2px solid #ff0000;
+    color: #ffffff;
+  }
+  
+  *:focus-visible {
+    outline: 3px solid #ffff00;
+    outline-offset: 2px;
+  }
+}
+
+/* ========================
+   Reduced Motion Support
+   ======================== */
+@media (prefers-reduced-motion: reduce) {
+  .loading-spinner {
+    animation: none;
+  }
+  
+  .tech-item:focus,
+  .item:focus {
+    transform: none;
+  }
+}
