@@ -89,9 +89,6 @@ This roadmap outlines the development priorities for the 3dime personal social h
 #### 🔧 Feature Upgrades
 - [ ] **Font Awesome 6** migration for better icons and performance
 - [ ] **Enhanced PWA** - Better offline experience, install prompts
-- [ ] **Social Media Integration** - Real follower counts, latest posts preview
-- [ ] **Contact Form** - Replace mailto with proper contact form
-- [ ] **Search Functionality** - Search through content sections
 
 #### 💻 Developer Experience  
 - [x] **CSS Custom Properties** - Complete variable system implementation
@@ -111,15 +108,12 @@ This roadmap outlines the development priorities for the 3dime personal social h
 #### 🚀 Advanced Functionality
 - [ ] **Analytics Integration** - Privacy-focused analytics (Plausible/Fathom)
 - [ ] **Content Management** - Admin panel for easy content updates
-- [ ] **Multi-language Expansion** - Add Spanish, German, Italian support
-- [ ] **Dynamic Content** - Blog section, project showcases
 - [ ] **Social Proof** - Testimonials, recommendations section
 
 #### 🔮 Future Considerations
 - [ ] **Build Process Evaluation** - Consider Vite/Webpack for optimization
 - [ ] **TypeScript Migration** - Enhanced development experience  
 - [ ] **Advanced Animations** - GSAP integration for complex animations
-- [ ] **API Integration** - Real-time data from GitHub, LinkedIn APIs
 - [ ] **Performance Monitoring** - Core Web Vitals tracking
 
 ---
