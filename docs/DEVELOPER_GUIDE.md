@@ -355,7 +355,7 @@ window.fallbackManager.recheckFallback('googleFonts');
 ## 📚 Additional Resources
 
 - **Roadmap**: `ROADMAP.md` - Development priorities and timeline
-- **Contributing**: `CONTRIBUTING.md` - Contribution guidelines
+- **Contributing**: `../CONTRIBUTING.md` - Contribution guidelines
 - **Security**: `SECURITY.md` - Security policy and reporting
 - **Site Review**: `SITE_REVIEW_RECOMMENDATIONS.md` - Detailed technical recommendations
 

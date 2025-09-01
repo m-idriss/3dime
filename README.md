@@ -237,18 +237,18 @@ The `content/content.json` supports:
 - **Phase 3**: Modern Features & UX (Advanced theming, micro-interactions)
 - **Phase 4**: Innovation & Future (Advanced integrations, scalability)
 
-📋 **[View Complete Roadmap](ROADMAP.md)** - Detailed timeline, priorities, and implementation guidelines
+📋 **[View Complete Roadmap](docs/ROADMAP.md)** - Detailed timeline, priorities, and implementation guidelines
 
 ## 🤝 Contributing
 
-1. **Check the [Roadmap](ROADMAP.md)** to see current priorities and find tasks that match your skills
+1. **Check the [Roadmap](docs/ROADMAP.md)** to see current priorities and find tasks that match your skills
 2. **Fork** the repository
 3. **Create** a feature branch: `git checkout -b feature/amazing-feature`
 4. **Commit** your changes: `git commit -m '✨ [feature/amazing] add amazing feature'`
 5. **Push** to the branch: `git push origin feature/amazing-feature`
 6. **Open** a Pull Request
 
-See our [contribution guidelines](CONTRIBUTING.md) and [development roadmap](ROADMAP.md) for more details.
+See our [contribution guidelines](CONTRIBUTING.md) and [development roadmap](docs/ROADMAP.md) for more details.
 
 ## 📊 Performance
 

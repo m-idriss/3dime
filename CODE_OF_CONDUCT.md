@@ -104,7 +104,7 @@ For answers to common questions about this code of conduct, see the FAQ at [http
 ## 📚 Additional Resources
 
 - **[Contributing Guidelines](CONTRIBUTING.md)** - How to contribute to 3dime
-- **[Security Policy](SECURITY.md)** - Reporting security vulnerabilities
+- **[Security Policy](docs/SECURITY.md)** - Reporting security vulnerabilities
 - **[Project README](README.md)** - Project overview and setup
 - **[License](LICENSE)** - Project license information
 

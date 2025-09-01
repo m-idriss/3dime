@@ -382,7 +382,7 @@ If applicable, add screenshots
 ### Project-Specific
 
 - **[README.md](README.md)**: Project overview and setup
-- **[SITE_REVIEW_RECOMMENDATIONS.md](SITE_REVIEW_RECOMMENDATIONS.md)**: Detailed code review and improvement suggestions
+- **[SITE_REVIEW_RECOMMENDATIONS.md](docs/SITE_REVIEW_RECOMMENDATIONS.md)**: Detailed code review and improvement suggestions
 - **[GitHub Actions Workflows](.github/workflows/)**: Automated deployment and screenshot generation
 
 ### External Documentation
