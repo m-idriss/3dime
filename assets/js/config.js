@@ -34,7 +34,10 @@ export const CONFIG = {
   DEFAULT_FONT_SIZE: 'normal',
   
   /** @type {string} Default theme setting (dark/light) */
-  DEFAULT_THEME: 'dark',
+  DEFAULT_THEME: 'light',
+  
+  /** @type {boolean} Default video background setting */
+  DEFAULT_VIDEO_BACKGROUND: false,
   
   // ===== ANIMATION SETTINGS =====
   
@@ -84,6 +87,9 @@ export const CONFIG = {
     
     /** @type {string} Font size adjustment toggle button ID */
     FONT_SIZE_TOGGLE: 'font-size-toggle',
+    
+    /** @type {string} Video background toggle button ID */
+    VIDEO_BG_TOGGLE: 'video-bg-toggle',
     
     /** @type {string} GitHub heatmap visualization container ID */
     HEATMAP_CONTAINER: 'heatmap-container'

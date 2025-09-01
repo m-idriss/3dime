@@ -9,25 +9,27 @@ export function setupBurgerMenu() {
   const dropdown = document.getElementById(CONFIG.IDS.PROFILE_DROPDOWN);
   const themeToggle = document.getElementById(CONFIG.IDS.THEME_TOGGLE);
   const fontSizeToggle = document.getElementById(CONFIG.IDS.FONT_SIZE_TOGGLE);
+  const videoBgToggle = document.getElementById(CONFIG.IDS.VIDEO_BG_TOGGLE);
 
-  if (!burgerBtn || !dropdown || !themeToggle || !fontSizeToggle) {
+  if (!burgerBtn || !dropdown || !themeToggle || !fontSizeToggle || !videoBgToggle) {
     console.warn(
       'setupBurgerMenu: Missing DOM elements:',
       !burgerBtn ? CONFIG.IDS.BURGER_BTN : '',
       !dropdown ? CONFIG.IDS.PROFILE_DROPDOWN : '',
       !themeToggle ? CONFIG.IDS.THEME_TOGGLE : '',
-      !fontSizeToggle ? CONFIG.IDS.FONT_SIZE_TOGGLE : ''
+      !fontSizeToggle ? CONFIG.IDS.FONT_SIZE_TOGGLE : '',
+      !videoBgToggle ? CONFIG.IDS.VIDEO_BG_TOGGLE : ''
     );
     return;
   }
   
-  // Initialize theme from localStorage or default to dark
+  // Initialize theme from localStorage or default to light
   const savedTheme = localStorage.getItem('theme');
-  if (savedTheme === 'light') {
-    document.body.classList.add('light-theme');
-    updateThemeToggleUI(true);
-  } else {
+  if (savedTheme === 'dark') {
+    document.body.classList.add('dark-theme');
     updateThemeToggleUI(false);
+  } else {
+    updateThemeToggleUI(true);
   }
 
 
@@ -35,6 +37,11 @@ export function setupBurgerMenu() {
   const savedFontSize = localStorage.getItem('fontSize') || CONFIG.DEFAULT_FONT_SIZE;
   applyFontSize(savedFontSize);
   updateFontSizeToggleUI(savedFontSize);
+
+  // Initialize video background from localStorage or default to false
+  const savedVideoBg = localStorage.getItem('videoBg') === 'true' || CONFIG.DEFAULT_VIDEO_BACKGROUND;
+  applyVideoBackground(savedVideoBg);
+  updateVideoBgToggleUI(savedVideoBg);
 
   // Burger button click handler
   burgerBtn.addEventListener('click', (e) => {
@@ -53,6 +60,12 @@ export function setupBurgerMenu() {
   fontSizeToggle.addEventListener('click', (e) => {
     e.stopPropagation();
     toggleFontSize();
+  });
+
+  // Video background toggle click handler
+  videoBgToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleVideoBackground();
   });
 
   // Close dropdown when clicking outside
@@ -96,16 +109,16 @@ export function closeDropdown() {
 
 
 export function toggleTheme() {
-  const isLight = document.body.classList.contains('light-theme');
+  const isDark = document.body.classList.contains('dark-theme');
   
-  if (isLight) {
-    document.body.classList.remove('light-theme');
+  if (isDark) {
+    document.body.classList.remove('dark-theme');
     localStorage.setItem('theme', CONFIG.DEFAULT_THEME);
-    updateThemeToggleUI(false);
-  } else {
-    document.body.classList.add('light-theme');
-    localStorage.setItem('theme', 'light');
     updateThemeToggleUI(true);
+  } else {
+    document.body.classList.add('dark-theme');
+    localStorage.setItem('theme', 'dark');
+    updateThemeToggleUI(false);
   }
 }
 
@@ -175,4 +188,41 @@ export function setupLogoReload() {
       setTimeout(() => location.reload(), CONFIG.FADE_TIMEOUT);
     });
   });
+}
+
+export function toggleVideoBackground() {
+  const isVideoEnabled = localStorage.getItem('videoBg') === 'true';
+  const newValue = !isVideoEnabled;
+  
+  localStorage.setItem('videoBg', newValue.toString());
+  applyVideoBackground(newValue);
+  updateVideoBgToggleUI(newValue);
+}
+
+export function applyVideoBackground(enabled) {
+  const bgElement = document.querySelector('.bg');
+  if (!bgElement) return;
+
+  if (enabled) {
+    // Add video background
+    bgElement.innerHTML = `
+      <video autoplay muted loop playsinline 
+             style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;"
+             aria-hidden="true">
+        <source src="assets/background.mp4" type="video/mp4">
+      </video>
+    `;
+    bgElement.style.background = 'transparent';
+    document.body.classList.add('video-bg-enabled');
+  } else {
+    // Remove video and use solid background
+    bgElement.innerHTML = '';
+    bgElement.style.background = 'var(--body-bg)';
+    document.body.classList.remove('video-bg-enabled');
+  }
+}
+
+export function updateVideoBgToggleUI(enabled) {
+  // The CSS automatically handles the toggle appearance based on body.video-bg-enabled class
+  // No additional UI updates needed since we use CSS-only toggle state
 }
