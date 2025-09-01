@@ -10,7 +10,7 @@
    ======================== */
 :root {
   /* Dark theme (default) */
-  --primary-bg: rgba(0, 0, 0, 0.85);
+  --primary-bg: rgba(0, 0, 0, 0.75);
   --primary-bg-hover: rgba(0, 0, 0, 0.9);
   --glass-bg: rgba(255, 255, 255, 0.15);
   --glass-bg-hover: rgba(255, 255, 255, 0.3);
@@ -269,7 +269,7 @@ textarea:focus,
 .bg {
   position: fixed;
   inset: 0;
-  background: url("background.jpg") no-repeat center/cover;
+  background: url("background-dark.mp4") no-repeat center/cover;
   z-index: -1;
   will-change: transform;
   transition: transform var(--t-medium);
