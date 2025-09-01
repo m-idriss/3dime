@@ -16,27 +16,27 @@
    Design Tokens - Root Variables
    ======================== */
 :root {
-  /* ===== COLOR PALETTE - DARK THEME (DEFAULT) ===== */
+  /* ===== COLOR PALETTE - LIGHT THEME (DEFAULT) ===== */
   
   /* Primary surfaces */
-  --primary-bg: rgba(0, 0, 0, 0.85);
-  --primary-bg-hover: rgba(0, 0, 0, 0.9);
+  --primary-bg: rgba(255, 255, 255, 0.5);
+  --primary-bg-hover: rgba(255, 255, 255, 0.65);
   
   /* Glass morphism effects */
-  --glass-bg: rgba(255, 255, 255, 0.15);
-  --glass-bg-hover: rgba(255, 255, 255, 0.3);
-  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-bg: rgba(0, 0, 0, 0.1);
+  --glass-bg-hover: rgba(0, 0, 0, 0.2);
+  --glass-border: rgba(0, 0, 0, 0.15);
   
   /* Text colors */
-  --text-primary: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.9);
+  --text-primary: #1a1a1a;
+  --text-secondary: rgba(26, 26, 26, 0.8);
   
   /* Brand colors */
   --accent-color: #3b82f6;
   --badge-color: #ef4444;
   
   /* Background */
-  --body-bg: #000000;
+  --body-bg: #ffffff;
 
   /* ===== TYPOGRAPHY SYSTEM ===== */
   
@@ -86,27 +86,27 @@
 }
 
 /* ========================
-   Light Theme Variant
+   Dark Theme Variant
    
-   Override default dark theme variables when
-   .light-theme class is applied to body
+   Override default light theme variables when
+   .dark-theme class is applied to body
    ======================== */
-body.light-theme {
-  /* Light theme surface colors */
-  --primary-bg: rgba(255, 255, 255, 0.5);
-  --primary-bg-hover: rgba(255, 255, 255, 0.65);
+body.dark-theme {
+  /* Dark theme surface colors */
+  --primary-bg: rgba(0, 0, 0, 0.85);
+  --primary-bg-hover: rgba(0, 0, 0, 0.9);
   
-  /* Inverted glass morphism for light backgrounds */
-  --glass-bg: rgba(0, 0, 0, 0.1);
-  --glass-bg-hover: rgba(0, 0, 0, 0.2);
-  --glass-border: rgba(0, 0, 0, 0.15);
+  /* Glass morphism for dark backgrounds */
+  --glass-bg: rgba(255, 255, 255, 0.15);
+  --glass-bg-hover: rgba(255, 255, 255, 0.3);
+  --glass-border: rgba(255, 255, 255, 0.2);
   
-  /* Dark text on light background */
-  --text-primary: #1a1a1a;
-  --text-secondary: rgba(26, 26, 26, 0.8);
+  /* Light text on dark background */
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.9);
   
-  /* Light background */
-  --body-bg: #ffffff;
+  /* Dark background */
+  --body-bg: #000000;
 }
 
 /* ========================
@@ -155,14 +155,15 @@ body.font-large {
    ======================== */
 @media (prefers-contrast: high) {
   :root {
-    --glass-bg: rgba(255, 255, 255, 0.25);
-    --glass-border: rgba(255, 255, 255, 0.4);
-    --accent-color: #60a5fa;
-  }
-  
-  body.light-theme {
     --glass-bg: rgba(0, 0, 0, 0.2);
     --glass-border: rgba(0, 0, 0, 0.3);
     --text-primary: #000000;
+  }
+  
+  body.dark-theme {
+    --glass-bg: rgba(255, 255, 255, 0.25);
+    --glass-border: rgba(255, 255, 255, 0.4);
+    --accent-color: #60a5fa;
+    --text-primary: #ffffff;
   }
 }

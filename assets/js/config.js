@@ -34,7 +34,7 @@ export const CONFIG = {
   DEFAULT_FONT_SIZE: 'normal',
   
   /** @type {string} Default theme setting (dark/light) */
-  DEFAULT_THEME: 'dark',
+  DEFAULT_THEME: 'light',
   
   // ===== ANIMATION SETTINGS =====
   

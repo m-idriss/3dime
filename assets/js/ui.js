@@ -21,13 +21,13 @@ export function setupBurgerMenu() {
     return;
   }
   
-  // Initialize theme from localStorage or default to dark
+  // Initialize theme from localStorage or default to light
   const savedTheme = localStorage.getItem('theme');
-  if (savedTheme === 'light') {
-    document.body.classList.add('light-theme');
-    updateThemeToggleUI(true);
-  } else {
+  if (savedTheme === 'dark') {
+    document.body.classList.add('dark-theme');
     updateThemeToggleUI(false);
+  } else {
+    updateThemeToggleUI(true);
   }
 
 
@@ -96,16 +96,16 @@ export function closeDropdown() {
 
 
 export function toggleTheme() {
-  const isLight = document.body.classList.contains('light-theme');
+  const isDark = document.body.classList.contains('dark-theme');
   
-  if (isLight) {
-    document.body.classList.remove('light-theme');
+  if (isDark) {
+    document.body.classList.remove('dark-theme');
     localStorage.setItem('theme', CONFIG.DEFAULT_THEME);
-    updateThemeToggleUI(false);
-  } else {
-    document.body.classList.add('light-theme');
-    localStorage.setItem('theme', 'light');
     updateThemeToggleUI(true);
+  } else {
+    document.body.classList.add('dark-theme');
+    localStorage.setItem('theme', 'dark');
+    updateThemeToggleUI(false);
   }
 }
 
