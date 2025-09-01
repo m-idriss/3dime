@@ -4,7 +4,7 @@
 
 import { CONFIG } from './config.js';
 import { loadHeatmapWithRetry } from './heatmap.js';
-import { setupLogoReload, setupBurgerMenu } from './ui.js';
+import { setupLogoReload, setupBurgerMenu, applyBackground, updateBackgroundToggleUI, toggleBackground } from './ui.js';
 
 /* =========================
    Security Utilities
@@ -124,6 +124,11 @@ export async function loadContent() {
   
   setupLogoReload();
   setupBurgerMenu();
+  
+  // Initialize background from localStorage
+  const savedBackground = localStorage.getItem('background') || CONFIG.DEFAULT_BACKGROUND;
+  applyBackground(savedBackground);
+  updateBackgroundToggleUI(savedBackground);
 }
 
 function createProfileSection(ldData) {
@@ -152,6 +157,11 @@ function createProfileSection(ldData) {
         <button class="dropdown-item font-size-toggle" id="font-size-toggle" role="menuitem" aria-label="Change font size">
           <i class="fas fa-text-height" aria-hidden="true"></i>
           <span>Font Size: Normal</span>
+        </button>
+        
+        <button class="dropdown-item background-toggle" id="background-toggle" role="menuitem" aria-label="Change background">
+          <i class="fas fa-moon" aria-hidden="true"></i>
+          <span>Background: Dark Theme</span>
         </button>
       </div>
     </div>

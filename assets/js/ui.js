@@ -9,14 +9,16 @@ export function setupBurgerMenu() {
   const dropdown = document.getElementById(CONFIG.IDS.PROFILE_DROPDOWN);
   const themeToggle = document.getElementById(CONFIG.IDS.THEME_TOGGLE);
   const fontSizeToggle = document.getElementById(CONFIG.IDS.FONT_SIZE_TOGGLE);
+  const backgroundToggle = document.getElementById(CONFIG.IDS.BACKGROUND_TOGGLE);
 
-  if (!burgerBtn || !dropdown || !themeToggle || !fontSizeToggle) {
+  if (!burgerBtn || !dropdown || !themeToggle || !fontSizeToggle || !backgroundToggle) {
     console.warn(
       'setupBurgerMenu: Missing DOM elements:',
       !burgerBtn ? CONFIG.IDS.BURGER_BTN : '',
       !dropdown ? CONFIG.IDS.PROFILE_DROPDOWN : '',
       !themeToggle ? CONFIG.IDS.THEME_TOGGLE : '',
-      !fontSizeToggle ? CONFIG.IDS.FONT_SIZE_TOGGLE : ''
+      !fontSizeToggle ? CONFIG.IDS.FONT_SIZE_TOGGLE : '',
+      !backgroundToggle ? CONFIG.IDS.BACKGROUND_TOGGLE : ''
     );
     return;
   }
@@ -49,10 +51,16 @@ export function setupBurgerMenu() {
   });
   
   // Notifications toggle click handler
-// Font size toggle click handler
+  // Font size toggle click handler
   fontSizeToggle.addEventListener('click', (e) => {
     e.stopPropagation();
     toggleFontSize();
+  });
+  
+  // Background toggle click handler
+  backgroundToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleBackground();
   });
 
   // Close dropdown when clicking outside
@@ -165,6 +173,62 @@ export function updateFontSizeToggleUI(size) {
   };
 
   text.textContent = `Font Size: ${sizeNames[size] || 'Normal'}`;
+}
+
+export function toggleBackground() {
+  const currentBackground = localStorage.getItem('background') || CONFIG.DEFAULT_BACKGROUND;
+  let nextBackground;
+
+  // Cycle through background options
+  const currentIndex = CONFIG.BACKGROUND_OPTIONS.indexOf(currentBackground);
+  const nextIndex = (currentIndex + 1) % CONFIG.BACKGROUND_OPTIONS.length;
+  nextBackground = CONFIG.BACKGROUND_OPTIONS[nextIndex];
+
+  localStorage.setItem('background', nextBackground);
+  applyBackground(nextBackground);
+  updateBackgroundToggleUI(nextBackground);
+}
+
+export function applyBackground(background) {
+  const bgElement = document.querySelector('.bg');
+  if (!bgElement) return;
+
+  // Remove existing background classes
+  CONFIG.BACKGROUND_OPTIONS.forEach(bg => {
+    bgElement.classList.remove(`bg-${bg}`);
+  });
+
+  // Add new background class
+  bgElement.classList.add(`bg-${background}`);
+}
+
+export function updateBackgroundToggleUI(background) {
+  const backgroundToggle = document.getElementById(CONFIG.IDS.BACKGROUND_TOGGLE);
+  if (!backgroundToggle) return;
+  
+  const icon = backgroundToggle.querySelector('i');
+  const text = backgroundToggle.querySelector('span');
+  
+  const backgroundNames = {
+    'dark': 'Dark Theme',
+    'light': 'Light Theme', 
+    'blue': 'Blue Gradient',
+    'green': 'Green Gradient',
+    'purple': 'Purple Gradient',
+    'red': 'Red Gradient'
+  };
+  
+  const backgroundIcons = {
+    'dark': 'fas fa-moon',
+    'light': 'fas fa-sun',
+    'blue': 'fas fa-palette',
+    'green': 'fas fa-palette',
+    'purple': 'fas fa-palette',
+    'red': 'fas fa-palette'
+  };
+
+  if (icon) icon.className = backgroundIcons[background] || 'fas fa-palette';
+  if (text) text.textContent = `Background: ${backgroundNames[background] || 'Dark Theme'}`;
 }
 
 export function setupLogoReload() {

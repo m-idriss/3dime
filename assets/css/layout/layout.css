@@ -12,27 +12,72 @@
    Background System
    ======================== */
 
-/* Animated background with glass-morphism effect */
+/* Base background element */
 .bg {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  z-index: -1;
+  transition: all 0.5s ease;
+}
+
+/* Default dark background (fallback) */
+.bg,
+.bg.bg-dark {
   background: 
     linear-gradient(45deg, rgba(59, 130, 246, 0.1), rgba(239, 68, 68, 0.1)),
     url('../../background.jpg') center/cover no-repeat;
-  z-index: -1;
   animation: bgShift 30s ease-in-out infinite;
 }
 
-/* Background animation */
+/* Light background */
+.bg.bg-light {
+  background: 
+    linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(200, 200, 200, 0.1)),
+    url('../../background.jpg') center/cover no-repeat;
+  animation: bgShift 30s ease-in-out infinite;
+  filter: brightness(1.4) contrast(0.8);
+}
+
+/* Colored backgrounds */
+.bg.bg-blue {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  animation: colorShift 20s ease-in-out infinite;
+}
+
+.bg.bg-green {
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  animation: colorShift 20s ease-in-out infinite;
+}
+
+.bg.bg-purple {
+  background: linear-gradient(135deg, #8360c3 0%, #2ebf91 100%);
+  animation: colorShift 20s ease-in-out infinite;
+}
+
+.bg.bg-red {
+  background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+  animation: colorShift 20s ease-in-out infinite;
+}
+
+/* Background animations */
 @keyframes bgShift {
   0%, 100% {
     filter: hue-rotate(0deg) brightness(0.8);
   }
   50% {
     filter: hue-rotate(10deg) brightness(0.9);
+  }
+}
+
+@keyframes colorShift {
+  0%, 100% {
+    filter: hue-rotate(0deg) brightness(0.9);
+  }
+  50% {
+    filter: hue-rotate(15deg) brightness(1.1);
   }
 }
 

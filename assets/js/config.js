@@ -36,6 +36,12 @@ export const CONFIG = {
   /** @type {string} Default theme setting (dark/light) */
   DEFAULT_THEME: 'dark',
   
+  /** @type {string[]} Available background options */
+  BACKGROUND_OPTIONS: ['dark', 'light', 'blue', 'green', 'purple', 'red'],
+  
+  /** @type {string} Default background setting */
+  DEFAULT_BACKGROUND: 'dark',
+  
   // ===== ANIMATION SETTINGS =====
   
   /** @type {number} Duration in milliseconds for CSS fade transitions */
@@ -84,6 +90,9 @@ export const CONFIG = {
     
     /** @type {string} Font size adjustment toggle button ID */
     FONT_SIZE_TOGGLE: 'font-size-toggle',
+    
+    /** @type {string} Background selection toggle button ID */
+    BACKGROUND_TOGGLE: 'background-toggle',
     
     /** @type {string} GitHub heatmap visualization container ID */
     HEATMAP_CONTAINER: 'heatmap-container'
