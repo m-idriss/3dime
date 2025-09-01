@@ -12,6 +12,7 @@
 
 import { loadContent } from './content.js';
 import { FallbackManager } from './fallbacks.js';
+import { initPWAEnhancements } from './pwa.js';
 
 /* =========================
    Service Worker Registration
@@ -98,6 +99,9 @@ async function initializeApp() {
 document.addEventListener('DOMContentLoaded', async () => {
   // Register service worker first for immediate caching benefits
   registerServiceWorker();
+  
+  // Initialize PWA enhancements (install prompts, offline handling)
+  initPWAEnhancements();
   
   // Initialize the main application
   await initializeApp();
