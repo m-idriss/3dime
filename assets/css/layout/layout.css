@@ -12,29 +12,18 @@
    Background System
    ======================== */
 
-/* Animated background with glass-morphism effect */
+/* Solid background with theme support */
 .bg {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: 
-    linear-gradient(45deg, rgba(59, 130, 246, 0.1), rgba(239, 68, 68, 0.1)),
-    url('../../background.jpg') center/cover no-repeat;
+  background: var(--body-bg);
   z-index: -1;
-  animation: bgShift 30s ease-in-out infinite;
 }
 
-/* Background animation */
-@keyframes bgShift {
-  0%, 100% {
-    filter: hue-rotate(0deg) brightness(0.8);
-  }
-  50% {
-    filter: hue-rotate(10deg) brightness(0.9);
-  }
-}
+
 
 /* ========================
    Main Content Layout

@@ -61,7 +61,7 @@ body.light-theme {
   --glass-border: rgba(0, 0, 0, 0.15);
   --text-primary: #1a1a1a;
   --text-secondary: rgba(26, 26, 26, 0.8);
-  --body-bg: #f5f5f5;
+  --body-bg: #ffffff;
 }
 
 /* Font size options */
@@ -269,10 +269,8 @@ textarea:focus,
 .bg {
   position: fixed;
   inset: 0;
-  background: url("background-dark.mp4") no-repeat center/cover;
+  background: var(--body-bg);
   z-index: -1;
-  will-change: transform;
-  transition: transform var(--t-medium);
 }
 
 /* ========================
