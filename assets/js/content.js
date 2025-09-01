@@ -153,6 +153,13 @@ function createProfileSection(ldData) {
           <i class="fas fa-text-height" aria-hidden="true"></i>
           <span>Font Size: Normal</span>
         </button>
+
+        <div class="dropdown-separator" role="separator"></div>
+        <button class="dropdown-item video-bg-toggle" id="video-bg-toggle" role="menuitem" aria-label="Toggle video background">
+          <i class="fas fa-video" aria-hidden="true"></i>
+          <span>Video Background</span>
+          <div class="toggle-switch" aria-hidden="true"></div>
+        </button>
       </div>
     </div>
   `;
