@@ -55,9 +55,18 @@ class PrivacyAnalytics {
 
   /**
    * Generate a session-based ID (not persistent across sessions)
+   * Uses cryptographically secure random values when available
    * @returns {string} Anonymous session identifier
    */
   generateSessionId() {
+    // Use cryptographically secure random number generation when available
+    if (typeof crypto !== 'undefined' && crypto.getRandomValues) {
+      const array = new Uint8Array(10);
+      crypto.getRandomValues(array);
+      return 'session_' + Array.from(array, byte => byte.toString(36)).join('');
+    }
+    
+    // Fallback to Math.random() for older browsers (less secure)
     return 'session_' + Math.random().toString(36).substring(2, 15);
   }
 
