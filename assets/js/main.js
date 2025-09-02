@@ -13,6 +13,9 @@
 import { loadContent } from './content.js';
 import { FallbackManager } from './fallbacks.js';
 import { initPWAEnhancements } from './pwa.js';
+import { initPerformanceMonitoring } from './performance.js';
+import { initAnalytics } from './analytics.js';
+import { initPrivacyNotice } from './privacy-notice.js';
 
 /* =========================
    Service Worker Registration
@@ -54,6 +57,15 @@ function registerServiceWorker() {
    ========================= */
 async function initializeApp() {
   try {
+    // Initialize performance monitoring for Core Web Vitals tracking
+    initPerformanceMonitoring();
+    
+    // Initialize privacy-focused analytics (respects DNT and user preferences)
+    initAnalytics();
+    
+    // Initialize privacy notice for transparency
+    initPrivacyNotice();
+    
     // Initialize CDN fallback manager to handle external dependency failures
     // This ensures the app continues to function even if CDNs are blocked/unavailable
     const fallbackManager = new FallbackManager();
