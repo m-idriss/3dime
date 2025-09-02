@@ -235,10 +235,10 @@ class PrivacyNotice {
   }
 }
 
-/**
- * Initialize privacy notice
- * @returns {PrivacyNotice} Privacy notice instance
- */
-export function initPrivacyNotice() {
-  return new PrivacyNotice();
+  try {
+    return new PrivacyNotice();
+  } catch (error) {
+    console.error('Failed to initialize PrivacyNotice:', error);
+    return null;
+  }
 }
