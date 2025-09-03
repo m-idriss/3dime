@@ -188,25 +188,24 @@ function applyFutureDateColors(commitSource) {
     const isFuture = elementDate > today;
     
     if (isFuture) {
-      // Get current fill color to determine intensity
-      const currentFill = element.getAttribute('fill') || element.style.fill;
+      // Find the corresponding commit data to get the value
+      const commitData = commitSource.find(d => d.date === dateStr);
+      const value = commitData ? commitData.value : 0;
       
-      // Parse the current green color and convert to teal
-      if (currentFill && currentFill !== 'rgba(255, 255, 255, 0.2)') {
-        // Find the corresponding commit data to get the value
-        const commitData = commitSource.find(d => d.date === dateStr);
-        const value = commitData ? commitData.value : 0;
-        
-        if (value > 0) {
-          // Calculate intensity and apply teal color for future dates
-          const intensity = Math.min(value / 30, 1);
-          const alpha = 0.3 + intensity * 0.7;
-          const tealColor = `rgba(20, 184, 166, ${alpha})`; // teal-500
-          
-          element.setAttribute('fill', tealColor);
-          element.style.fill = tealColor;
-        }
+      let tealColor;
+      if (value === 0) {
+        // For future dates with no commits, use the same transparency as past dates with no commits
+        // but with teal color to maintain consistency
+        tealColor = 'rgba(20, 184, 166, 0.2)'; // Same alpha as the original transparent color
+      } else {
+        // For future dates with commits, calculate intensity and apply appropriate teal color
+        const intensity = Math.min(value / 30, 1);
+        const alpha = 0.3 + intensity * 0.7;
+        tealColor = `rgba(20, 184, 166, ${alpha})`; // teal-500
       }
+      
+      element.setAttribute('fill', tealColor);
+      element.style.fill = tealColor;
     }
   });
 }
