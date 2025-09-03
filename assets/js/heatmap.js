@@ -118,7 +118,7 @@ export async function loadHeatmap() {
       range: 6,
       scale: {
         color: {
-          range: ['rgba(255, 255, 255, 0.2)', 'green'],
+          range: ['rgba(128, 128, 128, 0.4)', '#26a641'],
           interpolate: 'hsl',
           type: 'linear',
           domain: [0, 30],

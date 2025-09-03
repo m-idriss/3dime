@@ -784,6 +784,18 @@ body.notifications-off .badge {
   stroke-width: 1px;
 }
 
+/* Cal-Heatmap cell styling for better future date visibility */
+.ch-subdomain-bg {
+  fill: rgba(128, 128, 128, 0.2) !important;
+}
+
+/* Future date styling - ensure grey appearance */
+.ch-subdomain[data-value="null"],
+.ch-subdomain[data-value="0"],
+.ch-subdomain:not([data-value]) {
+  fill: rgba(128, 128, 128, 0.3) !important;
+}
+
 #ch-tooltip {
   background: var(--primary-bg) !important;
   color: var(--text-primary) !important;
@@ -797,6 +809,13 @@ body.notifications-off .badge {
 
 [data-theme="dark"] .ch-subdomain {
   stroke: rgba(255, 255, 255, 0.1);
+}
+
+/* Dark theme future date styling */
+[data-theme="dark"] .ch-subdomain[data-value="null"],
+[data-theme="dark"] .ch-subdomain[data-value="0"],
+[data-theme="dark"] .ch-subdomain:not([data-value]) {
+  fill: rgba(160, 160, 160, 0.25) !important;
 }
 
 /* Responsive heatmap */
