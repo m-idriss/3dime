@@ -120,6 +120,7 @@ export function toggleTheme() {
   
   localStorage.setItem('theme', nextTheme);
   updateThemeToggleUI(nextTheme);
+  updateThemeColor(nextTheme);
   
   // Update heatmap theme to match the new website theme
   updateHeatmapTheme();
@@ -144,6 +145,9 @@ export function applyTheme(theme) {
     // dark theme or default
     document.body.classList.add('dark-theme');
   }
+  
+  // Update theme color for mobile browser status bar
+  updateThemeColor(theme);
 }
 
 export function updateThemeToggleUI(theme) {
@@ -169,6 +173,26 @@ export function updateThemeToggleUI(theme) {
     default:
       icon.className = 'fas fa-moon';
       text.textContent = 'Dark Theme';
+  }
+}
+
+export function updateThemeColor(theme) {
+  const themeColorMeta = document.getElementById('theme-color-meta');
+  if (!themeColorMeta) return;
+  
+  switch(theme) {
+    case 'dark':
+      themeColorMeta.setAttribute('content', '#000000');
+      break;
+    case 'white':
+      themeColorMeta.setAttribute('content', '#ffffff');
+      break;
+    case 'glass':
+      // Glass theme uses dark theme browser color as specified in issue
+      themeColorMeta.setAttribute('content', '#000000');
+      break;
+    default:
+      themeColorMeta.setAttribute('content', '#000000');
   }
 }
 
