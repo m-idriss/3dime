@@ -634,6 +634,13 @@ body.video-bg-enabled .video-bg-toggle .toggle-switch {
   flex-wrap: wrap;
 }
 
+.socials a {
+  display: inline-block;
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  transition: all var(--t-medium);
+}
+
 .socials i {
   font-size: 32px;
   color: var(--text-primary);
@@ -644,6 +651,7 @@ body.video-bg-enabled .video-bg-toggle .toggle-switch {
   transition: all var(--t-medium);
   position: relative;
   z-index: 1;
+  display: inline-block;
 }
 
 .socials i::before {
@@ -657,12 +665,14 @@ body.video-bg-enabled .video-bg-toggle .toggle-switch {
   z-index: -1;
 }
 
+.socials a:hover i,
 .socials i:hover {
   transform: scale(1.3) translateY(-3px);
   opacity: 1;
   box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
 }
 
+.socials a:hover i::before,
 .socials i:hover::before {
   opacity: 1;
   transform: scale(1.1);
@@ -1153,8 +1163,8 @@ body.notifications-off .badge {
   }
   
   .link {
-    padding: 16px 20px;
-    min-height: 48px;
+    padding: 12px 16px;
+    min-height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1175,6 +1185,7 @@ body.notifications-off .badge {
 .burger-button:focus-visible,
 .dropdown-item:focus-visible,
 .link:focus-visible,
+.socials a:focus-visible,
 .socials i:focus-visible,
 .tech-item:focus-visible {
   outline: 3px solid var(--accent-color);
@@ -1191,6 +1202,7 @@ body.notifications-off .badge {
   background: var(--glass-bg-hover);
 }
 
+.socials a:focus-visible,
 .socials i:focus-visible {
   transform: scale(1.2);
   background: var(--glass-bg-hover);
@@ -1312,6 +1324,7 @@ body.notifications-off .badge {
   .logo:hover,
   .link:hover,
   .tech-item:hover,
+  .socials a:hover,
   .socials i:hover,
   .burger-button:hover {
     transform: none !important;
