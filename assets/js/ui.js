@@ -3,6 +3,7 @@
    ========================= */
 
 import { CONFIG } from './config.js';
+import { updateHeatmapTheme } from './heatmap.js';
 
 export function setupBurgerMenu() {
   const burgerBtn = document.getElementById(CONFIG.IDS.BURGER_BTN);
@@ -119,6 +120,9 @@ export function toggleTheme() {
   
   localStorage.setItem('theme', nextTheme);
   updateThemeToggleUI(nextTheme);
+  
+  // Update heatmap theme to match the new website theme
+  updateHeatmapTheme();
 }
 
 function getCurrentTheme() {
