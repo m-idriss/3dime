@@ -107,26 +107,26 @@ body.dark-theme {
 }
 
 /* ========================
-   White Theme Variant
+   Light Theme Variant
    
    Override default theme variables when
    .white-theme class is applied to body
    ======================== */
 body.white-theme {
-  /* White theme surface colors */
+  /* Light theme surface colors */
   --primary-bg: rgba(255, 255, 255, 0.95);
   --primary-bg-hover: rgba(255, 255, 255, 1);
   
-  /* Glass morphism for white backgrounds */
+  /* Glass morphism for light backgrounds */
   --glass-bg: rgba(0, 0, 0, 0.05);
   --glass-bg-hover: rgba(0, 0, 0, 0.1);
   --glass-border: rgba(0, 0, 0, 0.1);
   
-  /* Dark text on white background */
+  /* Dark text on light background */
   --text-primary: #000000;
   --text-secondary: rgba(0, 0, 0, 0.8);
   
-  /* White background */
+  /* Light background */
   --body-bg: #ffffff;
 }
 

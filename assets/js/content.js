@@ -150,7 +150,7 @@ function createProfileSection(ldData) {
         <div class="dropdown-separator" role="separator"></div>
         <button class="dropdown-item video-bg-toggle" id="video-bg-toggle" role="menuitem" aria-label="Cycle background mode">
           <i class="fas fa-circle" aria-hidden="true"></i>
-          <span>Black Background</span>
+          <span>Dark Background</span>
         </button>
 
         <div class="dropdown-separator" role="separator"></div>
