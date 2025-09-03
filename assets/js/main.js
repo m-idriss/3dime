@@ -12,34 +12,11 @@
 
 import { loadContent } from './content.js';
 import { FallbackManager } from './fallbacks.js';
-import { initPWAEnhancements } from './pwa.js';
 import { initPerformanceMonitoring } from './performance.js';
 import { initAnalytics } from './analytics.js';
 import { initPrivacyNotice } from './privacy-notice.js';
 
-/* =========================
-   Service Worker Registration
-   
-   Registers the service worker for Progressive Web App functionality.
-   The service worker handles caching, offline support, and resource management.
-   
-   @function registerServiceWorker
-   @returns {void}
-   ========================= */
-function registerServiceWorker() {
-  // Check if service workers are supported by the browser
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('assets/sw.js')
-      .then(() => {
-        console.log('SW registered');
-        // Service worker successfully registered - enables offline functionality
-      })
-      .catch(err => {
-        console.log('SW failed', err);
-        // Service worker registration failed - app will still work but without offline features
-      });
-  }
-}
+
 
 /* =========================
    Application Initialization
@@ -109,12 +86,6 @@ async function initializeApp() {
    @event DOMContentLoaded
    ========================= */
 document.addEventListener('DOMContentLoaded', async () => {
-  // Register service worker first for immediate caching benefits
-  registerServiceWorker();
-  
-  // Initialize PWA enhancements (install prompts, offline handling)
-  initPWAEnhancements();
-  
   // Initialize the main application
   await initializeApp();
 });
