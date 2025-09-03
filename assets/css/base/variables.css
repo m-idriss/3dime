@@ -107,6 +107,54 @@ body.dark-theme {
 }
 
 /* ========================
+   White Theme Variant
+   
+   Override default theme variables when
+   .white-theme class is applied to body
+   ======================== */
+body.white-theme {
+  /* White theme surface colors */
+  --primary-bg: rgba(255, 255, 255, 0.95);
+  --primary-bg-hover: rgba(255, 255, 255, 1);
+  
+  /* Glass morphism for white backgrounds */
+  --glass-bg: rgba(0, 0, 0, 0.05);
+  --glass-bg-hover: rgba(0, 0, 0, 0.1);
+  --glass-border: rgba(0, 0, 0, 0.1);
+  
+  /* Dark text on white background */
+  --text-primary: #000000;
+  --text-secondary: rgba(0, 0, 0, 0.8);
+  
+  /* White background */
+  --body-bg: #ffffff;
+}
+
+/* ========================
+   Glass Theme Variant
+   
+   Override default theme variables when
+   .glass-theme class is applied to body
+   ======================== */
+body.glass-theme {
+  /* Glass theme surface colors - as specified in issue */
+  --primary-bg: rgba(155, 155, 155, 0.1);
+  --primary-bg-hover: rgba(155, 155, 155, 0.25);
+  
+  /* Glass morphism for glass backgrounds */
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-bg-hover: rgba(255, 255, 255, 0.2);
+  --glass-border: rgba(255, 255, 255, 0.15);
+  
+  /* White text on glass background - as specified in issue */
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.9);
+  
+  /* Transparent background for glass effect */
+  --body-bg: transparent;
+}
+
+/* ========================
    Font Size Accessibility Variants
    
    Support for user font size preferences
