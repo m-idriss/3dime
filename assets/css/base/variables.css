@@ -9,9 +9,6 @@
    @version 2.0
    ============================================== */
 
-/* Load Inter font efficiently */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
-
 /* ========================
    Design Tokens - Root Variables
    ======================== */

@@ -203,12 +203,12 @@ body.light-theme .theme-toggle .toggle-switch {
    PERFORMANCE OPTIMIZATIONS
    ======================== */
 
-/* Hardware acceleration for smooth animations */
-.container,
-.logo,
-.burger-button,
-.item,
-.tech-item {
+/* 
+ * Avoid setting will-change on many elements globally.
+ * Use the utility class below only when animating/translating an element.
+ */
+
+.will-change-transform {
   will-change: transform;
 }
 

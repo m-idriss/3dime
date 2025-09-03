@@ -653,5 +653,4 @@ function showUpdateAvailableMessage() {
   }, 10000);
 }
 
-// Auto-initialize when module is imported
-initPWAEnhancements();
+// Export the initialization function for explicit use
