@@ -78,6 +78,10 @@ function showHeatmapFallback() {
   }
 }
 
+// Store heatmap data and instance for re-rendering
+let heatmapData = null;
+let heatmapInstance = null;
+
 export async function loadHeatmap() {
   try {
     const response = await fetch(`${CONFIG.ENDPOINTS.PROXY}?service=github&type=commits`);
@@ -103,69 +107,89 @@ export async function loadHeatmap() {
       })
     );
 
-    // Clear loading state before rendering heatmap
-    const container = document.getElementById(CONFIG.IDS.HEATMAP_CONTAINER);
-    if (container) {
-      container.innerHTML = ''; // Clear loading indicator
-    }
-
-    const cal = new CalHeatmap();
-    cal.paint({
-      itemSelector: CONFIG.SELECTORS.HEATMAP_CONTAINER,
-      domain: {
-        type: 'month',
-        label: { text: 'MMM', textAlign: 'start', position: 'top'}
-      },
-      subDomain: { type: 'ghDay', radius: 2, width: 9, height: 9, gutter: 1, },
-      data: {
-        source: commitSource,
-        x: d => new Date(d.date).getTime(),
-        y: d => d.value
-      },
-      date: {
-        start: new Date(new Date().setMonth(new Date().getMonth() - 3)),
-        locale: { weekStart: 1 },
-        highlight: [new Date()]
-      },
-      range: 6,
-      scale: {
-        color: {
-          range: ['rgba(255, 255, 255, 0.2)', 'green'],
-          interpolate: 'hsl',
-          type: 'linear',
-          domain: [0, 30],
-        },
-      },
-      theme: getHeatmapTheme()
-    },
-    [
-      [
-        CalendarLabel,
-        {
-          position: 'left',
-          key: 'left',
-          text: () => ['Mon', '', '', 'Thu', '', '', 'Sun'],
-          textAlign: 'end',
-          width: 20,
-          padding: [25, 5, 0, 0],
-        },
-      ],
-      [
-        Tooltip,
-        {
-          text: function (date, value, dayjsDate) {
-            return (
-              (value ? value + ' commits' : 'No commits') +
-              ' on ' +
-              dayjsDate.format('LL')
-            );
-          },
-        },
-      ]
-    ]);
+    // Store data for re-rendering
+    heatmapData = commitSource;
+    
+    // Render the heatmap
+    renderHeatmap(commitSource);
 
   } catch (error) {
     console.error('Error loading heatmap:', error);
     showHeatmapFallback();
+  }
+}
+
+function renderHeatmap(commitSource) {
+  // Clear loading state before rendering heatmap
+  const container = document.getElementById(CONFIG.IDS.HEATMAP_CONTAINER);
+  if (container) {
+    container.innerHTML = ''; // Clear loading indicator and any existing heatmap
+  }
+
+  const cal = new CalHeatmap();
+  heatmapInstance = cal; // Store instance for potential future use
+  
+  cal.paint({
+    itemSelector: CONFIG.SELECTORS.HEATMAP_CONTAINER,
+    domain: {
+      type: 'month',
+      label: { text: 'MMM', textAlign: 'start', position: 'top'}
+    },
+    subDomain: { type: 'ghDay', radius: 2, width: 9, height: 9, gutter: 1, },
+    data: {
+      source: commitSource,
+      x: d => new Date(d.date).getTime(),
+      y: d => d.value
+    },
+    date: {
+      start: new Date(new Date().setMonth(new Date().getMonth() - 3)),
+      locale: { weekStart: 1 },
+      highlight: [new Date()]
+    },
+    range: 6,
+    scale: {
+      color: {
+        range: ['rgba(255, 255, 255, 0.2)', 'green'],
+        interpolate: 'hsl',
+        type: 'linear',
+        domain: [0, 30],
+      },
+    },
+    theme: getHeatmapTheme()
+  },
+  [
+    [
+      CalendarLabel,
+      {
+        position: 'left',
+        key: 'left',
+        text: () => ['Mon', '', '', 'Thu', '', '', 'Sun'],
+        textAlign: 'end',
+        width: 20,
+        padding: [25, 5, 0, 0],
+      },
+    ],
+    [
+      Tooltip,
+      {
+        text: function (date, value, dayjsDate) {
+          return (
+            (value ? value + ' commits' : 'No commits') +
+            ' on ' +
+            dayjsDate.format('LL')
+          );
+        },
+      },
+    ]
+  ]);
+}
+
+/* =========================
+   Re-render Heatmap with Current Theme
+   ========================= */
+export function updateHeatmapTheme() {
+  // Only re-render if we have data and the heatmap container exists
+  if (heatmapData && document.getElementById(CONFIG.IDS.HEATMAP_CONTAINER)) {
+    renderHeatmap(heatmapData);
   }
 }
