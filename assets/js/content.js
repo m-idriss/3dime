@@ -142,17 +142,15 @@ function createProfileSection(ldData) {
         <i class="fas fa-ellipsis-v"></i>
       </button>
       <div class="profile-dropdown" id="profile-dropdown" role="menu" aria-labelledby="burger-btn">
-        <button class="dropdown-item theme-toggle" id="theme-toggle" role="menuitem" aria-label="Toggle dark/light theme">
+        <button class="dropdown-item theme-toggle" id="theme-toggle" role="menuitem" aria-label="Cycle theme mode">
           <i class="fas fa-moon" aria-hidden="true"></i>
-          <span>Dark Mode</span>
-          <div class="toggle-switch" aria-hidden="true"></div>
+          <span>Dark Theme</span>
         </button>
 
         <div class="dropdown-separator" role="separator"></div>
-        <button class="dropdown-item video-bg-toggle" id="video-bg-toggle" role="menuitem" aria-label="Toggle video background">
-          <i class="fas fa-video" aria-hidden="true"></i>
-          <span>Video BG</span>
-          <div class="toggle-switch" aria-hidden="true"></div>
+        <button class="dropdown-item video-bg-toggle" id="video-bg-toggle" role="menuitem" aria-label="Cycle background mode">
+          <i class="fas fa-circle" aria-hidden="true"></i>
+          <span>Black Background</span>
         </button>
 
         <div class="dropdown-separator" role="separator"></div>
