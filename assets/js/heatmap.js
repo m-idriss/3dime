@@ -5,6 +5,18 @@
 import { CONFIG } from './config.js';
 
 /* =========================
+   Theme Detection Helper
+   ========================= */
+function getHeatmapTheme() {
+  // Check current website theme and map to appropriate heatmap theme
+  if (document.body.classList.contains('white-theme')) {
+    return 'light';
+  }
+  // For dark-theme and glass-theme (or default), use dark heatmap theme
+  return 'dark';
+}
+
+/* =========================
    Library Readiness Check
    ========================= */
 function waitForLibraries(timeout = 10000) {
@@ -124,7 +136,7 @@ export async function loadHeatmap() {
           domain: [0, 30],
         },
       },
-      theme: 'dark'
+      theme: getHeatmapTheme()
     },
     [
       [
