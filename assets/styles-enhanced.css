@@ -67,6 +67,30 @@ body.dark-theme {
   --body-bg: #000;
 }
 
+/* White theme */
+body.white-theme {
+  --primary-bg: rgba(255, 255, 255, 0.95);
+  --primary-bg-hover: rgba(255, 255, 255, 1);
+  --glass-bg: rgba(0, 0, 0, 0.1);
+  --glass-bg-hover: rgba(0, 0, 0, 0.2);
+  --glass-border: rgba(0, 0, 0, 0.15);
+  --text-primary: #1a1a1a;
+  --text-secondary: rgba(26, 26, 26, 0.8);
+  --body-bg: #ffffff;
+}
+
+/* Glass theme */
+body.glass-theme {
+  --primary-bg: rgba(155, 155, 155, 0.1);
+  --primary-bg-hover: rgba(155, 155, 155, 0.25);
+  --glass-bg: rgba(155, 155, 155, 0.1);
+  --glass-bg-hover: rgba(155, 155, 155, 0.25);
+  --glass-border: rgba(155, 155, 155, 0.2);
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.9);
+  --body-bg: transparent;
+}
+
 /* Font size options */
 body.font-small {
   --font-size-base: 0.875rem;
