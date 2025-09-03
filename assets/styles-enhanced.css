@@ -67,7 +67,7 @@ body.dark-theme {
   --body-bg: #000;
 }
 
-/* White theme */
+/* Light theme */
 body.white-theme {
   --primary-bg: rgba(255, 255, 255, 0.95);
   --primary-bg-hover: rgba(255, 255, 255, 1);

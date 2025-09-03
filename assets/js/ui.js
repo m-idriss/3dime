@@ -158,7 +158,7 @@ export function updateThemeToggleUI(theme) {
       break;
     case 'white':
       icon.className = 'fas fa-sun';
-      text.textContent = 'White Theme';
+      text.textContent = 'Light Theme';
       break;
     case 'glass':
       icon.className = 'fas fa-gem';
@@ -292,11 +292,11 @@ export function updateVideoBgToggleUI(mode) {
   switch(mode) {
     case 'black':
       icon.className = 'fas fa-circle';
-      text.textContent = 'Black Background';
+      text.textContent = 'Dark Background';
       break;
     case 'white':
       icon.className = 'far fa-circle';
-      text.textContent = 'White Background';
+      text.textContent = 'Light Background';
       break;
     case 'video':
       icon.className = 'fas fa-play';
@@ -304,7 +304,7 @@ export function updateVideoBgToggleUI(mode) {
       break;
     default:
       icon.className = 'fas fa-circle';
-      text.textContent = 'Black Background';
+      text.textContent = 'Dark Background';
   }
 }
 
