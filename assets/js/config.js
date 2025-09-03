@@ -33,11 +33,17 @@ export const CONFIG = {
   /** @type {string} Default font size setting */
   DEFAULT_FONT_SIZE: 'normal',
   
-  /** @type {string} Default theme setting (dark/light) */
-  DEFAULT_THEME: 'light',
+  /** @type {string[]} Available theme modes for containers */
+  THEME_MODES: ['dark', 'white', 'glass'],
   
-  /** @type {boolean} Default video background setting */
-  DEFAULT_VIDEO_BACKGROUND: true,
+  /** @type {string} Default theme setting */
+  DEFAULT_THEME: 'dark',
+  
+  /** @type {string[]} Available background modes */
+  BACKGROUND_MODES: ['black', 'white', 'video'],
+  
+  /** @type {string} Default background setting */
+  DEFAULT_BACKGROUND: 'black',
   
   // ===== ANIMATION SETTINGS =====
   

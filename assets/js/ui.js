@@ -23,25 +23,20 @@ export function setupBurgerMenu() {
     return;
   }
   
-  // Initialize theme from localStorage or default to light
-  const savedTheme = localStorage.getItem('theme');
-  if (savedTheme === 'dark') {
-    document.body.classList.add('dark-theme');
-    updateThemeToggleUI(false);
-  } else {
-    updateThemeToggleUI(true);
-  }
-
+  // Initialize theme from localStorage or default
+  const savedTheme = localStorage.getItem('theme') || CONFIG.DEFAULT_THEME;
+  applyTheme(savedTheme);
+  updateThemeToggleUI(savedTheme);
 
   // Initialize font size from localStorage or default to normal
   const savedFontSize = localStorage.getItem('fontSize') || CONFIG.DEFAULT_FONT_SIZE;
   applyFontSize(savedFontSize);
   updateFontSizeToggleUI(savedFontSize);
 
-  // Initialize video background from localStorage or default to false
-  const savedVideoBg = localStorage.getItem('videoBg') === 'true' || CONFIG.DEFAULT_VIDEO_BACKGROUND;
-  applyVideoBackground(savedVideoBg);
-  updateVideoBgToggleUI(savedVideoBg);
+  // Initialize background from localStorage or default 
+  const savedBackground = localStorage.getItem('background') || CONFIG.DEFAULT_BACKGROUND;
+  applyBackground(savedBackground);
+  updateVideoBgToggleUI(savedBackground);
 
   // Burger button click handler
   burgerBtn.addEventListener('click', (e) => {
@@ -109,32 +104,69 @@ export function closeDropdown() {
 
 
 export function toggleTheme() {
-  const isDark = document.body.classList.contains('dark-theme');
+  const currentTheme = getCurrentTheme();
   
-  if (isDark) {
-    document.body.classList.remove('dark-theme');
-    localStorage.setItem('theme', CONFIG.DEFAULT_THEME);
-    updateThemeToggleUI(true);
+  // Cycle through: dark -> white -> glass -> dark
+  const currentIndex = CONFIG.THEME_MODES.indexOf(currentTheme);
+  const nextIndex = (currentIndex + 1) % CONFIG.THEME_MODES.length;
+  const nextTheme = CONFIG.THEME_MODES[nextIndex];
+  
+  // Remove all theme classes
+  document.body.classList.remove('dark-theme', 'white-theme', 'glass-theme');
+  
+  // Add the new theme class
+  if (nextTheme !== 'dark') {
+    document.body.classList.add(`${nextTheme}-theme`);
+  }
+  
+  localStorage.setItem('theme', nextTheme);
+  updateThemeToggleUI(nextTheme);
+}
+
+function getCurrentTheme() {
+  if (document.body.classList.contains('white-theme')) return 'white';
+  if (document.body.classList.contains('glass-theme')) return 'glass';
+  return 'dark'; // default or dark-theme class
+}
+
+export function applyTheme(theme) {
+  // Remove all theme classes
+  document.body.classList.remove('dark-theme', 'white-theme', 'glass-theme');
+  
+  // Add the appropriate theme class
+  if (theme === 'white') {
+    document.body.classList.add('white-theme');
+  } else if (theme === 'glass') {
+    document.body.classList.add('glass-theme');
   } else {
+    // dark theme or default
     document.body.classList.add('dark-theme');
-    localStorage.setItem('theme', 'dark');
-    updateThemeToggleUI(false);
   }
 }
 
-export function updateThemeToggleUI(isLight) {
+export function updateThemeToggleUI(theme) {
   const themeToggle = document.getElementById(CONFIG.IDS.THEME_TOGGLE);
   if (!themeToggle) return;
   
   const icon = themeToggle.querySelector('i');
   const text = themeToggle.querySelector('span');
   
-  if (isLight) {
-    icon.className = 'fas fa-sun';
-    text.textContent = 'Light Mode';
-  } else {
-    icon.className = 'fas fa-moon';
-    text.textContent = 'Dark Mode';
+  switch(theme) {
+    case 'dark':
+      icon.className = 'fas fa-moon';
+      text.textContent = 'Dark Theme';
+      break;
+    case 'white':
+      icon.className = 'fas fa-sun';
+      text.textContent = 'White Theme';
+      break;
+    case 'glass':
+      icon.className = 'fas fa-gem';
+      text.textContent = 'Glass Theme';
+      break;
+    default:
+      icon.className = 'fas fa-moon';
+      text.textContent = 'Dark Theme';
   }
 }
 
@@ -191,38 +223,92 @@ export function setupLogoReload() {
 }
 
 export function toggleVideoBackground() {
-  const isVideoEnabled = localStorage.getItem('videoBg') === 'true';
-  const newValue = !isVideoEnabled;
+  const currentBg = getCurrentBackground();
   
-  localStorage.setItem('videoBg', newValue.toString());
-  applyVideoBackground(newValue);
-  updateVideoBgToggleUI(newValue);
+  // Cycle through: black -> white -> video -> black
+  const currentIndex = CONFIG.BACKGROUND_MODES.indexOf(currentBg);
+  const nextIndex = (currentIndex + 1) % CONFIG.BACKGROUND_MODES.length;
+  const nextBackground = CONFIG.BACKGROUND_MODES[nextIndex];
+  
+  localStorage.setItem('background', nextBackground);
+  applyBackground(nextBackground);
+  updateVideoBgToggleUI(nextBackground);
 }
 
-export function applyVideoBackground(enabled) {
+function getCurrentBackground() {
+  const savedBackground = localStorage.getItem('background');
+  if (savedBackground && CONFIG.BACKGROUND_MODES.includes(savedBackground)) {
+    return savedBackground;
+  }
+  return CONFIG.DEFAULT_BACKGROUND;
+}
+
+export function applyBackground(mode) {
   const bgElement = document.querySelector('.bg');
   if (!bgElement) return;
 
-  if (enabled) {
-    // Add video background
-    bgElement.innerHTML = `
-      <video autoplay muted loop playsinline 
-             style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;"
-             aria-hidden="true">
-        <source src="assets/background.mp4" type="video/mp4">
-      </video>
-    `;
-    bgElement.style.background = 'transparent';
-    document.body.classList.add('video-bg-enabled');
-  } else {
-    // Remove video and use solid background
-    bgElement.innerHTML = '';
-    bgElement.style.background = 'var(--body-bg)';
-    document.body.classList.remove('video-bg-enabled');
+  // Remove all background classes
+  document.body.classList.remove('bg-black', 'bg-white', 'bg-video');
+  
+  switch(mode) {
+    case 'black':
+      bgElement.innerHTML = '';
+      bgElement.style.background = '#000000';
+      document.body.classList.add('bg-black');
+      break;
+      
+    case 'white':
+      bgElement.innerHTML = '';
+      bgElement.style.background = '#ffffff';
+      document.body.classList.add('bg-white');
+      break;
+      
+    case 'video':
+      bgElement.innerHTML = `
+        <video autoplay muted loop playsinline 
+               style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;"
+               aria-hidden="true">
+          <source src="assets/background.mp4" type="video/mp4">
+        </video>
+      `;
+      bgElement.style.background = 'transparent';
+      document.body.classList.add('bg-video');
+      break;
+      
+    default:
+      bgElement.innerHTML = '';
+      bgElement.style.background = '#000000';
+      document.body.classList.add('bg-black');
   }
 }
 
-export function updateVideoBgToggleUI(enabled) {
-  // The CSS automatically handles the toggle appearance based on body.video-bg-enabled class
-  // No additional UI updates needed since we use CSS-only toggle state
+export function updateVideoBgToggleUI(mode) {
+  const videoBgToggle = document.getElementById(CONFIG.IDS.VIDEO_BG_TOGGLE);
+  if (!videoBgToggle) return;
+  
+  const icon = videoBgToggle.querySelector('i');
+  const text = videoBgToggle.querySelector('span');
+  
+  switch(mode) {
+    case 'black':
+      icon.className = 'fas fa-circle';
+      text.textContent = 'Black Background';
+      break;
+    case 'white':
+      icon.className = 'far fa-circle';
+      text.textContent = 'White Background';
+      break;
+    case 'video':
+      icon.className = 'fas fa-play';
+      text.textContent = 'Video Background';
+      break;
+    default:
+      icon.className = 'fas fa-circle';
+      text.textContent = 'Black Background';
+  }
+}
+
+// Legacy function for backward compatibility
+export function applyVideoBackground(enabled) {
+  applyBackground(enabled ? 'video' : 'black');
 }

@@ -57,14 +57,38 @@
 
 /* Dark theme */
 body.dark-theme {
-  --primary-bg: rgba(0, 0, 0, 0.75);
-  --primary-bg-hover: rgba(0, 0, 0, 0.9);
-  --glass-bg: rgba(255, 255, 255, 0.15);
-  --glass-bg-hover: rgba(255, 255, 255, 0.3);
-  --glass-border: rgba(255, 255, 255, 0.2);
+  --primary-bg: rgba(0, 0, 0, 0.95);
+  --primary-bg-hover: rgba(0, 0, 0, 1);
+  --glass-bg: rgba(255, 255, 255, 0.08);
+  --glass-bg-hover: rgba(255, 255, 255, 0.15);
+  --glass-border: rgba(255, 255, 255, 0.1);
   --text-primary: #fff;
   --text-secondary: rgba(255, 255, 255, 0.9);
   --body-bg: #000;
+}
+
+/* White theme */
+body.white-theme {
+  --primary-bg: rgba(255, 255, 255, 0.95);
+  --primary-bg-hover: rgba(255, 255, 255, 1);
+  --glass-bg: rgba(0, 0, 0, 0.1);
+  --glass-bg-hover: rgba(0, 0, 0, 0.2);
+  --glass-border: rgba(0, 0, 0, 0.15);
+  --text-primary: #1a1a1a;
+  --text-secondary: rgba(26, 26, 26, 0.8);
+  --body-bg: #ffffff;
+}
+
+/* Glass theme */
+body.glass-theme {
+  --primary-bg: rgba(155, 155, 155, 0.1);
+  --primary-bg-hover: rgba(155, 155, 155, 0.25);
+  --glass-bg: rgba(155, 155, 155, 0.1);
+  --glass-bg-hover: rgba(155, 155, 155, 0.25);
+  --glass-border: rgba(155, 155, 155, 0.2);
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.9);
+  --body-bg: transparent;
 }
 
 /* Font size options */
@@ -457,7 +481,7 @@ textarea:focus,
 
 /* Theme Toggle */
 .theme-toggle {
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 
 .theme-toggle .toggle-switch {
@@ -535,7 +559,12 @@ body:not(.notifications-off) .notifications-toggle .toggle-switch {
 
 /* Video Background Toggle */
 .video-bg-toggle {
-  justify-content: space-between;
+  justify-content: flex-start;
+}
+
+/* Font Size Toggle */
+.font-size-toggle {
+  justify-content: flex-start;
 }
 
 .video-bg-toggle .toggle-switch {
