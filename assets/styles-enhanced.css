@@ -44,9 +44,12 @@
   /* Shadows */
   --shadow-card: 0 6px 18px rgba(0, 0, 0, 0.3);
   --shadow-card-hover: 0 12px 28px rgba(0, 0, 0, 0.35);
+  --shadow-glow: 0 0 20px rgba(59, 130, 246, 0.3);
+  --shadow-glow-strong: 0 0 30px rgba(59, 130, 246, 0.5);
 
   /* Transitions */
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
   --t-fast: 150ms var(--ease);
   --t-medium: 300ms var(--ease);
   --t-slow: 600ms var(--ease);
@@ -290,10 +293,11 @@ textarea:focus,
 }
 
 .container:hover {
-  transform: translateY(-4px) scale(1.02);
-  box-shadow: var(--shadow-card-hover);
-  backdrop-filter: blur(16px);
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: var(--shadow-card-hover), var(--shadow-glow);
+  backdrop-filter: blur(20px);
   background: var(--primary-bg-hover);
+  transition: all var(--ease-bounce);
 }
 
 .container h2 {
@@ -322,16 +326,17 @@ textarea:focus,
   backdrop-filter: blur(12px);
   box-shadow: var(--shadow-card);
   cursor: pointer;
-  margin: 0 auto var(--space-md);
   display: block;
+  grid-column: 2;
   transition: all var(--t-medium);
 }
 
 .logo:hover {
-  transform: scale(1.08);
-  backdrop-filter: blur(14px);
+  transform: scale(1.12) rotate(5deg);
+  backdrop-filter: blur(20px);
   background: var(--glass-bg-hover);
-  box-shadow: var(--shadow-card-hover);
+  box-shadow: var(--shadow-card-hover), var(--shadow-glow);
+  transition: all var(--ease-bounce);
 }
 
 .logo-text {
@@ -347,9 +352,10 @@ textarea:focus,
    ======================== */
 .profile-header {
   position: relative;
-  display: flex;
+  display: grid;
+  grid-template-columns: 40px 1fr 40px;
   align-items: center;
-  justify-content: center;
+  justify-items: center;
   margin-bottom: var(--space-md);
 }
 
@@ -379,9 +385,10 @@ textarea:focus,
 
 .burger-button:hover {
   background: var(--glass-bg-hover);
-  backdrop-filter: blur(16px);
-  transform: scale(1.05);
-  box-shadow: var(--shadow-card-hover);
+  backdrop-filter: blur(20px);
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: var(--shadow-card-hover), 0 0 15px rgba(59, 130, 246, 0.3);
+  transition: all var(--ease-bounce);
 }
 
 .burger-button i {
@@ -438,6 +445,8 @@ textarea:focus,
 
 .dropdown-item:hover {
   background: var(--glass-bg-hover);
+  transform: translateX(4px);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
 }
 
 .dropdown-item i {
@@ -577,13 +586,35 @@ body.video-bg-enabled .video-bg-toggle .toggle-switch {
   letter-spacing: 0.5px;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
   transition: all var(--t-medium);
+  border: 1px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(59, 130, 246, 0.1), 
+    transparent);
+  transition: left 0.6s var(--ease);
 }
 
 .link:hover {
-  transform: translateY(-2px) scale(1.03);
+  transform: translateY(-3px) scale(1.05);
   background: var(--glass-bg-hover);
-  box-shadow: var(--shadow-card-hover);
-  backdrop-filter: blur(14px);
+  box-shadow: var(--shadow-card-hover), 0 0 15px rgba(59, 130, 246, 0.2);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.link:hover::before {
+  left: 100%;
 }
 
 .chip-little {
@@ -878,8 +909,10 @@ body.notifications-off .badge {
 }
 
 .tech-item:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+  transform: scale(1.08) translateY(-2px);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3), var(--shadow-glow);
+  border: 1px solid rgba(59, 130, 246, 0.4);
+  background: linear-gradient(135deg, var(--glass-bg-hover), rgba(59, 130, 246, 0.1));
 }
 
 /* Loading state animations */
@@ -1068,26 +1101,162 @@ body.notifications-off .badge {
   transition: opacity 0.2s ease;
 }
 
-/* Mobile-specific enhancements */
-@media (max-width: 768px) {
-  .swipe-notification {
-    left: 10px;
-    right: 10px;
-    transform: translateY(100%);
+/* ========================
+   Enhanced Focus Indicators for Accessibility
+   ======================== */
+
+/* Remove default focus outline */
+*:focus {
+  outline: none;
+}
+
+/* Enhanced focus indicators */
+.logo:focus-visible,
+.burger-button:focus-visible,
+.dropdown-item:focus-visible,
+.link:focus-visible,
+.socials a:focus-visible,
+.socials i:focus-visible,
+.tech-item:focus-visible {
+  outline: 3px solid var(--accent-color);
+  outline-offset: 3px;
+  box-shadow:
+    0 0 0 6px rgba(59, 130, 246, 0.2),
+    var(--shadow-card-hover);
+  transition: all var(--t-fast);
+}
+
+/* Special focus for interactive elements */
+.tech-item:focus-visible {
+  transform: scale(1.05);
+  background: var(--glass-bg-hover);
+}
+
+.socials a:focus-visible,
+.socials i:focus-visible {
+  transform: scale(1.2);
+  background: var(--glass-bg-hover);
+}
+
+/* Skip links enhanced styling */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: var(--accent-color);
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  z-index: 1000;
+  font-weight: var(--fw-semibold);
+  transition: top var(--t-medium);
+}
+
+.skip-link:focus {
+  top: 6px;
+}
+
+/* ========================
+   Enhanced Loading States
+   ======================== */
+
+.loading-enhanced {
+  background: linear-gradient(
+    90deg,
+    var(--glass-bg) 25%,
+    var(--glass-bg-hover) 50%,
+    var(--glass-bg) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer-enhanced 2s infinite;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  position: relative;
+}
+
+.loading-enhanced::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(59, 130, 246, 0.1) 50%,
+    transparent 70%
+  );
+  animation: sweep 3s infinite;
+}
+
+@keyframes shimmer-enhanced {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes sweep {
+  0% { transform: translateX(-100%) translateY(-100%); }
+  50% { transform: translateX(100%) translateY(100%); }
+  100% { transform: translateX(100%) translateY(100%); }
+}
+
+/* ========================
+   Improved Visual Hierarchy
+   ======================== */
+
+/* Enhanced container headers */
+.container h2 {
+  margin-bottom: var(--space-md);
+  font-size: var(--font-size-xl);
+  font-weight: var(--fw-semibold);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, var(--text-primary), rgba(59, 130, 246, 0.8));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+}
+
+.container h2::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+  border-radius: 1px;
+}
+
+/* Enhanced spacing for better readability */
+.container p {
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-md);
+}
+
+/* ========================
+   Reduced Motion Support for Accessibility
+   ======================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
-  
-  .swipe-notification.show {
-    transform: translateY(0);
-  }
-  
-  /* Larger touch targets on mobile */
-  .tech-item {
-    min-height: 48px;
-    padding: 12px 16px;
-  }
-  
-  .section-toggle {
-    width: 36px;
-    height: 36px;
+
+  /* Disable hover transforms for reduced motion */
+  .container:hover,
+  .logo:hover,
+  .link:hover,
+  .tech-item:hover,
+  .socials a:hover,
+  .socials i:hover,
+  .burger-button:hover {
+    transform: none !important;
   }
 }
