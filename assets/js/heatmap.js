@@ -152,8 +152,61 @@ export async function loadHeatmap() {
       ]
     ]);
 
+    // Post-process to apply different colors for future dates
+    setTimeout(() => {
+      applyFutureDateColors(commitSource);
+    }, 100);
+
   } catch (error) {
     console.error('Error loading heatmap:', error);
     showHeatmapFallback();
   }
+}
+
+/* =========================
+   Apply Future Date Colors
+   ========================= */
+function applyFutureDateColors(commitSource) {
+  // Get today's date for comparison
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  
+  // Find all heatmap rectangles/elements
+  const heatmapContainer = document.querySelector(CONFIG.SELECTORS.HEATMAP_CONTAINER);
+  if (!heatmapContainer) return;
+  
+  // Get all day elements (CalHeatmap uses rect elements for each day)
+  const dayElements = heatmapContainer.querySelectorAll('rect[data-date]');
+  
+  dayElements.forEach(element => {
+    const dateStr = element.getAttribute('data-date');
+    if (!dateStr) return;
+    
+    const elementDate = new Date(dateStr);
+    elementDate.setHours(0, 0, 0, 0);
+    
+    const isFuture = elementDate > today;
+    
+    if (isFuture) {
+      // Get current fill color to determine intensity
+      const currentFill = element.getAttribute('fill') || element.style.fill;
+      
+      // Parse the current green color and convert to teal
+      if (currentFill && currentFill !== 'rgba(255, 255, 255, 0.2)') {
+        // Find the corresponding commit data to get the value
+        const commitData = commitSource.find(d => d.date === dateStr);
+        const value = commitData ? commitData.value : 0;
+        
+        if (value > 0) {
+          // Calculate intensity and apply teal color for future dates
+          const intensity = Math.min(value / 30, 1);
+          const alpha = 0.3 + intensity * 0.7;
+          const tealColor = `rgba(20, 184, 166, ${alpha})`; // teal-500
+          
+          element.setAttribute('fill', tealColor);
+          element.style.fill = tealColor;
+        }
+      }
+    }
+  });
 }
