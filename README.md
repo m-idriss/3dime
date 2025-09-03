@@ -33,12 +33,13 @@ Perfect for developers, designers, content creators, and professionals who want 
 
 ### ⚡ **Performance & Technology**
 - **Progressive Web App (PWA)** - Installable, works offline, app-like experience
-- **Zero Build Process** - Pure HTML5, CSS3, and Vanilla JavaScript
+- **Zero Build Process** - Pure HTML5, CSS3, and Vanilla JavaScript ES6+ modules
 - **Service Worker** - Intelligent caching for lightning-fast repeat visits
 - **Optimized Assets** - Compressed images and efficient resource loading
+- **Modular Architecture** - Clean separation of concerns with ES6 modules
 
 ### 🔗 **Content Management**
-- **JSON-Driven Content** - Easy customization through simple configuration
+- **JSON-LD Structured Data** - Easy customization through standards-compliant structured data
 - **Dynamic Loading** - Content fetched asynchronously for better performance
 - **Social Integration** - Showcase all your profiles with custom badges
 - **Portfolio Sections** - Highlight your experience, education, and projects
@@ -58,7 +59,7 @@ Perfect for developers, designers, content creators, and professionals who want 
 **Frontend**
 - HTML5
 - CSS3 (Custom Properties)
-- Vanilla JavaScript (ES6+)
+- Vanilla JavaScript (ES6+ Modules)
 - Font Awesome Icons
 - Google Fonts (Inter)
 
@@ -108,34 +109,35 @@ open http://localhost:8000
 ```
 ### ⚙️ Configuration
 
-Copy `config.php.example` to `config.php` and update with your API credentials:
+The project uses modern standards-based configuration:
+
+1. **Content Configuration**: Edit `structured-data.jsonld` with your personal information using JSON-LD schema.org format
+2. **Styling Configuration**: Customize appearance in `assets/styles-enhanced.css`
+3. **PWA Configuration**: Update `assets/manifest.json` for Progressive Web App settings
+4. **Optional**: Copy `config.php.example` to `config.php` for PHP-based API features (if needed)
 
 ### 🎨 Customization
 
-1. **Edit your content** in `content/content.json`:
+1. **Edit your content** in `structured-data.jsonld`:
 ```json
 {
-  "groups": [
-    {
-      "sections": [
-        {
-          "name": "profile",
-          "title": "✨ Hello, I'm @YourName ✨",
-          "items": [
-            {
-              "name": "GitHub", 
-              "url": "https://github.com/yourusername",
-              "iconClass": "fa-github"
-            }
-          ]
-        }
-      ]
-    }
-  ]
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Your Name",
+  "description": "Your professional description here",
+  "url": "https://yourwebsite.com",
+  "email": "contact@yourwebsite.com",
+  "sameAs": [
+    "https://github.com/yourusername",
+    "https://www.linkedin.com/in/yourprofile/",
+    "https://x.com/yourusername"
+  ],
+  "jobTitle": "Your Job Title",
+  "knowsAbout": ["JavaScript", "Java", "React"]
 }
 ```
 
-2. **Update colors** in `assets/styles.css` using CSS custom properties
+2. **Update colors** in `assets/styles-enhanced.css` using CSS custom properties
 3. **Replace logo** with your own in `assets/logo.png`
 4. **Modify PWA settings** in `assets/manifest.json`
 
@@ -198,7 +200,7 @@ Upload all files to any web server. Works with:
 
 ### Custom Styling
 ```css
-/* Edit assets/styles.css */
+/* Edit assets/styles-enhanced.css */
 :root {
   --glass-bg: rgba(255, 255, 255, 0.15);
   --accent-color: #3b82f6;
@@ -218,15 +220,12 @@ Upload all files to any web server. Works with:
 ```
 
 ### Content Sections
-The `content/content.json` supports:
-- **Profile** with social links and badges
-- **About** with personal description
-- **Tech Stack** with technology links
-- **Experience** with companies and projects
-- **Education** with institutions and courses
-- **Recommendations** with tools and products
-- **Hobbies** with interests and activities
-- **Contact** information
+The `structured-data.jsonld` supports standard JSON-LD schema.org formats for:
+- **Person** with social links and professional information
+- **Organization** for work history and affiliations  
+- **Educational** credentials and courses
+- **Skills** and technical expertise
+- **Contact** information and social profiles
 
 ## 📋 Documentation & Roadmap
 
@@ -250,6 +249,12 @@ Based on the audit findings, 3dime follows a structured development roadmap focu
 - **Phase 4**: Innovation & Future (Advanced integrations, scalability)
 
 📋 **[View Complete Roadmap](docs/ROADMAP.md)** - Detailed timeline, priorities, and implementation guidelines
+
+### 📚 Additional Documentation
+- **[Developer Guide](docs/DEVELOPER_GUIDE.md)** - Comprehensive technical documentation
+- **[Security Policy](docs/SECURITY.md)** - Security guidelines and vulnerability reporting  
+- **[Contributing Guidelines](CONTRIBUTING.md)** - How to contribute to the project
+- **[Code of Conduct](CODE_OF_CONDUCT.md)** - Community guidelines
 
 ## 🤝 Contributing
 
