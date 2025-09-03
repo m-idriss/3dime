@@ -146,7 +146,7 @@ function renderHeatmap(commitSource) {
       locale: { weekStart: 1 },
       highlight: [new Date()]
     },
-    range: 6,
+    range: 7,
     scale: {
       color: {
         range: ['rgba(255, 255, 255, 0.2)', 'green'],
