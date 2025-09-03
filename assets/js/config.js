@@ -37,13 +37,13 @@ export const CONFIG = {
   THEME_MODES: ['dark', 'white', 'glass'],
   
   /** @type {string} Default theme setting */
-  DEFAULT_THEME: 'dark',
+  DEFAULT_THEME: 'glass',
   
   /** @type {string[]} Available background modes */
   BACKGROUND_MODES: ['black', 'white', 'video'],
   
   /** @type {string} Default background setting */
-  DEFAULT_BACKGROUND: 'black',
+  DEFAULT_BACKGROUND: 'video',
   
   // ===== ANIMATION SETTINGS =====
   
