@@ -326,8 +326,8 @@ textarea:focus,
   backdrop-filter: blur(12px);
   box-shadow: var(--shadow-card);
   cursor: pointer;
-  margin: 0 auto var(--space-md);
   display: block;
+  grid-column: 2;
   transition: all var(--t-medium);
 }
 
@@ -352,9 +352,10 @@ textarea:focus,
    ======================== */
 .profile-header {
   position: relative;
-  display: flex;
+  display: grid;
+  grid-template-columns: 40px 1fr 40px;
   align-items: center;
-  justify-content: center;
+  justify-items: center;
   margin-bottom: var(--space-md);
 }
 
@@ -362,9 +363,8 @@ textarea:focus,
    Burger Menu
    ======================== */
 .burger-menu {
-  position: absolute;
-  top: 0;
-  right: 0;
+  grid-column: 3;
+  justify-self: end;
 }
 
 .burger-button {
