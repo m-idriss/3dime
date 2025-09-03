@@ -228,9 +228,21 @@ The `content/content.json` supports:
 - **Hobbies** with interests and activities
 - **Contact** information
 
-## 🗺️ Development Roadmap
+## 📋 Documentation & Roadmap
 
-3dime follows a structured development roadmap focusing on security, performance, and user experience. Our roadmap is organized into phases with clear priorities:
+3dime includes comprehensive project documentation and development planning:
+
+### 🔍 Website Audit & Analysis
+A complete technical, UX, and performance audit has been conducted with detailed findings and recommendations:
+
+📊 **[Website Audit Report](docs/WEBSITE_AUDIT_REPORT.md)** - Comprehensive analysis covering:
+- Technical performance, SEO, and mobile responsiveness ✅
+- UX and navigation flow assessment ✅
+- Functional bug identification and documentation ✅
+- Feature proposals and enhancement opportunities ✅
+
+### 🗺️ Development Roadmap  
+Based on the audit findings, 3dime follows a structured development roadmap focusing on security, performance, and user experience:
 
 - **Phase 1**: Security & Accessibility (Critical fixes, WCAG compliance)
 - **Phase 2**: Performance & SEO (Lighthouse optimization, enhanced metadata)  
@@ -241,14 +253,15 @@ The `content/content.json` supports:
 
 ## 🤝 Contributing
 
-1. **Check the [Roadmap](docs/ROADMAP.md)** to see current priorities and find tasks that match your skills
-2. **Fork** the repository
-3. **Create** a feature branch: `git checkout -b feature/amazing-feature`
-4. **Commit** your changes: `git commit -m '✨ [feature/amazing] add amazing feature'`
-5. **Push** to the branch: `git push origin feature/amazing-feature`
-6. **Open** a Pull Request
+1. **Review the [Audit Report](docs/WEBSITE_AUDIT_REPORT.md)** to understand current website status and identified opportunities
+2. **Check the [Roadmap](docs/ROADMAP.md)** to see current priorities and find tasks that match your skills
+3. **Fork** the repository
+4. **Create** a feature branch: `git checkout -b feature/amazing-feature`
+5. **Commit** your changes: `git commit -m '✨ [feature/amazing] add amazing feature'`
+6. **Push** to the branch: `git push origin feature/amazing-feature`
+7. **Open** a Pull Request
 
-See our [contribution guidelines](CONTRIBUTING.md) and [development roadmap](docs/ROADMAP.md) for more details.
+See our [contribution guidelines](CONTRIBUTING.md), [audit report](docs/WEBSITE_AUDIT_REPORT.md), and [development roadmap](docs/ROADMAP.md) for complete details.
 
 ## 📊 Performance
 
