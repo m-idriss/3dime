@@ -46,21 +46,6 @@
     },
     {
       "@type": "Thing",
-      "name": "JavaScript",
-      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
-    },
-    {
-      "@type": "Thing",
-      "name": "HTML5",
-      "url": "https://developer.mozilla.org/en-US/docs/Web/HTML"
-    },
-    {
-      "@type": "Thing",
-      "name": "CSS3",
-      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS"
-    },
-    {
-      "@type": "Thing",
       "name": "Agile",
       "url": "https://agilemanifesto.org"
     },
@@ -68,11 +53,6 @@
       "@type": "Thing",
       "name": "Docker",
       "url": "https://www.docker.com"
-    },
-    {
-      "@type": "Thing",
-      "name": "MySQL",
-      "url": "https://www.mysql.com"
     },
     {
       "@type": "Thing",
@@ -189,11 +169,6 @@
       "url": "https://www.om.fr"
     },
     {
-      "@type": "VideoGame",
-      "name": "Age of Empires 2",
-      "url": "https://www.ageofempires.com/games/aoe2de/"
-    },
-    {
       "@type": "Thing",
       "name": "One Piece",
       "url": "https://mangaplus.shueisha.co.jp/titles/700005"
@@ -207,6 +182,11 @@
       "@type": "Game",
       "name": "Chess",
       "url": "https://www.chess.com/member/idriss33345"
+    },
+    {
+      "@type": "VideoGame",
+      "name": "Age of Empires 2",
+      "url": "https://www.ageofempires.com/games/aoe2de/"
     },
     {
       "@type": "Game",
