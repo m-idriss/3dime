@@ -114,10 +114,8 @@ export function toggleTheme() {
   // Remove all theme classes
   document.body.classList.remove('dark-theme', 'white-theme', 'glass-theme');
   
-  // Add the new theme class
-  if (nextTheme !== 'dark') {
-    document.body.classList.add(`${nextTheme}-theme`);
-  }
+  // Add the new theme class (consistent with applyTheme function)
+  document.body.classList.add(`${nextTheme}-theme`);
   
   localStorage.setItem('theme', nextTheme);
   updateThemeToggleUI(nextTheme);
