@@ -41,7 +41,7 @@ function waitForLibraries(timeout = 10000) {
 /* =========================
    Heatmap Loading with Retry
    ========================= */
-export async function loadHeatmapWithRetry(retries = 3, delay = 1000) {
+export async function loadHeatmapWithRetry(retries = 3, delay = 5000) {
   try {
     // Wait for external libraries to be ready
     await waitForLibraries();
