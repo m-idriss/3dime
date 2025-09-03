@@ -37,7 +37,7 @@ export const CONFIG = {
   DEFAULT_THEME: 'light',
   
   /** @type {boolean} Default video background setting */
-  DEFAULT_VIDEO_BACKGROUND: false,
+  DEFAULT_VIDEO_BACKGROUND: true,
   
   // ===== ANIMATION SETTINGS =====
   
