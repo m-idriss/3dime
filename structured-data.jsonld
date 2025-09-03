@@ -179,6 +179,11 @@
       "url": "https://www.instagram.com/chateaupizza/"
     },
     {
+      "@type": "Thing",
+      "name": "F1",
+      "url": "https://www.formula1.com"
+    },
+    {
       "@type": "Game",
       "name": "Chess",
       "url": "https://www.chess.com/member/idriss33345"
