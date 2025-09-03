@@ -140,27 +140,6 @@ body.loaded {
 }
 
 /* ========================
-   Skip Links for Accessibility
-   ======================== */
-.skip-link {
-  position: absolute;
-  top: -40px;
-  left: 6px;
-  background: var(--accent-color);
-  color: white;
-  padding: 8px;
-  text-decoration: none;
-  border-radius: var(--radius-md);
-  font-weight: var(--fw-semibold);
-  z-index: 9999;
-  transition: top var(--t-fast);
-}
-
-.skip-link:focus {
-  top: 6px;
-}
-
-/* ========================
    Focus Indicators (Accessibility)
    ======================== */
 /* Comprehensive focus indicators for WCAG AA compliance */
@@ -194,11 +173,6 @@ textarea:focus,
   background: var(--glass-bg-hover);
   transform: translateY(-2px);
   transition: all var(--t-fast);
-}
-
-/* Remove default browser focus outline that's less accessible */
-*:focus {
-  outline: none;
 }
 
 /* Re-apply focus for our custom implementation */
@@ -322,19 +296,6 @@ textarea:focus,
   backdrop-filter: blur(20px);
   background: var(--primary-bg-hover);
   transition: all var(--ease-bounce);
-}
-
-.container h2 {
-  margin-bottom: var(--space-sm);
-  font-size: var(--font-size-xl);
-  font-weight: var(--fw-semibold);
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-}
-
-.container p {
-  font-size: var(--font-size-base);
-  line-height: 1.5;
-  color: var(--text-secondary);
 }
 
 /* ========================
@@ -1005,32 +966,6 @@ body.notifications-off .badge {
 
 .collapsible-section.expanded {
   max-height: 1000px;
-}
-
-.section-toggle {
-  background: none;
-  border: none;
-  color: var(--text-secondary);
-  cursor: pointer;
-  padding: 4px;
-  border-radius: 4px;
-  transition: all 0.2s var(--ease);
-}
-
-.section-toggle:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: var(--text-primary);
-}
-
-.section-toggle::after {
-  content: '↓';
-  display: inline-block;
-  transition: transform 0.2s var(--ease);
-  margin-left: 8px;
-}
-
-.section-toggle.expanded::after {
-  transform: rotate(180deg);
 }
 
 /* Touch device optimizations */
