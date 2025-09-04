@@ -58,7 +58,7 @@ export const CONFIG = {
    */
   ENDPOINTS: {
     /** @type {string} PHP proxy endpoint for GitHub API calls */
-    PROXY: 'proxy.php'
+    PROXY: 'config/proxy.php'
   },
   
   // ===== DOM SELECTORS =====
