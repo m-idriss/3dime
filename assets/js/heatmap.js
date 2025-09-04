@@ -55,11 +55,26 @@ export async function loadHeatmapWithRetry(retries = 3, delay = 5000) {
       response = await fetch(proxyUrl);
     }
     
+    let data;
     if (!response.ok) {
+      // If API fails, check if it's a rate limit or API access issue
+      if (response.status === 403 || response.status === 429) {
+        console.warn('GitHub API rate limited or access restricted');
+        showHeatmapDataFallback('GitHub API rate limited - showing demo data', createMockHeatmapData());
+        return;
+      }
       throw new Error(`Failed to fetch commit data: ${response.status}`);
     }
     
-    const data = await response.json();
+    try {
+      data = await response.json();
+    } catch (jsonErr) {
+      // If JSON parsing fails, it means the proxy returned HTML (PHP not executing)
+      console.warn('Proxy returned HTML instead of JSON - using demo data');
+      showHeatmapDataFallback('API proxy unavailable - showing demo data', createMockHeatmapData());
+      return;
+    }
+    
     const commitActivity = data.commit_activity;
     
     if (!commitActivity || !Array.isArray(commitActivity)) {
@@ -167,6 +182,38 @@ function showHeatmapDataFallback(message, data = null) {
 // Store heatmap data and instance for re-rendering
 let heatmapData = null;
 let heatmapInstance = null;
+
+/* =========================
+   Mock Data Generation for Development/Fallback
+   ========================= */
+function createMockHeatmapData() {
+  const data = [];
+  const now = new Date();
+  const threeMonthsAgo = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
+  
+  // Generate realistic commit pattern - more commits on weekdays, sporadic on weekends
+  for (let d = new Date(threeMonthsAgo); d <= now; d.setDate(d.getDate() + 1)) {
+    const dayOfWeek = d.getDay();
+    let baseActivity = 0;
+    
+    // Higher activity on weekdays
+    if (dayOfWeek >= 1 && dayOfWeek <= 5) {
+      baseActivity = Math.random() * 8; // 0-8 commits on weekdays
+    } else {
+      baseActivity = Math.random() * 3; // 0-3 commits on weekends
+    }
+    
+    // Add some randomness and occasional high-activity days
+    let commits = Math.floor(baseActivity + (Math.random() > 0.9 ? Math.random() * 10 : 0));
+    
+    data.push({
+      date: d.toISOString().split('T')[0],
+      value: commits
+    });
+  }
+  
+  return data;
+}
 
 export async function loadHeatmap() {
   try {
