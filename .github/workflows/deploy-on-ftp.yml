@@ -27,4 +27,25 @@ jobs:
           exclude: |
             **/.git*
             **/.git*/**
-            README.md
+            **/.github/**
+            **/docs/**
+            **/*.md
+            LICENSE
+            CODE_OF_CONDUCT.md
+            CONTRIBUTING.md
+            assets/screenshots/**
+            **/*.yml
+            **/*.yaml
+            .gitignore
+            **/.DS_Store
+            **/Thumbs.db
+            **/*.log
+            **/node_modules/**
+            **/coverage/**
+            **/.env*
+            **/dist/**
+            **/build/**
+            **/.idea/**
+            **/*.iml
+            **/out/**
+            **/.run/**
