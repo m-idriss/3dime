@@ -31,7 +31,7 @@ logs/
 coverage/
 
 # PHP configuration files with sensitive credentials
-config.php
+config/config.php
 
 # Web server configuration files
 .htaccess
