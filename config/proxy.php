@@ -1,8 +1,8 @@
 <?php
 require_once 'config.php';
-require_once 'services/trakt.php';
-require_once 'services/github.php';
-require_once 'services/twitter.php';
+require_once '../services/trakt.php';
+require_once '../services/github.php';
+require_once '../services/twitter.php';
 
 $service = $_GET['service'] ?? '';
 
