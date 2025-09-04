@@ -65,6 +65,16 @@ async function initializeApp() {
       fallbackManager.checkAllFallbacks();
     }, 2000);
     
+    // Register service worker for PWA functionality
+    if ('serviceWorker' in navigator) {
+      try {
+        const registration = await navigator.serviceWorker.register('/assets/sw.js');
+        console.log('SW registered:', registration);
+      } catch (error) {
+        console.log('SW registration failed:', error);
+      }
+    }
+    
   } catch (error) {
     // Log detailed error for debugging
     console.error('Application initialization failed:', error);
