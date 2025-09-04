@@ -115,11 +115,8 @@ const CDN_FALLBACKS = {
     fallback: () => {
       console.log('CDN Fallback: D3.js failed, disabling heatmap');
       
-      // Gracefully disable heatmap functionality
-      const heatmapContainer = document.getElementById(CONFIG.IDS.HEATMAP_CONTAINER);
-      if (heatmapContainer) {
-        heatmapContainer.innerHTML = '<p>GitHub Activity heatmap unavailable offline</p>';
-      }
+      // Don't immediately replace heatmap content - let heatmap.js handle fallback
+      // The heatmap loading logic will determine the appropriate fallback
     }
   },
 
@@ -143,15 +140,9 @@ const CDN_FALLBACKS = {
      */
     fallback: () => {
       console.log('CDN Fallback: Cal-heatmap failed, using placeholder');
-      const heatmapContainer = document.getElementById(CONFIG.IDS.HEATMAP_CONTAINER);
-      if (heatmapContainer) {
-        heatmapContainer.innerHTML = `
-          <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; text-align: center;">
-            <p>📊 GitHub Activity visualization requires internet connection</p>
-            <p><small>Visit <a href="https://github.com/m-idriss" target="_blank" rel="noopener noreferrer">github.com/m-idriss</a> to see activity</small></p>
-          </div>
-        `;
-      }
+      
+      // Don't immediately replace heatmap content - let heatmap.js handle fallback
+      // The heatmap loading logic will determine the appropriate fallback
     }
   },
 

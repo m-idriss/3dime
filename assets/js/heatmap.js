@@ -42,39 +42,125 @@ function waitForLibraries(timeout = 10000) {
    Heatmap Loading with Retry
    ========================= */
 export async function loadHeatmapWithRetry(retries = 3, delay = 5000) {
+  // First, try to load data regardless of library availability
   try {
-    // Wait for external libraries to be ready
-    await waitForLibraries();
+    // Check if we're in development mode (PHP server might be on different port)
+    let proxyUrl = `${CONFIG.ENDPOINTS.PROXY}?service=github&type=commits`;
     
-    for (let i = 0; i < retries; i++) {
-      try {
-        await loadHeatmap();
-        return; // success → stop retrying
-      } catch (err) {
-        console.warn(`Heatmap load failed (attempt ${i + 1}/${retries})`, err);
-        if (i < retries - 1) {
-          await new Promise(res => setTimeout(res, delay));
+    // Try PHP dev server if main proxy fails
+    let response = await fetch(proxyUrl);
+    if (!response.ok || response.headers.get('content-type')?.includes('text/html')) {
+      // Fallback to PHP dev server on localhost:8080
+      proxyUrl = `http://localhost:8080/config/proxy.php?service=github&type=commits`;
+      response = await fetch(proxyUrl);
+    }
+    
+    if (!response.ok) {
+      throw new Error(`Failed to fetch commit data: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    const commitActivity = data.commit_activity;
+    
+    if (!commitActivity || !Array.isArray(commitActivity)) {
+      console.warn('No commit activity data available');
+      showHeatmapDataFallback('No commit activity data available');
+      return;
+    }
+
+    // Store data for potential future use
+    heatmapData = commitActivity.flatMap(week =>
+      week.days.map((value, i) => {
+        const date = new Date((week.week + i * 86400) * 1000)
+          .toISOString()
+          .split("T")[0];
+        return { date, value };
+      })
+    );
+
+    // Try to render with libraries if available
+    try {
+      await waitForLibraries();
+      renderHeatmap(heatmapData);
+      return; // Success with full heatmap
+    } catch (libErr) {
+      console.warn('Heatmap libraries not available, showing data summary');
+      showHeatmapDataFallback('Heatmap libraries unavailable', heatmapData);
+      return;
+    }
+    
+  } catch (dataErr) {
+    console.warn('Failed to fetch heatmap data:', dataErr.message);
+    
+    // Try with libraries for basic fallback
+    try {
+      await waitForLibraries();
+      for (let i = 0; i < retries; i++) {
+        try {
+          await loadHeatmap();
+          return; // success → stop retrying
+        } catch (err) {
+          console.warn(`Heatmap load failed (attempt ${i + 1}/${retries})`, err);
+          if (i < retries - 1) {
+            await new Promise(res => setTimeout(res, delay));
+          }
         }
       }
+    } catch (libErr) {
+      console.warn('Heatmap libraries not available');
     }
-  } catch (err) {
-    console.warn('Heatmap initialization failed:', err.message);
-    // Show user-friendly fallback message
-    showHeatmapFallback();
+    
+    // Final fallback
+    showHeatmapFallback(dataErr.message);
   }
 }
 
-function showHeatmapFallback() {
+function showHeatmapFallback(errorMessage = '') {
   const container = document.getElementById(CONFIG.IDS.HEATMAP_CONTAINER);
   if (container) {
+    const errorDetail = errorMessage ? ` (${errorMessage})` : '';
     container.innerHTML = `
       <div class="heatmap-fallback" role="alert" aria-live="polite">
+        <p>⚠️ Unable to load GitHub activity${errorDetail}</p>
         <p>🔗 <a href="https://github.com/m-idriss" target="_blank" rel="noopener noreferrer" 
            aria-label="View GitHub profile for commit activity">
            View GitHub activity
         </a></p>
       </div>
     `;
+  }
+}
+
+function showHeatmapDataFallback(message, data = null) {
+  const container = document.getElementById(CONFIG.IDS.HEATMAP_CONTAINER);
+  if (container) {
+    let html = `
+      <div class="heatmap-fallback" role="alert" aria-live="polite">
+        <p>📊 ${message}</p>
+    `;
+    
+    if (data && Array.isArray(data)) {
+      // Calculate some basic stats from the data
+      const totalCommits = data.reduce((sum, entry) => sum + (entry.value || 0), 0);
+      const daysWithCommits = data.filter(entry => entry.value > 0).length;
+      const maxCommits = Math.max(...data.map(entry => entry.value || 0));
+      
+      html += `
+        <div class="heatmap-stats" style="margin: 10px 0; font-size: 0.9em; color: rgba(255,255,255,0.8);">
+          <p><strong>Activity Summary:</strong></p>
+          <p>• Total commits: ${totalCommits}</p>
+          <p>• Active days: ${daysWithCommits}</p>
+          <p>• Most commits in a day: ${maxCommits}</p>
+        </div>
+      `;
+    }
+    
+    html += `
+        <p><small>Visit <a href="https://github.com/m-idriss" target="_blank" rel="noopener noreferrer">github.com/m-idriss</a> for full activity</small></p>
+      </div>
+    `;
+    
+    container.innerHTML = html;
   }
 }
 
