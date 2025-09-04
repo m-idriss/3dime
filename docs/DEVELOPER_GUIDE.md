@@ -15,36 +15,52 @@ This guide provides comprehensive documentation for developers working on the 3d
 
 ## 🏗️ Architecture Overview
 
-3dime follows a **modular, component-based architecture** built with vanilla JavaScript ES6+ modules:
+3dime follows a **hybrid architecture** with a static frontend and optional PHP backend services:
 
 ```
 ┌─────────────────────────────────────────┐
-│                Frontend                 │
+│            Static Frontend              │
 ├─────────────────────────────────────────┤
 │ • Vanilla HTML5/CSS3/JavaScript         │
-│ • ES6+ Modules                          │
+│ • ES6+ Modules (no build process)       │
 │ • Progressive Web App (PWA)             │
 │ • Service Worker for offline support    │
+│ • JSON-LD structured data               │
+└─────────────────────────────────────────┘
+           │
+           ▼
+┌─────────────────────────────────────────┐
+│        Optional PHP Backend            │
+├─────────────────────────────────────────┤
+│ • Proxy services for external APIs      │
+│ • GitHub API integration               │
+│ • Twitter/X API integration            │
+│ • Trakt TV API integration             │
+│ • CORS handling & rate limit mgmt      │
 └─────────────────────────────────────────┘
            │
            ▼
 ┌─────────────────────────────────────────┐
 │            External APIs                │
 ├─────────────────────────────────────────┤
-│ • GitHub API (via PHP proxy)            │
+│ • GitHub API (commit activity)          │
+│ • Twitter/X API (social metrics)       │
+│ • Trakt TV API (entertainment data)    │
 │ • Font Awesome CDN                      │
 │ • Google Fonts CDN                      │
-│ • D3.js & Cal-heatmap CDNs             │
+│ • Cal-heatmap CDN                       │
 └─────────────────────────────────────────┘
 ```
 
 ### Key Design Principles
 
-1. **Progressive Enhancement** - Core functionality works without JavaScript
-2. **Graceful Degradation** - CDN failures don't break the site
-3. **Mobile-First** - Responsive design prioritizes mobile experience
-4. **Accessibility-First** - WCAG AA compliance by default
-5. **Performance-Focused** - Minimal dependencies, optimized loading
+1. **Static-First Architecture** - Core functionality works without server-side processing
+2. **Progressive Enhancement** - PHP services add enhanced features when available
+3. **Graceful Degradation** - CDN failures and API outages don't break the site
+4. **Mobile-First** - Responsive design prioritizes mobile experience
+5. **Accessibility-First** - WCAG AA compliance by default
+6. **Performance-Focused** - Minimal dependencies, optimized loading
+7. **Hosting Flexibility** - Deploy on static hosts or PHP-enabled servers
 
 ## 📁 File Structure
 
@@ -53,11 +69,24 @@ This guide provides comprehensive documentation for developers working on the 3d
 ├── assets/
 │   ├── js/
 │   │   ├── main.js           # Application entry point
-│   │   ├── config.js         # Configuration constants
+│   │   ├── config.js         # Configuration constants  
 │   │   ├── content.js        # Content loading & rendering
 │   │   ├── fallbacks.js      # CDN fallback management
 │   │   ├── heatmap.js        # GitHub activity visualization
 │   │   └── ui.js             # UI interactions & animations
+│   ├── styles-enhanced.css   # Main stylesheet
+│   ├── sw.js                 # Service worker
+│   └── manifest.json         # PWA manifest
+├── config/
+│   ├── config.php.example    # PHP configuration template
+│   └── proxy.php             # API proxy endpoint
+├── services/
+│   ├── github.php            # GitHub API service
+│   ├── twitter.php           # Twitter/X API service
+│   └── trakt.php             # Trakt TV API service
+├── content/
+│   └── content.json          # Legacy content (deprecated)
+├── structured-data.jsonld    # Schema.org structured data
 │   ├── styles-enhanced.css   # Main stylesheet with CSS variables
 │   ├── sw.js                 # Service worker for PWA
 │   ├── manifest.json         # PWA manifest
@@ -123,12 +152,79 @@ This guide provides comprehensive documentation for developers working on the 3d
 - Cal-heatmap (activity visualization)
 
 ### heatmap.js - GitHub Integration
-**Purpose**: GitHub activity visualization
+**Purpose**: GitHub activity visualization via PHP proxy
 
 **Key Functions**:
-- `loadHeatmapWithRetry()` - Robust GitHub API integration
-- Error handling for API failures
+- `loadHeatmapWithRetry()` - Robust GitHub API integration via `config/proxy.php`
+- `waitForLibraries()` - Ensures Cal-heatmap library availability
+- `renderHeatmap()` - Creates interactive commit activity visualization
+- `updateHeatmapTheme()` - Dynamic theme switching
+- Error handling for API failures and fallback display
 - Retry logic with exponential backoff
+
+**API Integration**:
+- Uses `CONFIG.ENDPOINTS.PROXY?service=github&type=commits`
+- Fetches commit activity data through PHP proxy
+- Handles CORS and rate limiting gracefully
+- Provides fallback link to GitHub profile on failure
+
+### ui.js - User Interface
+**Purpose**: Interactive UI components and theme management
+
+**Key Features**:
+- Theme switching (dark/white/glass modes)
+- Responsive navigation and mobile interactions
+- Smooth animations and micro-interactions
+- Accessibility-compliant interactive elements
+
+## 🔧 PHP Backend Services
+
+### config/proxy.php - API Gateway
+**Purpose**: Unified endpoint for external API calls
+
+**Supported Services**:
+- `?service=github` - GitHub user/repository data
+- `?service=github&type=commits` - Commit activity for heatmap
+- `?service=trakt` - Trakt TV movie statistics  
+- `?service=twitter` or `?service=x` - Twitter/X follower count
+
+**Features**:
+- CORS handling for browser compatibility
+- Rate limit management and error handling
+- Authentication token support
+- Graceful error responses with fallback data
+
+### services/github.php - GitHub API Integration
+**Purpose**: GitHub API wrapper with enhanced features
+
+**Functions**:
+- `fetchGithubData($type, $repo)` - Flexible GitHub data fetching
+- User statistics (followers, repositories, etc.)
+- Repository metrics (stars, forks, issues, etc.)
+- Commit activity data for heatmap visualization
+- Token-based authentication for higher rate limits
+
+**Security**:
+- Input validation and sanitization
+- Repository name validation with regex
+- Error code mapping and meaningful responses
+
+### services/twitter.php - Twitter/X API Integration
+**Purpose**: Twitter API v2 integration for social metrics
+
+**Functions**:
+- `fetchTwitterFollowers()` - Gets follower count via API v2
+- Username to user ID resolution
+- Public metrics extraction
+- Bearer token authentication
+
+### services/trakt.php - Trakt TV Integration
+**Purpose**: Entertainment tracking integration
+
+**Functions**:
+- `fetchTraktStats()` - Movie watching statistics
+- Trakt API v2 integration
+- Client ID authentication
 - Graceful degradation when offline
 
 ### ui.js - User Interface
@@ -144,17 +240,49 @@ This guide provides comprehensive documentation for developers working on the 3d
 
 ### 1. Setup Development Environment
 
+#### Option A: Static Mode (Basic Features)
 ```bash
 # Clone the repository
 git clone https://github.com/m-idriss/3dime.git
 cd 3dime
 
-# Start local development server
+# Start static development server
 python3 -m http.server 8000
+# OR
+npx serve .
 
 # Access the site
 open http://localhost:8000
 ```
+
+#### Option B: Enhanced Mode (All Features including PHP Services)
+```bash
+# Clone the repository  
+git clone https://github.com/m-idriss/3dime.git
+cd 3dime
+
+# Copy configuration template
+cp config/config.php.example config/config.php
+
+# Edit config.php with your API credentials (optional)
+nano config/config.php
+
+# Start PHP development server
+php -S localhost:8000
+
+# Access the site
+open http://localhost:8000
+```
+
+**Enhanced Mode Benefits**:
+- ✅ GitHub activity heatmap visualization
+- ✅ Real-time social media metrics  
+- ✅ External API integration with rate limiting
+- ✅ CORS handling for browser compatibility
+
+**Required for Enhanced Mode**:
+- PHP 7.4+ with curl extension
+- Optional: API tokens for external services (GitHub, Twitter, Trakt)
 
 ### 2. Making Changes
 
@@ -166,8 +294,8 @@ open http://localhost:8000
 
 ### 3. Testing Checklist
 
-**Manual Testing Requirements**:
-- ✅ Page loads completely with all sections
+**Core Functionality (Both Modes)**:
+- ✅ Page loads completely with all content sections
 - ✅ Social media links open in new tabs with `rel="noopener noreferrer"`
 - ✅ Technology links navigate to correct external sites
 - ✅ Email link opens mailto: correctly
@@ -176,11 +304,19 @@ open http://localhost:8000
 - ✅ Keyboard navigation functions properly
 - ✅ Screen reader accessibility validated
 
+**Enhanced Mode Additional Tests**:
+- ✅ GitHub activity heatmap loads and displays correctly
+- ✅ Heatmap fallback shows when PHP services unavailable
+- ✅ API proxy endpoints respond correctly (`/config/proxy.php?service=github`)
+- ✅ CORS headers allow browser requests
+- ✅ Rate limiting and error handling work gracefully
+
 **Console Validation**:
-- ✅ Service Worker registers successfully
+- ✅ Service Worker registers successfully (`SW registered`)
 - ✅ CDN fallbacks trigger appropriately when blocked
 - ✅ No JavaScript runtime errors
 - ✅ Graceful error handling for failed API calls
+- ✅ PHP errors logged appropriately (check server logs)
 
 ## 📏 Code Standards
 

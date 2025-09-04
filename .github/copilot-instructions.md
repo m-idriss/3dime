@@ -1,13 +1,19 @@
 # 3dime - Personal Social Hub Website
 
-3dime is a minimalistic static website serving as a personal social hub to regroup and share profiles & links in one place. It's built with vanilla HTML5, CSS3, and JavaScript with Progressive Web App (PWA) features.
+3dime is a hybrid static frontend with optional PHP backend services, serving as a personal social hub to regroup and share profiles & links in one place. It's built with vanilla HTML5, CSS3, and JavaScript with Progressive Web App (PWA) features.
+
+**Architecture**: The project follows a static-first approach where core functionality works without server-side processing, while optional PHP services provide enhanced features like GitHub activity heatmaps and real-time social metrics.
 
 **Always reference these instructions first and fallback to search or bash commands only when you encounter unexpected information that does not match the info here.**
 
 ## Working Effectively
 
 ### Bootstrap and Run the Application
-**NO BUILD PROCESS REQUIRED** - This is a static website with no dependencies to install.
+
+The project supports two modes:
+
+#### Static Mode (Basic Features)
+**NO BUILD PROCESS REQUIRED** - Core features work with static files only.
 
 - **Start local development server:**
   ```bash
@@ -18,23 +24,37 @@
   - Access at `http://localhost:8000`
   - **NEVER CANCEL** - Server runs continuously until stopped
 
+#### Enhanced Mode (All Features)
+**PHP BACKEND SERVICES** - Additional features with API integration.
+
+- **Start PHP development server:**
+  ```bash
+  cd /home/runner/work/3dime/3dime
+  php -S localhost:8000
+  ```
+  - Enables GitHub heatmap, social metrics, and API proxy services
+  - Requires PHP 7.4+ with curl extension
+  - Optional: API tokens for enhanced functionality
+
 - **Test the website:**
   - Open `http://localhost:8000` in browser  
   - Website loads in <2 seconds locally
   - All links and interactions should work
   - Logo click reloads the page (expected behavior)
+  - Enhanced mode: GitHub heatmap should load (if configured)
 
-### No Build, Test, or Lint Commands
+### No Build, Test, or Lint Commands for Frontend
 - **There is NO package.json, npm, webpack, or build tools**
 - **There are NO automated tests**
 - **There are NO linting tools configured**
-- This is a static website - files are served directly
+- This is a hybrid static website with optional PHP backend services
 
 ## Validation
 
 ### Manual Validation Requirements
 **ALWAYS perform these validation steps after making ANY changes:**
 
+#### Basic Validation (Static Mode)
 1. **Start local server:**
    ```bash
    python3 -m http.server 8000
@@ -49,6 +69,17 @@
    - Click contact email link
    - **Test logo click** - should reload the page
 
+#### Enhanced Validation (PHP Mode)
+1. **Start PHP server:**
+   ```bash
+   php -S localhost:8000
+   ```
+
+2. **Test PHP services:**
+   - Verify GitHub heatmap loads in the profile section
+   - Test API proxy: `curl "http://localhost:8000/config/proxy.php?service=github"`
+   - Check that enhanced features work or fail gracefully
+
 3. **Test responsive design:**
    - Resize browser window to mobile viewport (375x667)
    - Verify layout adapts correctly
@@ -57,7 +88,7 @@
 4. **Check browser console:**
    - Expected errors when running locally:
      - `Failed to load resource: net::ERR_BLOCKED_BY_CLIENT` (Font Awesome, Google Fonts)
-     - `Error fetching GitHub data: TypeError: Failed to fetch` (GitHub API)
+     - `Error fetching GitHub data: TypeError: Failed to fetch` (GitHub API - in restricted environments)
      - These are normal in restricted environments and work in production
 
 5. **Expected console success:**
@@ -84,29 +115,58 @@
 ### Key Files and Directories
 ```
 /home/runner/work/3dime/3dime/
-├── index.html              # Main entry point
+├── index.html                    # Main entry point
+├── structured-data.jsonld        # Schema.org structured data (primary content)
 ├── assets/
-│   ├── styles.css          # Main stylesheet
-│   ├── script.js           # Main JavaScript functionality
-│   ├── sw.js              # Service worker for PWA
-│   ├── manifest.json      # PWA manifest
-│   ├── background.jpg     # Background image
-│   ├── logo.png           # Site logo
-│   └── icons/             # PWA icons (16, 192, 512px)
+│   ├── js/                      # JavaScript modules (ES6+)
+│   │   ├── main.js             # Application entry point
+│   │   ├── config.js           # Configuration constants
+│   │   ├── content.js          # Content loading & rendering
+│   │   ├── heatmap.js          # GitHub activity visualization
+│   │   └── ui.js               # User interface interactions
+│   ├── styles-enhanced.css     # Main stylesheet
+│   ├── sw.js                   # Service worker for PWA
+│   ├── manifest.json           # PWA manifest
+│   ├── background.jpg          # Background image
+│   ├── logo.png                # Site logo
+│   └── icons/                  # PWA icons (16, 192, 512px)
+├── config/
+│   ├── config.php.example      # PHP configuration template
+│   └── proxy.php               # API proxy endpoint
+├── services/
+│   ├── github.php              # GitHub API service
+│   ├── twitter.php             # Twitter/X API service
+│   └── trakt.php               # Trakt TV API service
+├── docs/
+│   ├── DEVELOPER_GUIDE.md      # Technical documentation
+│   ├── PHP_SETUP_GUIDE.md      # PHP backend setup guide
+│   └── [other documentation]
 ├── content/
-│   └── content.json        # Dynamic content configuration
+│   └── content.json            # Legacy content (deprecated, use structured-data.jsonld)
 ├── .github/
 │   └── workflows/
 │       ├── deploy-on-ftp.yml      # Auto-deployment
 │       └── update-screenshot.yml  # Screenshot generation
-└── favicon.ico            # Site favicon
+└── favicon.ico                 # Site favicon
 ```
 
 ### Content Management
-- **Edit content**: Modify `content/content.json` to update:
+- **Primary content**: Edit `structured-data.jsonld` (Schema.org format) to update:
   - Profile information and social links
-  - Technology stack items
-  - Experience and project links
+  - Technology stack items (knowsAbout)
+  - Work experience and projects
+  - Education information
+  - Personal hobbies and interests
+  - Contact information
+
+- **Enhanced features**: Configure `config/config.php` for:
+  - GitHub API integration (activity heatmap)
+  - Twitter/X API (social metrics)
+  - Trakt TV API (entertainment data)
+
+- **Styling**: Edit `assets/styles-enhanced.css` for visual changes
+- **Functionality**: Edit JavaScript modules in `assets/js/` for behavior changes
+- **PWA settings**: Modify `assets/manifest.json` for app configuration
   - Education information
   - Personal recommendations and hobbies
   - Contact information
