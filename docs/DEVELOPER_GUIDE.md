@@ -34,8 +34,6 @@ This guide provides comprehensive documentation for developers working on the 3d
 ├─────────────────────────────────────────┤
 │ • Proxy services for external APIs      │
 │ • GitHub API integration               │
-│ • Twitter/X API integration            │
-│ • Trakt TV API integration             │
 │ • CORS handling & rate limit mgmt      │
 └─────────────────────────────────────────┘
            │
@@ -44,8 +42,6 @@ This guide provides comprehensive documentation for developers working on the 3d
 │            External APIs                │
 ├─────────────────────────────────────────┤
 │ • GitHub API (commit activity)          │
-│ • Twitter/X API (social metrics)       │
-│ • Trakt TV API (entertainment data)    │
 │ • Font Awesome CDN                      │
 │ • Google Fonts CDN                      │
 │ • Cal-heatmap CDN                       │
@@ -81,9 +77,7 @@ This guide provides comprehensive documentation for developers working on the 3d
 │   ├── config.php.example    # PHP configuration template
 │   └── proxy.php             # API proxy endpoint
 ├── services/
-│   ├── github.php            # GitHub API service
-│   ├── twitter.php           # Twitter/X API service
-│   └── trakt.php             # Trakt TV API service
+│   └── github.php            # GitHub API service
 ├── content/
 │   └── content.json          # Legacy content (deprecated)
 ├── structured-data.jsonld    # Schema.org structured data
@@ -185,8 +179,6 @@ This guide provides comprehensive documentation for developers working on the 3d
 **Supported Services**:
 - `?service=github` - GitHub user/repository data
 - `?service=github&type=commits` - Commit activity for heatmap
-- `?service=trakt` - Trakt TV movie statistics  
-- `?service=twitter` or `?service=x` - Twitter/X follower count
 
 **Features**:
 - CORS handling for browser compatibility
@@ -208,24 +200,6 @@ This guide provides comprehensive documentation for developers working on the 3d
 - Input validation and sanitization
 - Repository name validation with regex
 - Error code mapping and meaningful responses
-
-### services/twitter.php - Twitter/X API Integration
-**Purpose**: Twitter API v2 integration for social metrics
-
-**Functions**:
-- `fetchTwitterFollowers()` - Gets follower count via API v2
-- Username to user ID resolution
-- Public metrics extraction
-- Bearer token authentication
-
-### services/trakt.php - Trakt TV Integration
-**Purpose**: Entertainment tracking integration
-
-**Functions**:
-- `fetchTraktStats()` - Movie watching statistics
-- Trakt API v2 integration
-- Client ID authentication
-- Graceful degradation when offline
 
 ### ui.js - User Interface
 **Purpose**: Interactive UI components and animations
@@ -282,7 +256,7 @@ open http://localhost:8000
 
 **Required for Enhanced Mode**:
 - PHP 7.4+ with curl extension
-- Optional: API tokens for external services (GitHub, Twitter, Trakt)
+- Optional: GitHub API token for enhanced functionality
 
 ### 2. Making Changes
 

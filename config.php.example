@@ -8,15 +8,5 @@
 define('GITHUB_TOKEN', getenv('GITHUB_TOKEN') ?: '');
 define('GITHUB_USERNAME', 'm-idriss');
 define('GITHUB_REPO', '3dime');
-
-// Trakt API Configuration
-define('TRAKT_CLIENT_ID', 'your_trakt_client_id_here');
-
-// LinkedIn Configuration
-// Note: LinkedIn doesn't provide a public API for follower counts
-// This username is used for potential future integration or manual updates
-define('LI_USERNAME', 'your_linkedin_username');
-
-// Add any required token if needed (for future use)
-// define('LI_ACCESS_TOKEN', 'your_linkedin_token_here');
+?>
 ?>

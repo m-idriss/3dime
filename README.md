@@ -73,8 +73,6 @@ Perfect for developers, designers, content creators, and professionals who want 
 **Backend (Optional)**
 - PHP 7.4+ for API services
 - GitHub API integration
-- Twitter/X API integration
-- Trakt TV API integration
 - CORS-friendly proxy services
 
 </td>
@@ -167,11 +165,6 @@ open http://localhost:8000
    define('GITHUB_TOKEN', 'your_github_token_here');
    define('GITHUB_USERNAME', 'your-username');
    define('GITHUB_REPO', 'your-repo-name');
-   
-   // Optional: Social APIs
-   define('TRAKT_CLIENT_ID', 'your_trakt_key');
-   define('X_BEARER_TOKEN', 'your_twitter_token');
-   define('X_USERNAME', 'your_twitter_handle');
    ?>
    ```
 
