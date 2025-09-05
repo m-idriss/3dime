@@ -236,6 +236,34 @@ textarea:focus,
   font-size: 0.875rem;
 }
 
+/* Update indicator for heatmap refresh */
+.update-indicator {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 4px;
+  padding: 4px 8px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.update-spinner {
+  width: 16px;
+  height: 16px;
+}
+
+.update-spinner .spinner-circle {
+  width: 100%;
+  height: 100%;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
 /* Fallback styling for graceful degradation */
 .heatmap-fallback {
   background: var(--glass-bg);
