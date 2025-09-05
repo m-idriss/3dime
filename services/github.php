@@ -2,6 +2,11 @@
 // GitHub API service
 
 function fetchGithubData($type = 'user', $repo = null) {
+    // Check if required constants are defined
+    if (!defined('GITHUB_USERNAME') || !defined('GITHUB_REPO')) {
+        throw new Exception('GitHub configuration missing. Please check config.php file.', 500);
+    }
+    
     $username = GITHUB_USERNAME;
     if ($repo === null) {
         $repo = GITHUB_REPO;
@@ -27,7 +32,8 @@ function fetchGithubData($type = 'user', $repo = null) {
     curl_setopt($ch, CURLOPT_TIMEOUT, 10);
     
     // Add authentication if GitHub token is available
-    if (!empty(GITHUB_TOKEN)) {
+    $hasToken = defined('GITHUB_TOKEN') && !empty(GITHUB_TOKEN);
+    if ($hasToken) {
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
             'Authorization: token ' . GITHUB_TOKEN,
             'Accept: application/vnd.github.v3+json'
@@ -49,12 +55,14 @@ function fetchGithubData($type = 'user', $repo = null) {
     // Handle 403 errors: distinguish rate limit from auth errors
     if ($httpCode === 403) {
         $errorMessage = is_array($data) && isset($data['message']) ? strtolower($data['message']) : '';
-        if (strpos($errorMessage, 'rate limit') !== false) {
-            throw new Exception('Rate limit exceeded: ' . ($data['message'] ?? 'GitHub API rate limit reached'), 429);
+        if (strpos($errorMessage, 'rate limit') !== false || strpos($errorMessage, 'api rate limit exceeded') !== false) {
+            $tokenHint = $hasToken ? '' : ' Consider adding a GitHub token to config.php for higher rate limits.';
+            throw new Exception('Rate limit exceeded: ' . ($data['message'] ?? 'GitHub API rate limit reached') . $tokenHint, 429);
         } elseif (strpos($errorMessage, 'bad credentials') !== false) {
             throw new Exception('Authentication failed: ' . ($data['message'] ?? 'Bad credentials'), 401);
         } else {
-            throw new Exception('Forbidden: ' . ($data['message'] ?? 'Access forbidden'), 403);
+            $tokenHint = $hasToken ? '' : ' This may be due to rate limiting. Consider adding a GitHub token to config.php.';
+            throw new Exception('Forbidden: ' . ($data['message'] ?? 'Access forbidden') . $tokenHint, 403);
         }
     }
 

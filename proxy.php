@@ -1,4 +1,14 @@
 <?php
+// Check if config.php exists
+if (!file_exists('config.php')) {
+    header('Content-Type: application/json');
+    http_response_code(500);
+    echo json_encode([
+        'error' => 'Configuration file missing. Please copy config.php.example to config.php and configure GitHub credentials.'
+    ]);
+    exit;
+}
+
 require_once 'config.php';
 require_once 'services/trakt.php';
 require_once 'services/github.php';
