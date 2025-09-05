@@ -38,13 +38,6 @@ Open `config/config.php` and update with your credentials:
 define('GITHUB_TOKEN', 'ghp_your_token_here');
 define('GITHUB_USERNAME', 'your-username');
 define('GITHUB_REPO', 'your-main-repo');
-
-// Optional: Twitter/X API
-define('X_BEARER_TOKEN', 'your_bearer_token');
-define('X_USERNAME', 'your_twitter_handle');
-
-// Optional: Trakt TV API
-define('TRAKT_CLIENT_ID', 'your_trakt_client_id');
 ?>
 ```
 
@@ -72,21 +65,13 @@ curl "http://localhost:8000/proxy.php?service=github&type=commits"
 
 **Benefits**: Higher rate limits (5,000/hour vs 60/hour)
 
-### Twitter/X Bearer Token (Optional)
+### ⚠️ Removed Services
 
-1. Apply for [Twitter Developer Account](https://developer.twitter.com/)
-2. Create an app and get Bearer Token
-3. Add to `config.php`
+The following services have been removed as of the latest version:
+- **Twitter/X API integration**: Removed to simplify the codebase
+- **Trakt TV API integration**: Removed to simplify the codebase
 
-**Features**: Real-time follower count display
-
-### Trakt Client ID (Optional)
-
-1. Register at [Trakt API](https://trakt.tv/oauth/applications)
-2. Create an application
-3. Copy Client ID to `config.php`
-
-**Features**: Movie watching statistics
+Social media links remain available as static links in the website.
 
 ## 🛠️ Deployment
 
@@ -157,7 +142,6 @@ When PHP services fail, 3dime gracefully falls back to:
 
 See detailed API documentation:
 - [GitHub API Docs](services/GITHUB_API_DOCS.md)
-- [Twitter Configuration](services/TWITTER_CONFIG.md)
 
 ## 🔒 Security Best Practices
 
