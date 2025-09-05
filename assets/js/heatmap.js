@@ -50,11 +50,6 @@ export async function loadHeatmapWithRetry(retries = 3, delay = 1000) {
       try {
         await loadHeatmap();
         
-        // Add refresh button after successful load for user control
-        setTimeout(() => {
-          addRefreshButton();
-        }, 500);
-        
         return; // success → stop retrying
       } catch (err) {
         console.warn(`Heatmap load failed (attempt ${i + 1}/${retries})`, err);
@@ -303,60 +298,3 @@ export function updateHeatmapTheme() {
   }
 }
 
-/* =========================
-   Force Heatmap Update (for manual refresh)
-   ========================= */
-export async function updateHeatmap() {
-  // Force refresh the heatmap data from GitHub
-  await loadHeatmap(true);
-}
-
-/* =========================
-   Add manual refresh button (for testing and user control)
-   ========================= */
-export function addRefreshButton() {
-  const container = document.getElementById(CONFIG.IDS.HEATMAP_CONTAINER);
-  if (!container) return;
-  
-  // Check if refresh button already exists
-  if (container.querySelector('.heatmap-refresh-btn')) return;
-  
-  const refreshBtn = document.createElement('button');
-  refreshBtn.className = 'heatmap-refresh-btn';
-  refreshBtn.innerHTML = '🔄 Refresh';
-  refreshBtn.style.cssText = `
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background: rgba(0, 123, 255, 0.8);
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 4px 8px;
-    font-size: 12px;
-    cursor: pointer;
-    z-index: 10;
-    transition: background 0.2s;
-  `;
-  refreshBtn.title = 'Refresh GitHub activity data';
-  
-  refreshBtn.addEventListener('click', async () => {
-    console.log('Manual heatmap refresh triggered');
-    await updateHeatmap();
-  });
-  
-  refreshBtn.addEventListener('mouseenter', () => {
-    refreshBtn.style.background = 'rgba(0, 123, 255, 1)';
-  });
-  
-  refreshBtn.addEventListener('mouseleave', () => {
-    refreshBtn.style.background = 'rgba(0, 123, 255, 0.8)';
-  });
-  
-  // Make container relative if it isn't already
-  if (container.style.position !== 'relative') {
-    container.style.position = 'relative';
-  }
-  
-  container.appendChild(refreshBtn);
-}
