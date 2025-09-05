@@ -180,19 +180,62 @@ export function updateThemeColor(theme) {
   const themeColorMeta = document.getElementById('theme-color-meta');
   if (!themeColorMeta) return;
   
+  let themeColor;
+  
   switch(theme) {
     case 'dark':
-      themeColorMeta.setAttribute('content', '#000000');
+      themeColor = '#000000';
       break;
     case 'white':
-      themeColorMeta.setAttribute('content', '#ffffff');
+      themeColor = '#ffffff';
       break;
     case 'glass':
       // Glass theme uses dark theme browser color as specified in issue
-      themeColorMeta.setAttribute('content', '#000000');
+      themeColor = '#000000';
       break;
     default:
-      themeColorMeta.setAttribute('content', '#000000');
+      themeColor = '#000000';
+  }
+  
+  // Update HTML meta tag for mobile browser status bar
+  themeColorMeta.setAttribute('content', themeColor);
+  
+  // Update PWA manifest theme_color dynamically for enhanced mobile browser support
+  updateManifestThemeColor(themeColor);
+}
+
+// Cache the original manifest data on first load
+let originalManifest = null;
+
+async function updateManifestThemeColor(themeColor) {
+  try {
+    const manifestLink = document.querySelector('link[rel="manifest"]');
+    if (!manifestLink) return;
+    
+    // Load the original manifest only once
+    if (!originalManifest) {
+      // If manifest is already a blob URL, we can't fetch it, so skip manifest update
+      if (manifestLink.href.startsWith('blob:')) {
+        console.warn('Manifest already modified, skipping theme color update');
+        return;
+      }
+      
+      const manifestResponse = await fetch(manifestLink.href);
+      originalManifest = await manifestResponse.json();
+    }
+    
+    // Create a copy of the original manifest with updated theme_color
+    const updatedManifest = { ...originalManifest, theme_color: themeColor };
+    
+    // Create a new blob with updated manifest
+    const manifestBlob = new Blob([JSON.stringify(updatedManifest)], { type: 'application/json' });
+    const manifestUrl = URL.createObjectURL(manifestBlob);
+    
+    // Update the manifest link to point to the new blob
+    manifestLink.href = manifestUrl;
+    
+  } catch (error) {
+    console.warn('Failed to update manifest theme color:', error);
   }
 }
 
