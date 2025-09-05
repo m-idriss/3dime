@@ -55,10 +55,10 @@ define('TRAKT_CLIENT_ID', 'your_trakt_client_id');
 php -S localhost:8000
 
 # Test GitHub API proxy
-curl "http://localhost:8000/config/proxy.php?service=github"
+curl "http://localhost:8000/proxy.php?service=github"
 
 # Test commit data for heatmap
-curl "http://localhost:8000/config/proxy.php?service=github&type=commits"
+curl "http://localhost:8000/proxy.php?service=github&type=commits"
 ```
 
 ## 🔑 API Token Setup
@@ -121,6 +121,12 @@ sudo systemctl start php7.4-fpm nginx
 - Check PHP curl extension is installed
 - Verify API tokens are correct
 - Check server error logs
+
+**GitHub Heatmap Not Loading**:
+- Ensure `config.php` exists (copy from `config.php.example`)
+- Set `GITHUB_USERNAME` and `GITHUB_REPO` in config.php
+- Add `GITHUB_TOKEN` for higher rate limits (optional but recommended)
+- Check that commit data endpoint works: `curl "yoursite.com/proxy.php?service=github&type=commits"`
 
 **CORS Errors**:
 - Ensure `proxy.php` includes proper CORS headers
