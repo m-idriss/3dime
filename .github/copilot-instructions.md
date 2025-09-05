@@ -135,8 +135,6 @@ The project supports two modes:
 │   └── proxy.php               # API proxy endpoint
 ├── services/
 │   ├── github.php              # GitHub API service
-│   ├── twitter.php             # Twitter/X API service
-│   └── trakt.php               # Trakt TV API service
 ├── docs/
 │   ├── DEVELOPER_GUIDE.md      # Technical documentation
 │   ├── PHP_SETUP_GUIDE.md      # PHP backend setup guide
@@ -161,8 +159,6 @@ The project supports two modes:
 
 - **Enhanced features**: Configure `config/config.php` for:
   - GitHub API integration (activity heatmap)
-  - Twitter/X API (social metrics)
-  - Trakt TV API (entertainment data)
 
 - **Styling**: Edit `assets/styles-enhanced.css` for visual changes
 - **Functionality**: Edit JavaScript modules in `assets/js/` for behavior changes
