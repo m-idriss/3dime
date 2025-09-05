@@ -173,8 +173,7 @@ function createProfileSection(ldData) {
     { url: 'linkedin.com', iconClass: 'fa-brands fa-linkedin', name: 'LinkedIn' },
     { url: 'x.com', iconClass: 'fa-brands fa-x-twitter', name: 'Twitter' },
     { url: 'facebook.com', iconClass: 'fa-brands fa-facebook-square', name: 'Facebook' },
-    { url: 'instagram.com', iconClass: 'fa-brands fa-instagram', name: 'Instagram' },
-    { url: 'trakt.tv', iconClass: 'fa-solid fa-photo-film', name: 'Trakt' }
+    { url: 'instagram.com', iconClass: 'fa-brands fa-instagram', name: 'Instagram' }
   ];
 
   ldData.sameAs.forEach(url => {
