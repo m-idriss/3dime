@@ -41,28 +41,117 @@ function waitForLibraries(timeout = 10000) {
 /* =========================
    Heatmap Loading with Retry
    ========================= */
-export async function loadHeatmapWithRetry(retries = 3, delay = 1000) {
+export async function loadHeatmapWithRetry(maxRetries = 5, initialDelay = 1000, maxDelay = 10000) {
   try {
     // Wait for external libraries to be ready
     await waitForLibraries();
     
-    for (let i = 0; i < retries; i++) {
+    for (let attempt = 0; attempt < maxRetries; attempt++) {
       try {
         await loadHeatmap();
         
+        // Success - log the attempt if it took more than one try
+        if (attempt > 0) {
+          console.log(`GitHub data loaded successfully on attempt ${attempt + 1}`);
+        }
         return; // success → stop retrying
       } catch (err) {
-        console.warn(`Heatmap load failed (attempt ${i + 1}/${retries})`, err);
-        if (i < retries - 1) {
-          await new Promise(res => setTimeout(res, delay));
+        const isLastAttempt = attempt === maxRetries - 1;
+        console.warn(`Heatmap load failed (attempt ${attempt + 1}/${maxRetries})`, err);
+        
+        if (!isLastAttempt) {
+          // Determine if this error should trigger a retry
+          const shouldRetry = isRetriableError(err);
+          
+          if (shouldRetry) {
+            // Exponential backoff with jitter to avoid thundering herd
+            const backoffDelay = Math.min(
+              initialDelay * Math.pow(2, attempt) + Math.random() * 1000,
+              maxDelay
+            );
+            
+            console.log(`Retrying in ${Math.round(backoffDelay)}ms...`);
+            await new Promise(res => setTimeout(res, backoffDelay));
+          } else {
+            console.warn('Error is not retriable, stopping retry attempts');
+            break;
+          }
         }
       }
     }
+    
+    // All retries exhausted
+    console.warn('All retry attempts exhausted, showing fallback');
+    showHeatmapFallback();
+    
   } catch (err) {
     console.warn('Heatmap initialization failed:', err.message);
     // Show user-friendly fallback message
     showHeatmapFallback();
   }
+}
+
+/* =========================
+   Error Analysis for Retry Logic
+   ========================= */
+function isRetriableError(error) {
+  const errorMessage = error.message?.toLowerCase() || '';
+  const errorString = error.toString().toLowerCase();
+  
+  // Don't retry for authentication errors or other client errors first
+  const nonRetriableStatuses = ['400', '401', '403', '404', '405', '406', '409', '410', '422'];
+  for (const status of nonRetriableStatuses) {
+    if (errorMessage.includes(status) || errorString.includes(status)) {
+      return false;
+    }
+  }
+  
+  // Network-related errors that should be retried
+  const networkErrors = [
+    'failed to fetch',
+    'network error',
+    'timeout',
+    'connection',
+    'net::err_',
+    'dns',
+    'unable to connect'
+  ];
+  
+  // HTTP status codes that should be retried
+  const retriableStatuses = [
+    '429', // Too Many Requests (rate limiting)
+    '500', // Internal Server Error
+    '502', // Bad Gateway
+    '503', // Service Unavailable
+    '504', // Gateway Timeout
+    '520', // Unknown Error (Cloudflare)
+    '521', // Web Server Is Down (Cloudflare)
+    '522', // Connection Timed Out (Cloudflare)
+    '523', // Origin Is Unreachable (Cloudflare)
+    '524'  // A Timeout Occurred (Cloudflare)
+  ];
+  
+  // Check for network-related errors
+  for (const networkError of networkErrors) {
+    if (errorMessage.includes(networkError) || errorString.includes(networkError)) {
+      return true;
+    }
+  }
+  
+  // Check for retriable HTTP status codes
+  for (const status of retriableStatuses) {
+    if (errorMessage.includes(status) || errorString.includes(status)) {
+      return true;
+    }
+  }
+  
+  // GitHub-specific retriable errors
+  if (errorMessage.includes('rate limit') || errorMessage.includes('api rate limit')) {
+    return true;
+  }
+  
+  // Default to not retrying for unknown errors to avoid infinite loops
+  return false;
 }
 
 function showLoadingState() {
@@ -150,12 +239,8 @@ export async function loadHeatmap(isUpdate = false) {
       showLoadingState();
     }
     
-    const response = await fetch(`${CONFIG.ENDPOINTS.PROXY}?service=github&type=commits`);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch commit data: ${response.status}`);
-    }
-    
-    const data = await response.json();
+    // Fetch data with retry logic
+    const data = await fetchGitHubDataWithRetry();
     const commitActivity = data.commit_activity;
     
     if (!commitActivity || !Array.isArray(commitActivity)) {
@@ -193,7 +278,64 @@ export async function loadHeatmap(isUpdate = false) {
     }
     
     showHeatmapFallback();
+    throw error; // Re-throw for upper-level retry logic
   }
+}
+
+/* =========================
+   GitHub Data Fetching with Retry
+   ========================= */
+async function fetchGitHubDataWithRetry(maxRetries = 3, initialDelay = 500) {
+  let lastError;
+  
+  for (let attempt = 0; attempt < maxRetries; attempt++) {
+    try {
+      const response = await fetch(`${CONFIG.ENDPOINTS.PROXY}?service=github&type=commits`, {
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      });
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        let errorData;
+        
+        try {
+          errorData = JSON.parse(errorText);
+        } catch {
+          errorData = { error: errorText };
+        }
+        
+        const error = new Error(`Failed to fetch commit data: ${response.status} - ${errorData.error || response.statusText}`);
+        error.status = response.status;
+        error.response = errorData;
+        throw error;
+      }
+      
+      const data = await response.json();
+      
+      // Validate that we received meaningful data
+      if (!data || typeof data !== 'object') {
+        throw new Error('Invalid response format: expected object');
+      }
+      
+      return data;
+      
+    } catch (error) {
+      lastError = error;
+      const isLastAttempt = attempt === maxRetries - 1;
+      
+      if (!isLastAttempt && isRetriableError(error)) {
+        const delay = initialDelay * Math.pow(2, attempt) + Math.random() * 200;
+        console.log(`Fetch attempt ${attempt + 1} failed, retrying in ${Math.round(delay)}ms:`, error.message);
+        await new Promise(resolve => setTimeout(resolve, delay));
+      } else {
+        break;
+      }
+    }
+  }
+  
+  throw lastError;
 }
 
 function renderHeatmap(commitSource) {

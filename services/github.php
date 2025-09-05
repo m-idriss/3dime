@@ -26,17 +26,113 @@ function fetchGithubData($type = 'user', $repo = null) {
         $apiUrl = "https://api.github.com/users/$username";
     }
     
+    // Attempt the API call with retry logic
+    return executeGitHubApiCallWithRetry($apiUrl, $type);
+}
+
+function executeGitHubApiCallWithRetry($apiUrl, $type, $maxRetries = 3, $baseDelay = 1) {
+    $lastException = null;
+    
+    for ($attempt = 0; $attempt < $maxRetries; $attempt++) {
+        try {
+            $result = executeGitHubApiCall($apiUrl, $type);
+            
+            // For commit activity, validate that we got meaningful data
+            if ($type === 'commits') {
+                if (!is_array($result['commit_activity']) || empty($result['commit_activity'])) {
+                    // GitHub sometimes returns 202 with empty data while stats are being computed
+                    if ($attempt < $maxRetries - 1) {
+                        $delay = $baseDelay * pow(2, $attempt) + (rand(0, 1000) / 1000);
+                        error_log("GitHub stats not ready, waiting {$delay}s before retry " . ($attempt + 1) . "/$maxRetries");
+                        sleep($delay);
+                        continue;
+                    }
+                }
+            }
+            
+            return $result;
+            
+        } catch (Exception $e) {
+            $lastException = $e;
+            $code = $e->getCode();
+            $isLastAttempt = ($attempt === $maxRetries - 1);
+            
+            // Determine if this error should trigger a retry
+            $shouldRetry = isRetriableGitHubError($code, $e->getMessage());
+            
+            if (!$isLastAttempt && $shouldRetry) {
+                // Exponential backoff with jitter
+                $delay = $baseDelay * pow(2, $attempt) + (rand(0, 1000) / 1000);
+                error_log("GitHub API call failed (attempt " . ($attempt + 1) . "/$maxRetries): " . $e->getMessage() . ". Retrying in {$delay}s");
+                sleep($delay);
+            } else {
+                break;
+            }
+        }
+    }
+    
+    // All retries exhausted or non-retriable error
+    throw $lastException;
+}
+
+function isRetriableGitHubError($httpCode, $message) {
+    // Don't retry client errors (4xx except 429)
+    if ($httpCode >= 400 && $httpCode < 500 && $httpCode !== 429) {
+        return false;
+    }
+    
+    // Rate limiting should definitely be retried
+    if ($httpCode === 429) {
+        return true;
+    }
+    
+    // Server errors are generally retriable
+    if ($httpCode >= 500 && $httpCode < 600) {
+        return true;
+    }
+    
+    // GitHub-specific cases that should be retried
+    $retriableMessages = [
+        'timeout',
+        'connection',
+        'network',
+        'temporarily unavailable',
+        'service unavailable',
+        'rate limit'
+    ];
+    
+    $lowerMessage = strtolower($message);
+    foreach ($retriableMessages as $pattern) {
+        if (strpos($lowerMessage, $pattern) !== false) {
+            return true;
+        }
+    }
+    
+    // Default to not retrying for unknown errors
+    return false;
+}
+
+function executeGitHubApiCall($apiUrl, $type) {
     $ch = curl_init($apiUrl);
     curl_setopt($ch, CURLOPT_USERAGENT, '3dime-proxy-script');
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 15);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    curl_setopt($ch, CURLOPT_MAXREDIRS, 3);
     
     // Add authentication if GitHub token is available
     $hasToken = defined('GITHUB_TOKEN') && !empty(GITHUB_TOKEN);
     if ($hasToken) {
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
             'Authorization: token ' . GITHUB_TOKEN,
-            'Accept: application/vnd.github.v3+json'
+            'Accept: application/vnd.github.v3+json',
+            'User-Agent: 3dime-proxy-script'
+        ]);
+    } else {
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Accept: application/vnd.github.v3+json',
+            'User-Agent: 3dime-proxy-script'
         ]);
     }
     
@@ -64,6 +160,11 @@ function fetchGithubData($type = 'user', $repo = null) {
             $tokenHint = $hasToken ? '' : ' This may be due to rate limiting. Consider adding a GitHub token to config.php.';
             throw new Exception('Forbidden: ' . ($data['message'] ?? 'Access forbidden') . $tokenHint, 403);
         }
+    }
+
+    // Handle 202 response for commit activity (stats being computed)
+    if ($httpCode === 202 && $type === 'commits') {
+        throw new Exception('GitHub stats are being computed, please try again in a few moments', 202);
     }
 
     if ($httpCode !== 200) {
