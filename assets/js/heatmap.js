@@ -41,7 +41,7 @@ function waitForLibraries(timeout = 10000) {
 /* =========================
    Heatmap Loading with Retry
    ========================= */
-export async function loadHeatmapWithRetry(retries = 3, delay = 5000) {
+export async function loadHeatmapWithRetry(retries = 3, delay = 1000) {
   try {
     // Wait for external libraries to be ready
     await waitForLibraries();
@@ -80,7 +80,6 @@ function showHeatmapFallback() {
 
 // Store heatmap data and instance for re-rendering
 let heatmapData = null;
-let heatmapInstance = null;
 
 export async function loadHeatmap() {
   try {
@@ -127,8 +126,7 @@ function renderHeatmap(commitSource) {
   }
 
   const cal = new CalHeatmap();
-  heatmapInstance = cal; // Store instance for potential future use
-  
+
   cal.paint({
     itemSelector: CONFIG.SELECTORS.HEATMAP_CONTAINER,
     domain: {
