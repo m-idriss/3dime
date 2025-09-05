@@ -96,4 +96,3 @@ function fetchGithubData($type = 'user', $repo = null) {
         ];
     }
 }
-?>
