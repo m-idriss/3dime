@@ -88,7 +88,6 @@ function showUpdatingState() {
   const container = document.getElementById(CONFIG.IDS.HEATMAP_CONTAINER);
   if (container) {
     // Show updating indicator without completely clearing the existing heatmap
-    const existingContent = container.innerHTML;
     container.style.opacity = '0.5';
     
     // Add a small update indicator
