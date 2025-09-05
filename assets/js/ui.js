@@ -204,16 +204,23 @@ export function updateThemeColor(theme) {
   updateManifestThemeColor(themeColor);
 }
 
-// Cache the original manifest data on first load
-let originalManifest = null;
-
 async function updateManifestThemeColor(themeColor) {
+  // Use closure to store cache within function scope, avoiding module-level state pollution
+  if (!updateManifestThemeColor._cache) {
+    updateManifestThemeColor._cache = {
+      originalManifest: null,
+      previousBlobUrl: null
+    };
+  }
+  
+  const cache = updateManifestThemeColor._cache;
+  
   try {
     const manifestLink = document.querySelector('link[rel="manifest"]');
     if (!manifestLink) return;
     
     // Load the original manifest only once
-    if (!originalManifest) {
+    if (!cache.originalManifest) {
       // If manifest is already a blob URL, we can't fetch it, so skip manifest update
       if (manifestLink.href.startsWith('blob:')) {
         console.warn('Manifest already modified, skipping theme color update');
@@ -221,18 +228,26 @@ async function updateManifestThemeColor(themeColor) {
       }
       
       const manifestResponse = await fetch(manifestLink.href);
-      originalManifest = await manifestResponse.json();
+      cache.originalManifest = await manifestResponse.json();
     }
     
     // Create a copy of the original manifest with updated theme_color
-    const updatedManifest = { ...originalManifest, theme_color: themeColor };
+    const updatedManifest = { ...cache.originalManifest, theme_color: themeColor };
     
     // Create a new blob with updated manifest
     const manifestBlob = new Blob([JSON.stringify(updatedManifest)], { type: 'application/json' });
     const manifestUrl = URL.createObjectURL(manifestBlob);
     
+    // Revoke previous blob URL to prevent memory leaks
+    if (cache.previousBlobUrl) {
+      URL.revokeObjectURL(cache.previousBlobUrl);
+    }
+    
     // Update the manifest link to point to the new blob
     manifestLink.href = manifestUrl;
+    
+    // Store the new blob URL for cleanup on next call
+    cache.previousBlobUrl = manifestUrl;
     
   } catch (error) {
     console.warn('Failed to update manifest theme color:', error);
