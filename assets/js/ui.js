@@ -306,6 +306,88 @@ export function setupLogoReload() {
   });
 }
 
+export function setupBackToTop() {
+  const backToTopBtn = document.getElementById(CONFIG.IDS.BACK_TO_TOP_BTN);
+  if (!backToTopBtn) {
+    console.warn('setupBackToTop: Back to top button not found');
+    return;
+  }
+
+  let isScrolling = false;
+
+  // Handle scroll events to show/hide the button
+  function handleScroll() {
+    if (isScrolling) return;
+    
+    isScrolling = true;
+    requestAnimationFrame(() => {
+      // Use multiple methods to get scroll position for better compatibility
+      const scrollY = window.pageYOffset || window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+      
+      if (scrollY > CONFIG.BACK_TO_TOP_THRESHOLD) {
+        backToTopBtn.classList.add('visible');
+      } else {
+        backToTopBtn.classList.remove('visible');
+      }
+      
+      isScrolling = false;
+    });
+  }
+
+  // Smooth scroll to top function
+  function scrollToTop() {
+    // Check if user prefers reduced motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    
+    if (prefersReducedMotion) {
+      // Instant scroll for reduced motion
+      window.scrollTo({ top: 0 });
+    } else {
+      // Smooth scroll animation
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+    
+    // Focus management for accessibility
+    // Focus the skip link or main content after scrolling
+    setTimeout(() => {
+      const mainContent = document.getElementById('main-content');
+      if (mainContent) {
+        mainContent.focus();
+      }
+    }, prefersReducedMotion ? 0 : 300);
+  }
+
+  // Add event listeners with multiple approaches for better compatibility
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  document.addEventListener('scroll', handleScroll, { passive: true });
+  
+  // Also listen for resize and orientationchange events that might affect scroll
+  window.addEventListener('resize', handleScroll, { passive: true });
+  window.addEventListener('orientationchange', handleScroll, { passive: true });
+  
+  backToTopBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    scrollToTop();
+  });
+
+  // Keyboard accessibility
+  backToTopBtn.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      scrollToTop();
+    }
+  });
+
+  // Initial state check
+  handleScroll();
+  
+  // Also check scroll state after a short delay to catch any initial scroll position
+  setTimeout(handleScroll, 100);
+}
+
 export function toggleVideoBackground() {
   const currentBg = getCurrentBackground();
   
