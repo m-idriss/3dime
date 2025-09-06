@@ -4,7 +4,7 @@
 
 import { CONFIG } from './config.js';
 import { loadHeatmapWithRetry } from './heatmap.js';
-import { setupLogoReload, setupBurgerMenu } from './ui.js';
+import { setupLogoReload, setupBurgerMenu, setupBackToTop } from './ui.js';
 
 /* =========================
    Security Utilities
@@ -124,6 +124,7 @@ export async function loadContent() {
   
   setupLogoReload();
   setupBurgerMenu();
+  setupBackToTop();
 }
 
 function createProfileSection(ldData) {

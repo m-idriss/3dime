@@ -50,6 +50,9 @@ export const CONFIG = {
   /** @type {number} Duration in milliseconds for CSS fade transitions */
   FADE_TIMEOUT: 400,
   
+  /** @type {number} Scroll threshold in pixels to show back-to-top button */
+  BACK_TO_TOP_THRESHOLD: 200,
+  
   // ===== API CONFIGURATION =====
   
   /**
@@ -96,6 +99,9 @@ export const CONFIG = {
     
     /** @type {string} Video background toggle button ID */
     VIDEO_BG_TOGGLE: 'video-bg-toggle',
+    
+    /** @type {string} Back to top button ID */
+    BACK_TO_TOP_BTN: 'back-to-top-btn',
     
     /** @type {string} GitHub heatmap visualization container ID */
     HEATMAP_CONTAINER: 'heatmap-container'

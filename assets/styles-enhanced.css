@@ -1252,3 +1252,90 @@ body.notifications-off .badge {
     transform: none !important;
   }
 }
+
+/* ========================
+   Back to Top Button
+   ======================== */
+.back-to-top-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  background: var(--primary-bg);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-full);
+  color: var(--text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  box-shadow: var(--shadow-card);
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px) scale(0.8);
+  transition: all var(--t-medium);
+}
+
+.back-to-top-btn.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.back-to-top-btn:hover {
+  background: var(--primary-bg-hover);
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-2px) scale(1.05);
+}
+
+.back-to-top-btn:active {
+  transform: translateY(0) scale(0.95);
+}
+
+.back-to-top-btn:focus-visible {
+  outline: 3px solid var(--accent-color);
+  outline-offset: 3px;
+  box-shadow: 
+    0 0 0 6px rgba(59, 130, 246, 0.2),
+    var(--shadow-card-hover);
+}
+
+.back-to-top-btn i {
+  transition: transform var(--t-fast);
+}
+
+.back-to-top-btn:hover i {
+  transform: translateY(-2px);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .back-to-top-btn {
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.125rem;
+  }
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .back-to-top-btn {
+    transition: opacity var(--t-fast), visibility var(--t-fast);
+    transform: none !important;
+  }
+  
+  .back-to-top-btn:hover,
+  .back-to-top-btn:active {
+    transform: none !important;
+  }
+  
+  .back-to-top-btn:hover i {
+    transform: none !important;
+  }
+}
