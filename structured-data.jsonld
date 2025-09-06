@@ -74,13 +74,13 @@
     {
       "@type": "EducationalOrganization", 
       "name": "Aries Ecole Sup d'Infographie 3D",
-      "url": "https://www.brassart.fr"
+      "url": "https://www.brassart.fr/ecole/histoire#history"
     },
     {
       "@type": "EducationalOrganization",
       "name": "IUT Aix-Marseille",
       "description": "DUT Génie Thermique & Énergie",
-      "url": "https://iut.univ-amu.fr"
+      "url": "https://iut.univ-amu.fr/fr/formations/bachelor-universitaire-de-technologie/but-metiers-transition-efficacite-energetiques"
     }
   ],
   "workExperience": [
@@ -112,7 +112,7 @@
     {
       "@type": "Thing",
       "name": "PFT Energies Propres",
-      "url": "https://www.univ-amu.fr"
+      "url": "https://www.univ-amu.fr/fr/public/plateformes-technologique-labellisees-de-linstitut"
     },
     {
       "@type": "Organization",
@@ -149,7 +149,7 @@
     {
       "@type": "Thing",
       "name": "Remington Electric Shaver for Bald",
-      "url": "https://www.remington-europe.com"
+      "url": "https://www.amazon.fr/Remington-Electrique-Résultat-Flexibles-Utilisation/dp/B09RNCQSJL/"
     },
     {
       "@type": "Thing",
@@ -195,7 +195,7 @@
     {
       "@type": "Game",
       "name": "Scrabble",
-      "url": "https://scrabblewordchecker.com"
+      "url": "https://www.clicmouse.fr/scra/"
     },
     {
       "@type": "Thing",
