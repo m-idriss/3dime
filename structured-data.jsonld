@@ -124,17 +124,17 @@
     {
       "@type": "Thing",
       "name": "Apple MacBook Pro 14",
-      "url": "https://www.apple.com/en/macbook-pro/"
+      "url": "https://www.apple.com/macbook-pro/"
     },
     {
       "@type": "Thing",
       "name": "Apple iPhone",
-      "url": "https://www.apple.com/en/iphone/"
+      "url": "https://www.apple.com/iphone/"
     },
     {
       "@type": "Thing",
       "name": "Apple AirPods Pro",
-      "url": "https://www.apple.com/en/airpods-pro/"
+      "url": "https://www.apple.com/airpods-pro/"
     },
     {
       "@type": "Thing",
@@ -195,7 +195,7 @@
     {
       "@type": "Game",
       "name": "Scrabble",
-      "url": "https://www.clicmouse.fr/scra/"
+      "url": "https://scrabblewordchecker.com/"
     },
     {
       "@type": "Thing",
