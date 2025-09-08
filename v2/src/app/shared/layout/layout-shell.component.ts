@@ -9,6 +9,11 @@ import { FooterComponent } from './footer.component';
   standalone: true,
   imports: [RouterOutlet, SkipLinksComponent, HeaderComponent, FooterComponent],
   template: `
+    <!-- Background Video -->
+    <video class="background-video" autoplay muted loop playsinline>
+      <source src="background.mp4" type="video/mp4">
+    </video>
+    
     <app-skip-links></app-skip-links>
     
     <div class="layout-shell">
@@ -22,19 +27,33 @@ import { FooterComponent } from './footer.component';
     </div>
   `,
   styles: [`
+    .background-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -3;
+      opacity: 0.3;
+    }
+    
     .layout-shell {
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      background: var(--color-bg-primary);
+      position: relative;
+      z-index: 1;
     }
 
     .main-content {
       flex: 1;
       width: 100%;
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto;
       padding: var(--space-6);
+      position: relative;
+      z-index: 2;
     }
 
     /* Focus management for SPA navigation */

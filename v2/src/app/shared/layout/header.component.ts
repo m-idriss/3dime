@@ -12,7 +12,7 @@ import { NavigationComponent } from '../components/navigation.component';
         <div class="logo-section">
           <a routerLink="/" class="logo-link" aria-label="3dime - Go to homepage">
             <img 
-              src="/assets/logo.png" 
+              src="logo.png" 
               alt="3dime logo"
               class="logo"
               width="40"
