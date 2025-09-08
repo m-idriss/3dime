@@ -1,0 +1,299 @@
+/* ==========================================================================
+   SCSS Mixins - 3dime v2
+   ========================================================================== */
+
+/* Glass Morphism Mixins */
+@mixin glass-effect($transparency: 0.8, $blur: 20px, $border-opacity: 0.1) {
+  background: rgba(26, 26, 26, $transparency);
+  backdrop-filter: blur($blur);
+  -webkit-backdrop-filter: blur($blur);
+  border: 1px solid rgba(255, 255, 255, $border-opacity);
+  box-shadow: var(--shadow-glass-md);
+}
+
+@mixin glass-card($elevation: 'md') {
+  @if $elevation == 'sm' {
+    @include glass-effect(0.8, 15px, 0.08);
+    box-shadow: var(--shadow-glass-sm);
+  } @else if $elevation == 'md' {
+    @include glass-effect(0.8, 20px, 0.1);
+    box-shadow: var(--shadow-glass-md);
+  } @else if $elevation == 'lg' {
+    @include glass-effect(0.8, 25px, 0.12);
+    box-shadow: var(--shadow-glass-lg);
+  } @else if $elevation == 'xl' {
+    @include glass-effect(0.8, 30px, 0.15);
+    box-shadow: var(--shadow-glass-xl);
+  }
+}
+
+@mixin glass-hover() {
+  transition: all var(--duration-normal) var(--ease-out);
+  
+  &:hover {
+    background: rgba(26, 26, 26, 0.9);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glass-lg);
+  }
+}
+
+/* Responsive Breakpoint Mixins */
+@mixin mobile {
+  @media (max-width: #{var(--breakpoint-sm) - 1px}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: #{var(--breakpoint-sm)}) and (max-width: #{var(--breakpoint-lg) - 1px}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: #{var(--breakpoint-lg)}) {
+    @content;
+  }
+}
+
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == xs {
+    @media (min-width: var(--breakpoint-xs)) { @content; }
+  }
+  @if $breakpoint == sm {
+    @media (min-width: var(--breakpoint-sm)) { @content; }
+  }
+  @if $breakpoint == md {
+    @media (min-width: var(--breakpoint-md)) { @content; }
+  }
+  @if $breakpoint == lg {
+    @media (min-width: var(--breakpoint-lg)) { @content; }
+  }
+  @if $breakpoint == xl {
+    @media (min-width: var(--breakpoint-xl)) { @content; }
+  }
+  @if $breakpoint == 2xl {
+    @media (min-width: var(--breakpoint-2xl)) { @content; }
+  }
+}
+
+/* Typography Mixins */
+@mixin heading($size: 'base', $weight: null, $line-height: null) {
+  font-family: var(--font-family-primary);
+  
+  @if $size == 'xs' {
+    font-size: var(--font-size-xs);
+  } @else if $size == 'sm' {
+    font-size: var(--font-size-sm);
+  } @else if $size == 'base' {
+    font-size: var(--font-size-base);
+  } @else if $size == 'lg' {
+    font-size: var(--font-size-lg);
+  } @else if $size == 'xl' {
+    font-size: var(--font-size-xl);
+  } @else if $size == '2xl' {
+    font-size: var(--font-size-2xl);
+  } @else if $size == '3xl' {
+    font-size: var(--font-size-3xl);
+  } @else if $size == '4xl' {
+    font-size: var(--font-size-4xl);
+  } @else if $size == '5xl' {
+    font-size: var(--font-size-5xl);
+  } @else if $size == '6xl' {
+    font-size: var(--font-size-6xl);
+  }
+  
+  @if $weight {
+    font-weight: var(--font-weight-#{$weight});
+  }
+  
+  @if $line-height {
+    line-height: var(--line-height-#{$line-height});
+  }
+}
+
+@mixin text-gradient($from: var(--color-primary), $to: var(--color-primary-light)) {
+  background: linear-gradient(135deg, $from 0%, $to 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Layout Mixins */
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin container($max-width: var(--breakpoint-xl)) {
+  width: 100%;
+  max-width: $max-width;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-4);
+  padding-right: var(--space-4);
+  
+  @include respond-to(sm) {
+    padding-left: var(--space-6);
+    padding-right: var(--space-6);
+  }
+  
+  @include respond-to(lg) {
+    padding-left: var(--space-8);
+    padding-right: var(--space-8);
+  }
+}
+
+/* Animation Mixins */
+@mixin fade-in($duration: var(--duration-normal), $delay: 0s) {
+  opacity: 0;
+  animation: fadeIn $duration var(--ease-out) $delay forwards;
+}
+
+@mixin slide-up($duration: var(--duration-normal), $delay: 0s, $distance: 20px) {
+  opacity: 0;
+  transform: translateY($distance);
+  animation: slideUp $duration var(--ease-out) $delay forwards;
+}
+
+@mixin stagger-animation($delay-increment: 0.1s, $max-children: 10) {
+  @for $i from 1 through $max-children {
+    &:nth-child(#{$i}) {
+      animation-delay: #{($i - 1) * $delay-increment};
+    }
+  }
+}
+
+/* Button Mixins */
+@mixin button-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  text-decoration: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-out);
+  
+  &:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+  
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+@mixin button-primary {
+  @include button-base;
+  background: var(--color-primary);
+  color: var(--color-bg-primary);
+  box-shadow: var(--shadow-primary);
+  
+  &:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+@mixin button-ghost {
+  @include button-base;
+  background: transparent;
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border-primary);
+  
+  &:hover:not(:disabled) {
+    background: var(--glass-bg);
+    border-color: var(--color-border-accent);
+    color: var(--color-primary);
+  }
+}
+
+/* Utility Mixins */
+@mixin visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+@mixin reset-button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+@mixin reset-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Focus Management */
+@mixin focus-ring($color: var(--color-primary)) {
+  &:focus {
+    outline: 2px solid $color;
+    outline-offset: 2px;
+  }
+  
+  &:focus:not(:focus-visible) {
+    outline: none;
+  }
+}
+
+/* Scrollbar Styling */
+@mixin custom-scrollbar($width: 8px, $track-color: var(--color-bg-tertiary), $thumb-color: var(--color-border-primary)) {
+  scrollbar-width: thin;
+  scrollbar-color: $thumb-color $track-color;
+  
+  &::-webkit-scrollbar {
+    width: $width;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: $track-color;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: $thumb-color;
+    
+    &:hover {
+      background: var(--color-border-accent);
+    }
+  }
+}
