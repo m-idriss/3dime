@@ -5,9 +5,9 @@
 /* Colors - Dark Theme Palette */
 :root {
   /* Primary Colors */
-  --color-primary: #00D4AA;
-  --color-primary-dark: #00B894;
-  --color-primary-light: #00E8C6;
+  --color-primary: #3b82f6;
+  --color-primary-dark: #2563eb;
+  --color-primary-light: #60a5fa;
   
   /* Background Colors */
   --color-bg-primary: #000000;
@@ -20,12 +20,12 @@
   --color-text-primary: #FFFFFF;
   --color-text-secondary: #B3B3B3;
   --color-text-tertiary: #808080;
-  --color-text-accent: #00D4AA;
+  --color-text-accent: #3b82f6;
   
   /* Border Colors */
   --color-border-primary: rgba(255, 255, 255, 0.1);
   --color-border-secondary: rgba(255, 255, 255, 0.05);
-  --color-border-accent: rgba(0, 212, 170, 0.3);
+  --color-border-accent: rgba(59, 130, 246, 0.3);
   
   /* Glass Morphism Effects */
   --glass-bg: rgba(26, 26, 26, 0.8);
