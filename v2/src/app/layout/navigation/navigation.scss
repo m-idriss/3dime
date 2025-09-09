@@ -1,0 +1,90 @@
+/* Import design system */
+@use '../../../styles/mixins';
+
+/* Navigation Styles */
+.navigation {
+  position: relative;
+  z-index: var(--z-index-navigation);
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4);
+  
+  @include mixins.respond-to(md) {
+    padding: var(--space-6) var(--space-8);
+  }
+}
+
+.logo-link {
+  display: block;
+  transition: transform var(--duration-fast) var(--ease-out);
+  
+  &:hover {
+    transform: scale(1.05);
+  }
+  
+  &:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
+    border-radius: 50%;
+  }
+}
+
+.logo {
+  display: block;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  
+  &:hover {
+    box-shadow: var(--shadow-glass-md);
+  }
+  
+  @include mixins.respond-to(md) {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+.profile-options-btn {
+  @include mixins.button-ghost();
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 50%;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  
+  &:hover {
+    background: var(--glass-bg-hover);
+    border-color: var(--color-border-accent);
+    transform: scale(1.1);
+  }
+  
+  &:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+  
+  svg {
+    width: 20px;
+    height: 20px;
+    transition: transform var(--duration-fast) var(--ease-out);
+  }
+  
+  &[aria-expanded="true"] svg {
+    transform: rotate(45deg);
+  }
+}
