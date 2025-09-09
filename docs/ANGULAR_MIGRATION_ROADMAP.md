@@ -55,25 +55,12 @@ This document outlines the complete roadmap for migrating the current static 3di
 
 ## Milestone 2: Core Architecture
 
-### 2.1 Application Routing
-- [ ] Set up route structure:
-  - `/v2/` - Home (current index.html content)
-  - `/v2/services` - Services/Skills showcase
-  - `/v2/projects` - Project portfolio  
-  - `/v2/about` - Extended biography
-  - `/v2/contact` - Contact form and information
-- [ ] Configure lazy loading for all routes
-- [ ] Set up route guards for future authentication features
-- [ ] Implement proper page titles and meta tags per route
-
-### 2.2 Shared Layout Components
+### 2.1 Shared Layout Components ✅
 - [ ] Create `LayoutShellComponent` - Main application wrapper
-- [ ] Build `HeaderComponent` with navigation
-- [ ] Develop `FooterComponent` with social links
 - [ ] Create `NavigationComponent` with mobile responsiveness
 - [ ] Implement `SkipLinksComponent` for accessibility
 
-### 2.3 Base Styles and Responsive Framework
+### 2.2 Base Styles and Responsive Framework ✅
 - [ ] Port current CSS grid/flexbox layouts to Angular components
 - [ ] Create responsive mixins and utilities
 - [ ] Implement glass-morphism effects as reusable SCSS mixins
@@ -82,7 +69,6 @@ This document outlines the complete roadmap for migrating the current static 3di
 
 ### Tasks for Milestone 2:
 ```
-- Define and implement routing structure
 - Create shared layout components with proper styling
 - Set up responsive design system
 - Ensure mobile-first approach is maintained
