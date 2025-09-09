@@ -1,0 +1,86 @@
+/* Import design system */
+@use '../../../styles/mixins';
+
+/* Layout Shell Styles */
+.layout-shell {
+  min-height: 100vh;
+  background: var(--color-bg-primary);
+  position: relative;
+  overflow-x: hidden;
+}
+
+.main-content {
+  padding: var(--space-4) 0;
+  
+  @include mixins.respond-to(md) {
+    padding: var(--space-8) 0;
+  }
+  
+  &:focus {
+    outline: none;
+  }
+}
+
+.container {
+  @include mixins.container();
+}
+
+.grid-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+  
+  @include mixins.respond-to(lg) {
+    grid-template-columns: 400px 1fr;
+    gap: var(--space-8);
+  }
+  
+  @include mixins.respond-to(xl) {
+    grid-template-columns: 450px 1fr;
+    gap: var(--space-12);
+  }
+}
+
+.profile-column {
+  @include mixins.glass-card();
+  padding: var(--space-6);
+  height: fit-content;
+  position: sticky;
+  top: var(--space-6);
+  
+  @include mixins.respond-to(md) {
+    padding: var(--space-8);
+  }
+  
+  /* Mobile: Full width, not sticky */
+  @include mixins.mobile() {
+    position: static;
+    margin-bottom: var(--space-6);
+  }
+}
+
+.content-column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  
+  @include mixins.respond-to(md) {
+    gap: var(--space-8);
+  }
+}
+
+/* Responsive adjustments */
+@include mixins.mobile() {
+  .grid-layout {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+  
+  .main-content {
+    padding: var(--space-2) 0;
+  }
+  
+  .profile-column {
+    padding: var(--space-4);
+  }
+}
