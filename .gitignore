@@ -33,11 +33,7 @@ coverage/
 # PHP configuration files with sensitive credentials
 config.php
 
-# Angular v2 build artifacts and dependencies
-v2/node_modules/
-v2/dist/
-v2/.angular/
-v2/coverage/
+
 
 # Web server configuration files
 .htaccess
