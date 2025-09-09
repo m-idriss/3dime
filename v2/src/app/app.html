@@ -2,49 +2,36 @@
 <app-layout-shell>
   <!-- Profile Section Content -->
   <div slot="profile" class="profile-content">
-    <div class="profile-header">
-      <h2 class="profile-title text-gradient">✨ Idriss ✨</h2>
-    </div>
-    
-    <div class="about-section">
-      <h3>About Me</h3>
-      <p>Tech enthusiast and lifelong learner. French of Malagasy origin, living in Nice with my wife and children. I love building elegant solutions that keep things simple.</p>
-    </div>
-    
-    <div class="tech-stack-section">
-      <h3>Tech Stack</h3>
-      <p>Some of the technologies I worked with.</p>
-      <div class="tech-badges">
-        <a href="https://www.java.com/" target="_blank" rel="noopener" class="tech-badge">Java</a>
-        <a href="https://quarkus.io/" target="_blank" rel="noopener" class="tech-badge">Quarkus</a>
-        <a href="https://spring.io/projects/spring-boot" target="_blank" rel="noopener" class="tech-badge">Spring Boot</a>
-        <a href="https://agilemanifesto.org/" target="_blank" rel="noopener" class="tech-badge">Agile</a>
-        <a href="https://www.docker.com/" target="_blank" rel="noopener" class="tech-badge">Docker</a>
-        <a href="https://www.postgresql.org/" target="_blank" rel="noopener" class="tech-badge">PostgreSQL</a>
-        <a href="https://www.mongodb.com/" target="_blank" rel="noopener" class="tech-badge">MongoDB</a>
-      </div>
-    </div>
+    <app-hero />
+    <app-social-links />
   </div>
   
   <!-- Main Content -->
   <div slot="content" class="main-content-sections">
+    <!-- Tech Stack Section -->
     <section class="content-card glass-card">
-      <h2>Welcome to 3dime v2</h2>
-      <p>This is the new Angular version of the 3dime website, currently under development.</p>
-      <p>The original site functionality is being migrated to this modern Angular application with improved performance and accessibility.</p>
+      <app-tech-stack />
     </section>
     
+    <!-- Migration Status Section -->
     <section class="content-card glass-card">
-      <h3>Migration Progress</h3>
-      <ul>
-        <li>✅ Angular project setup with SSR</li>
-        <li>✅ Design system and glass-morphism effects</li>
-        <li>✅ Layout shell and navigation components</li>
-        <li>🚧 Content migration from structured data</li>
-        <li>🚧 GitHub activity heatmap</li>
-        <li>🚧 Experience and education sections</li>
-        <li>⏳ SEO and accessibility features</li>
-        <li>⏳ Performance optimization</li>
+      <h2>Migration Progress</h2>
+      <p>This is the new Angular version of the 3dime website, currently under development.</p>
+      <p>The original site functionality is being migrated to this modern Angular application with improved performance and accessibility.</p>
+      
+      <h3>Completed Features</h3>
+      <ul class="progress-list">
+        <li class="completed">✅ Angular project setup with SSR</li>
+        <li class="completed">✅ Design system and glass-morphism effects</li>
+        <li class="completed">✅ Layout shell and navigation components</li>
+        <li class="completed">✅ Content migration from structured data</li>
+        <li class="completed">✅ Dynamic profile and hero components</li>
+        <li class="completed">✅ Technology stack with icons and links</li>
+        <li class="completed">✅ Social media links integration</li>
+        <li class="in-progress">🚧 GitHub activity heatmap</li>
+        <li class="in-progress">🚧 Experience and education sections</li>
+        <li class="pending">⏳ SEO and accessibility features</li>
+        <li class="pending">⏳ Performance optimization</li>
       </ul>
     </section>
   </div>

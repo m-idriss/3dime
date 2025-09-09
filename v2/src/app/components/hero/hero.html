@@ -1,0 +1,91 @@
+<!-- Hero/Profile Section -->
+<div class="hero-container">
+  @if (isLoading()) {
+    <!-- Loading State -->
+    <div class="hero-loading" role="status" aria-label="Loading profile information">
+      <div class="skeleton-avatar"></div>
+      <div class="skeleton-text skeleton-title"></div>
+      <div class="skeleton-text skeleton-subtitle"></div>
+      <div class="skeleton-text skeleton-description"></div>
+      <div class="skeleton-text skeleton-description short"></div>
+    </div>
+  } @else if (error()) {
+    <!-- Error State -->
+    <div class="hero-error" role="alert">
+      <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+      <h2>Unable to Load Profile</h2>
+      <p>{{ error() }}</p>
+      <button 
+        type="button" 
+        class="retry-btn"
+        (click)="contentService.refresh()"
+      >
+        <i class="fas fa-redo" aria-hidden="true"></i>
+        Try Again
+      </button>
+    </div>
+  } @else if (profile(); as profileData) {
+    <!-- Profile Content -->
+    <div class="hero-content">
+      <!-- Profile Header -->
+      <header class="profile-header">
+        <div class="avatar-container">
+          <img 
+            [src]="profileData.image" 
+            [alt]="profileData.name + ' - Profile Photo'"
+            class="avatar"
+            loading="eager"
+            (error)="onImageError($event)"
+          />
+          <div class="avatar-ring" aria-hidden="true"></div>
+        </div>
+        
+        <div class="header-content">
+          <h1 class="profile-name text-gradient">
+            ✨ {{ profileData.name }} ✨
+          </h1>
+          
+          <p class="profile-title">
+            {{ profileData.title }}
+          </p>
+          
+          <p class="profile-location">
+            <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+            {{ profileData.location }}
+          </p>
+        </div>
+      </header>
+
+      <!-- About Section -->
+      <section class="about-section">
+        <h2 class="section-title">About Me</h2>
+        <p class="about-description">
+          {{ profileData.description }}
+        </p>
+      </section>
+
+      <!-- Contact Section -->
+      <section class="contact-section">
+        <h2 class="section-title">Get In Touch</h2>
+        <button 
+          type="button"
+          class="contact-btn primary-btn"
+          (click)="onEmailClick()"
+          [attr.aria-label]="'Send email to ' + profileData.email"
+        >
+          <i class="fas fa-envelope" aria-hidden="true"></i>
+          Contact Me
+        </button>
+        
+        <p class="email-display">
+          <a 
+            [href]="'mailto:' + profileData.email"
+            class="email-link"
+          >
+            {{ profileData.email }}
+          </a>
+        </p>
+      </section>
+    </div>
+  }
+</div>

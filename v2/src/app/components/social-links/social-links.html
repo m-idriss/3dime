@@ -1,0 +1,65 @@
+<!-- Social Links Section -->
+<section class="social-links-container">
+  <header class="section-header">
+    <h2 class="section-title">Connect With Me</h2>
+    <p class="section-description">Find me on these platforms and let's connect!</p>
+  </header>
+
+  @if (isLoading()) {
+    <!-- Loading State -->
+    <div class="social-loading" role="status" aria-label="Loading social links">
+      <div class="skeleton-links">
+        @for (item of [1,2,3,4]; track item) {
+          <div class="skeleton-link"></div>
+        }
+      </div>
+    </div>
+  } @else if (error()) {
+    <!-- Error State -->
+    <div class="social-error" role="alert">
+      <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+      <p>{{ error() }}</p>
+      <button 
+        type="button" 
+        class="retry-btn"
+        (click)="contentService.refresh()"
+      >
+        <i class="fas fa-redo" aria-hidden="true"></i>
+        Retry
+      </button>
+    </div>
+  } @else {
+    <!-- Social Links Grid -->
+    <div class="social-grid" role="list">
+      @for (link of socialLinks(); track trackByLink($index, link)) {
+        <a
+          [href]="link.url"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="social-link"
+          [attr.aria-label]="'Visit my ' + link.platform + ' profile'"
+          (click)="onSocialClick(link)"
+          role="listitem"
+        >
+          <div class="social-icon" [style.color]="link.color">
+            <i [class]="link.icon" aria-hidden="true"></i>
+          </div>
+          
+          <div class="social-content">
+            <span class="social-platform">{{ link.platform }}</span>
+            @if (link.username) {
+              <span class="social-username">{{ link.username }}</span>
+            }
+          </div>
+          
+          <i class="fas fa-external-link-alt social-external" aria-hidden="true"></i>
+        </a>
+      } @empty {
+        <div class="social-empty" role="status">
+          <i class="fas fa-share-alt" aria-hidden="true"></i>
+          <p>No social links available</p>
+        </div>
+      }
+    </div>
+  }
+</section>

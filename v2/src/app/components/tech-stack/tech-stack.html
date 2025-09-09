@@ -1,0 +1,67 @@
+<!-- Tech Stack Section -->
+<section class="tech-stack-container">
+  <header class="section-header">
+    <h2 class="section-title">Tech Stack</h2>
+    <p class="section-description">Technologies I work with and enjoy using.</p>
+  </header>
+
+  @if (isLoading()) {
+    <!-- Loading State -->
+    <div class="tech-loading" role="status" aria-label="Loading technology stack">
+      <div class="skeleton-badges">
+        @for (item of [1,2,3,4,5,6,7]; track item) {
+          <div class="skeleton-badge"></div>
+        }
+      </div>
+    </div>
+  } @else if (error()) {
+    <!-- Error State -->
+    <div class="tech-error" role="alert">
+      <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+      <p>{{ error() }}</p>
+      <button 
+        type="button" 
+        class="retry-btn"
+        (click)="contentService.refresh()"
+      >
+        <i class="fas fa-redo" aria-hidden="true"></i>
+        Retry
+      </button>
+    </div>
+  } @else {
+    <!-- Technology Badges -->
+    <div class="tech-grid" role="list">
+      @for (tech of technologies(); track trackByTech($index, tech)) {
+        <a
+          [href]="tech.url || null"
+          [target]="tech.url ? '_blank' : null"
+          [rel]="tech.url ? 'noopener noreferrer' : null"
+          class="tech-badge"
+          [class.tech-badge--no-link]="!tech.url"
+          [attr.aria-label]="tech.url ? 'Learn more about ' + tech.name : tech.name"
+          (click)="onTechClick(tech, $event)"
+          role="listitem"
+        >
+          @if (tech.icon) {
+            <i 
+              [class]="tech.icon" 
+              [style.color]="tech.color || 'var(--color-primary)'"
+              aria-hidden="true"
+            ></i>
+          }
+          
+          <span class="tech-name">{{ tech.name }}</span>
+          
+          @if (tech.url) {
+            <i class="fas fa-external-link-alt tech-external" aria-hidden="true"></i>
+          }
+        </a>
+      } @empty {
+        <div class="tech-empty" role="status">
+          <i class="fas fa-code" aria-hidden="true"></i>
+          <p>No technologies to display</p>
+        </div>
+      }
+    </div>
+  }
+</section>
