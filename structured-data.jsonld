@@ -62,6 +62,11 @@
       "@type": "Thing",
       "name": "MongoDB",
       "url": "https://www.mongodb.com"
+    },
+    {
+      "@type": "Thing",
+      "name": "Canva",
+      "url": "https://www.canva.com"
     }
   ],
   "alumniOf": [
