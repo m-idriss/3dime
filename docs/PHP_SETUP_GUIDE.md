@@ -50,7 +50,7 @@ php -S localhost:8000
 # Test GitHub API proxy
 curl "http://localhost:8000/proxy.php?service=github"
 
-# Test commit data for heatmap
+# Test commit data for heatmap (shows activity from all repositories)
 curl "http://localhost:8000/proxy.php?service=github&type=commits"
 ```
 
@@ -109,9 +109,9 @@ sudo systemctl start php7.4-fpm nginx
 
 **GitHub Heatmap Not Loading**:
 - Ensure `config.php` exists (copy from `config.php.example`)
-- Set `GITHUB_USERNAME` and `GITHUB_REPO` in config.php
+- Set `GITHUB_USERNAME` in config.php (GITHUB_REPO is no longer required as we fetch from all repositories)
 - Add `GITHUB_TOKEN` for higher rate limits (optional but recommended)
-- Check that commit data endpoint works: `curl "yoursite.com/proxy.php?service=github&type=commits"`
+- Check that user events endpoint works: `curl "yoursite.com/proxy.php?service=github&type=commits"`
 
 **CORS Errors**:
 - Ensure `proxy.php` includes proper CORS headers
