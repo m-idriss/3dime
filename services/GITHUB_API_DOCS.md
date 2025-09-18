@@ -21,6 +21,25 @@ define('GITHUB_REPO', '3dime');
 
 ## API Endpoints
 
+### User Activity (Heatmap Data) - Updated
+```
+GET /proxy.php?service=github&type=commits
+```
+
+**Returns activity from ALL user repositories** (changed from single repository):
+```json
+{
+  "commit_activity": [
+    {
+      "week": 1640908800,
+      "days": [2, 0, 1, 3, 0, 0, 1]
+    }
+  ]
+}
+```
+
+This endpoint now uses the GitHub User Events API (`/users/{username}/events/public`) to aggregate activity across all repositories, providing a comprehensive view of the user's GitHub activity rather than just one specific repository.
+
 ### User Statistics
 ```
 GET /proxy.php?service=github
