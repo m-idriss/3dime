@@ -162,7 +162,7 @@ function showLoadingState() {
         <div class="spinner" aria-label="Loading heatmap">
           <div class="spinner-circle"></div>
         </div>
-        <p>Loading GitHub activity from all repositories...</p>
+        <p>Loading GitHub activity...</p>
       </div>
     `;
   }
@@ -407,8 +407,8 @@ function renderHeatmap(commitSource) {
         {
           text: function (date, value, dayjsDate) {
             return (
-              (value ? value + ' activities' : 'No activity') +
-              ' across all repositories on ' +
+              (value ? value + ' commits' : 'No commits') +
+              ' on ' +
               dayjsDate.format('LL')
             );
           },
