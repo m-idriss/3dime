@@ -21,8 +21,7 @@ function fetchGithubData($type = 'user', $repo = null) {
     if ($type === 'repo') {
         $apiUrl = "https://api.github.com/repos/$username/$repo";
     } elseif ($type === 'commits') {
-        // Use user events API to get activity from all repositories
-        $apiUrl = "https://api.github.com/users/$username/events/public";
+        $apiUrl = "https://api.github.com/repos/$username/$repo/stats/commit_activity";
     } else {
         $apiUrl = "https://api.github.com/users/$username";
     }
@@ -38,13 +37,13 @@ function executeGitHubApiCallWithRetry($apiUrl, $type, $maxRetries = 3, $baseDel
         try {
             $result = executeGitHubApiCall($apiUrl, $type);
             
-            // For user events (commits type), we expect an array of events
+            // For commit activity, validate that we got meaningful data
             if ($type === 'commits') {
-                // User events API should return an array, but empty arrays are valid (user might not have recent activity)
-                if (!is_array($result['commit_activity'])) {
+                if (!is_array($result['commit_activity']) || empty($result['commit_activity'])) {
+                    // GitHub sometimes returns 202 with empty data while stats are being computed
                     if ($attempt < $maxRetries - 1) {
                         $delay = $baseDelay * pow(2, $attempt) + (rand(0, 1000) / 1000);
-                        error_log("Invalid user events data format, retrying in {$delay}s (attempt " . ($attempt + 1) . "/$maxRetries)");
+                        error_log("GitHub stats not ready, waiting {$delay}s before retry " . ($attempt + 1) . "/$maxRetries");
                         sleep($delay);
                         continue;
                     }
@@ -163,7 +162,11 @@ function executeGitHubApiCall($apiUrl, $type) {
         }
     }
 
-    // User events API should return 200, no special handling needed for 202
+    // Handle 202 response for commit activity (stats being computed)
+    if ($httpCode === 202 && $type === 'commits') {
+        throw new Exception('GitHub stats are being computed, please try again in a few moments', 202);
+    }
+
     if ($httpCode !== 200) {
         $message = is_array($data) && isset($data['message']) ? $data['message'] : '';
         throw new Exception('GitHub API error: ' . $message, $httpCode);
@@ -189,9 +192,9 @@ function executeGitHubApiCall($apiUrl, $type) {
             'updated_at' => $data['updated_at'] ?? ''
         ];
     } elseif ($type === 'commits') {
-        // Process user events to extract commit activity across all repositories
+        // Return commit activity data for heatmap
         return [
-            'commit_activity' => processUserEventsToCommitActivity($data)
+            'commit_activity' => $data
         ];
     } else {
         return [
@@ -201,78 +204,4 @@ function executeGitHubApiCall($apiUrl, $type) {
             'following' => $data['following'] ?? 0
         ];
     }
-}
-
-/**
- * Process GitHub user events to create commit activity data for heatmap
- * Converts user events (from all repositories) into weekly commit activity format
- * 
- * @param array $events Array of GitHub events from user events API
- * @return array Weekly commit activity data compatible with existing heatmap format
- */
-function processUserEventsToCommitActivity($events) {
-    if (!is_array($events) || empty($events)) {
-        return [];
-    }
-    
-    // Initialize date-based commit counts
-    $commitsByDate = [];
-    
-    // Process events to extract commit data
-    foreach ($events as $event) {
-        if (!isset($event['type']) || !isset($event['created_at'])) {
-            continue;
-        }
-        
-        // Focus on PushEvent which contains commit information
-        if ($event['type'] === 'PushEvent' && isset($event['payload']['commits'])) {
-            $eventDate = date('Y-m-d', strtotime($event['created_at']));
-            $commitCount = count($event['payload']['commits']);
-            
-            if (!isset($commitsByDate[$eventDate])) {
-                $commitsByDate[$eventDate] = 0;
-            }
-            $commitsByDate[$eventDate] += $commitCount;
-        }
-        // Also count other relevant events as activity
-        elseif (in_array($event['type'], ['CreateEvent', 'PullRequestEvent', 'IssuesEvent', 'ReleaseEvent'])) {
-            $eventDate = date('Y-m-d', strtotime($event['created_at']));
-            
-            if (!isset($commitsByDate[$eventDate])) {
-                $commitsByDate[$eventDate] = 0;
-            }
-            $commitsByDate[$eventDate] += 1; // Count as 1 activity unit
-        }
-    }
-    
-    // Convert to weekly format expected by heatmap
-    $weeklyActivity = [];
-    $startDate = strtotime('-6 months'); // 6 months of data
-    $endDate = time();
-    
-    // Group dates into weeks (Sunday to Saturday)
-    for ($timestamp = $startDate; $timestamp <= $endDate; $timestamp += 7 * 24 * 60 * 60) {
-        $weekStart = strtotime('last Sunday', $timestamp);
-        if ($weekStart > $timestamp) {
-            $weekStart = strtotime('Sunday -1 week', $timestamp);
-        }
-        
-        $weekData = [
-            'week' => $weekStart,
-            'days' => []
-        ];
-        
-        // Process 7 days of the week
-        for ($dayOffset = 0; $dayOffset < 7; $dayOffset++) {
-            $dayTimestamp = $weekStart + ($dayOffset * 24 * 60 * 60);
-            $dayDate = date('Y-m-d', $dayTimestamp);
-            $commitCount = isset($commitsByDate[$dayDate]) ? $commitsByDate[$dayDate] : 0;
-            
-            $weekData['days'][] = $commitCount;
-        }
-        
-        $weeklyActivity[] = $weekData;
-    }
-    
-    return $weeklyActivity;
 }
