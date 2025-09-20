@@ -220,7 +220,7 @@ function getAllCommitActivityAsJson($username) {
                 }
             }
         } catch (Exception $e) {
-            error_log("Erreur sur $repoName : " . $e->getMessage());
+            error_log("Error on $repoName: " . $e->getMessage());
         }
     }
 
