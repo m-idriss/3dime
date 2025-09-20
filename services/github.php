@@ -196,9 +196,16 @@ function executeGitHubApiCall($apiUrl, $type) {
     }
 }
 
-function getAllCommitActivityAsJson($username) {
-    $repos = fetchGithubData('list');
+function getAllCommitActivityAsJson() {
+    // Uncomment to fetch all repos dynamically
+    // $repos = fetchGithubData('list');
 
+    // For simplicity and to avoid hitting rate limits, we hardcode
+    // just "3dime", "converter" repos here, which are the main ones.
+    $repos = [
+        ['name' => '3dime'],
+        ['name' => 'converter']
+    ];
     $aggregated = [];
 
     foreach ($repos as $repo) {

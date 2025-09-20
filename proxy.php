@@ -22,7 +22,7 @@ try {
             $type = $_GET['type'] ?? 'user';
             $repo = $_GET['repo'] ?? GITHUB_REPO;
             if ($type === 'commits_all') {
-                echo json_encode(getAllCommitActivityAsJson(GITHUB_USERNAME));
+                echo json_encode(getAllCommitActivityAsJson());
             } else {
                 echo json_encode(fetchGithubData($type, $repo));
             }
