@@ -290,7 +290,7 @@ async function fetchGitHubDataWithRetry(maxRetries = 3, initialDelay = 500) {
   
   for (let attempt = 0; attempt < maxRetries; attempt++) {
     try {
-      const response = await fetch(`${CONFIG.ENDPOINTS.PROXY}?service=github&type=commits`, {
+      const response = await fetch(`${CONFIG.ENDPOINTS.PROXY}?service=github&type=commits_all`, {
         headers: {
           'Cache-Control': 'no-cache'
         }
