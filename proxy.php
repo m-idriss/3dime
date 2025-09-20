@@ -21,7 +21,11 @@ try {
         case 'github':
             $type = $_GET['type'] ?? 'user';
             $repo = $_GET['repo'] ?? GITHUB_REPO;
-            echo json_encode(fetchGithubData($type, $repo));
+            if ($type === 'commits_all') {
+                echo json_encode(getAllCommitActivityAsJson(GITHUB_USERNAME));
+            } else {
+                echo json_encode(fetchGithubData($type, $repo));
+            }
             break;
         default:
             http_response_code(400);

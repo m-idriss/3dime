@@ -6,33 +6,35 @@ function fetchGithubData($type = 'user', $repo = null) {
     if (!defined('GITHUB_USERNAME') || !defined('GITHUB_REPO')) {
         throw new Exception('GitHub configuration missing. Please check config.php file.', 500);
     }
-    
+
     $username = GITHUB_USERNAME;
     if ($repo === null) {
         $repo = GITHUB_REPO;
     }
-    
+
     // Validate repo parameter
     if (isset($repo) && !preg_match('/^[A-Za-z0-9._-]+$/', $repo)) {
         throw new Exception('Invalid repository name');
     }
-    
+
     // Determine API endpoint based on type
     if ($type === 'repo') {
         $apiUrl = "https://api.github.com/repos/$username/$repo";
     } elseif ($type === 'commits') {
         $apiUrl = "https://api.github.com/repos/$username/$repo/stats/commit_activity";
+    } elseif ($type === 'list') {
+        $apiUrl = "https://api.github.com/users/$username/repos";
     } else {
         $apiUrl = "https://api.github.com/users/$username";
     }
-    
+
     // Attempt the API call with retry logic
     return executeGitHubApiCallWithRetry($apiUrl, $type);
 }
 
 function executeGitHubApiCallWithRetry($apiUrl, $type, $maxRetries = 3, $baseDelay = 1) {
     $lastException = null;
-    
+
     for ($attempt = 0; $attempt < $maxRetries; $attempt++) {
         try {
             $result = executeGitHubApiCall($apiUrl, $type);
@@ -49,9 +51,7 @@ function executeGitHubApiCallWithRetry($apiUrl, $type, $maxRetries = 3, $baseDel
                     }
                 }
             }
-            
             return $result;
-            
         } catch (Exception $e) {
             $lastException = $e;
             $code = $e->getCode();
@@ -59,7 +59,6 @@ function executeGitHubApiCallWithRetry($apiUrl, $type, $maxRetries = 3, $baseDel
             
             // Determine if this error should trigger a retry
             $shouldRetry = isRetriableGitHubError($code, $e->getMessage());
-            
             if (!$isLastAttempt && $shouldRetry) {
                 // Exponential backoff with jitter
                 $delay = $baseDelay * pow(2, $attempt) + (rand(0, 1000) / 1000);
@@ -92,15 +91,7 @@ function isRetriableGitHubError($httpCode, $message) {
     }
     
     // GitHub-specific cases that should be retried
-    $retriableMessages = [
-        'timeout',
-        'connection',
-        'network',
-        'temporarily unavailable',
-        'service unavailable',
-        'rate limit'
-    ];
-    
+    $retriableMessages = ['timeout','connection','network','temporarily unavailable','service unavailable','rate limit'];
     $lowerMessage = strtolower($message);
     foreach ($retriableMessages as $pattern) {
         if (strpos($lowerMessage, $pattern) !== false) {
@@ -120,7 +111,7 @@ function executeGitHubApiCall($apiUrl, $type) {
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
     curl_setopt($ch, CURLOPT_MAXREDIRS, 3);
-    
+
     // Add authentication if GitHub token is available
     $hasToken = defined('GITHUB_TOKEN') && !empty(GITHUB_TOKEN);
     if ($hasToken) {
@@ -135,10 +126,10 @@ function executeGitHubApiCall($apiUrl, $type) {
             'User-Agent: 3dime-proxy-script'
         ]);
     }
-    
+
     $response = curl_exec($ch);
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    
+
     if ($response === false) {
         $error = curl_error($ch);
         curl_close($ch);
@@ -171,11 +162,11 @@ function executeGitHubApiCall($apiUrl, $type) {
         $message = is_array($data) && isset($data['message']) ? $data['message'] : '';
         throw new Exception('GitHub API error: ' . $message, $httpCode);
     }
-    
+
     if ($data === null) {
         throw new Exception('Invalid JSON response');
     }
-    
+
     // Prepare response based on type
     if ($type === 'repo') {
         return [
@@ -192,10 +183,9 @@ function executeGitHubApiCall($apiUrl, $type) {
             'updated_at' => $data['updated_at'] ?? ''
         ];
     } elseif ($type === 'commits') {
-        // Return commit activity data for heatmap
-        return [
-            'commit_activity' => $data
-        ];
+        return ['commit_activity' => $data];
+    } elseif ($type === 'list') {
+        return $data;
     } else {
         return [
             'user_id' => $data['id'] ?? 0,
@@ -204,4 +194,39 @@ function executeGitHubApiCall($apiUrl, $type) {
             'following' => $data['following'] ?? 0
         ];
     }
+}
+
+function getAllCommitActivityAsJson($username) {
+    $repos = fetchGithubData('list');
+
+    $aggregated = [];
+
+    foreach ($repos as $repo) {
+        $repoName = $repo['name'];
+        try {
+            $data = fetchGithubData('commits', $repoName);
+            foreach ($data['commit_activity'] as $week) {
+                $ts = $week['week'];
+                if (!isset($aggregated[$ts])) {
+                    $aggregated[$ts] = [
+                        'week'  => $ts,
+                        'total' => 0,
+                        'days'  => array_fill(0, 7, 0)
+                    ];
+                }
+                $aggregated[$ts]['total'] += $week['total'];
+                foreach ($week['days'] as $i => $dayCount) {
+                    $aggregated[$ts]['days'][$i] += $dayCount;
+                }
+            }
+        } catch (Exception $e) {
+            error_log("Erreur sur $repoName : " . $e->getMessage());
+        }
+    }
+
+    ksort($aggregated);
+
+    return [
+        'commit_activity' => array_values($aggregated)
+    ];
 }
