@@ -15,6 +15,7 @@ require_once 'services/github.php';
 $service = $_GET['service'] ?? '';
 
 header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: *');
 
 try {
     switch ($service) {
