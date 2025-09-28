@@ -187,12 +187,7 @@ function executeGitHubApiCall($apiUrl, $type) {
     } elseif ($type === 'list') {
         return $data;
     } else {
-        return [
-            'user_id' => $data['id'] ?? 0,
-            'repos' => $data['public_repos'] ?? 0,
-            'followers' => $data['followers'] ?? 0,
-            'following' => $data['following'] ?? 0
-        ];
+        return $data;
     }
 }
 
