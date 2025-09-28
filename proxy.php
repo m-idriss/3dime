@@ -11,6 +11,7 @@ if (!file_exists('config.php')) {
 
 require_once 'config.php';
 require_once 'services/github.php';
+require_once 'services/notion.php';
 
 $service = $_GET['service'] ?? '';
 
@@ -28,12 +29,36 @@ try {
                 echo json_encode(fetchGithubData($type, $repo));
             }
             break;
+
+        case 'notion':
+            $db = $_GET['db'] ?? '';
+            if (empty($db)) {
+                http_response_code(400);
+                echo json_encode(['error' => 'Database ID is required for Notion service']);
+                exit;
+            }
+
+            if ($db === 'all') {
+                $all = [];
+                foreach (DATABASES as $key => $id) {
+                    try {
+                        $all[$key] = fetchNotionData($key);
+                    } catch (Exception $e) {
+                        error_log("Error fetching $key: ".$e->getMessage());
+                        $all[$key] = [];
+                    }
+                }
+                echo json_encode($all);
+            } else {
+                echo json_encode(fetchNotionData($db));
+            }
+            break;
+
         default:
             http_response_code(400);
             echo json_encode(['error' => 'Service not supported']);
     }
 } catch (Exception $e) {
-    // Handle specific HTTP codes from service errors
     $code = $e->getCode();
     if ($code >= 400 && $code < 600) {
         http_response_code($code);
