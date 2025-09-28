@@ -24,6 +24,8 @@ function fetchGithubData($type = 'user', $repo = null) {
         $apiUrl = "https://api.github.com/repos/$username/$repo/stats/commit_activity";
     } elseif ($type === 'list') {
         $apiUrl = "https://api.github.com/users/$username/repos";
+    } elseif ($type === 'social') {
+        $apiUrl = "https://api.github.com/users/$username/social_accounts";
     } else {
         $apiUrl = "https://api.github.com/users/$username";
     }
