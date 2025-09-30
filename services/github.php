@@ -26,6 +26,8 @@ function fetchGithubData($type = 'user', $repo = null) {
         $apiUrl = "https://api.github.com/users/$username/repos";
     } elseif ($type === 'social') {
         $apiUrl = "https://api.github.com/users/$username/social_accounts";
+    } elseif ($type === 'contributions') {
+        return fetchUserContributionCalendarV2(GITHUB_USERNAME);
     } else {
         $apiUrl = "https://api.github.com/users/$username";
     }
@@ -200,6 +202,7 @@ function getAllCommitActivityAsJson() {
     // For simplicity and to avoid hitting rate limits, we hardcode
     // just "3dime", "converter" repos here, which are the main ones.
     $repos = [
+        ['name' => '3dime-angular'],
         ['name' => '3dime'],
         ['name' => 'converter']
     ];
@@ -234,3 +237,107 @@ function getAllCommitActivityAsJson() {
         'commit_activity' => array_values($aggregated)
     ];
 }
+
+/**
+ * Execute a GitHub GraphQL query
+ */
+function executeGitHubGraphQLQuery($query, $variables = []) {
+    if (!defined('GITHUB_TOKEN') || empty(GITHUB_TOKEN)) {
+        throw new Exception('GitHub GraphQL requires a valid GITHUB_TOKEN in config.php', 500);
+    }
+
+    $apiUrl = "https://api.github.com/graphql";
+    $ch = curl_init($apiUrl);
+
+    $payload = json_encode([
+        'query' => $query,
+        'variables' => $variables
+    ]);
+
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 15);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'Authorization: bearer ' . GITHUB_TOKEN,
+        'Content-Type: application/json',
+        'User-Agent: 3dime-proxy-script'
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+    if ($response === false) {
+        $error = curl_error($ch);
+        curl_close($ch);
+        throw new Exception('GraphQL request failed: ' . $error, 500);
+    }
+
+    curl_close($ch);
+    $data = json_decode($response, true);
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown error';
+        throw new Exception('GitHub GraphQL error: ' . $message, $httpCode);
+    }
+
+    if ($data === null) {
+        throw new Exception('Invalid JSON response from GitHub GraphQL');
+    }
+
+    if (isset($data['errors'])) {
+        $errMsg = $data['errors'][0]['message'] ?? 'Unknown GraphQL error';
+        throw new Exception('GitHub GraphQL returned error: ' . $errMsg, 500);
+    }
+
+    return $data['data'];
+}
+
+/**
+ * Fetch user contribution calendar using GitHub GraphQL API
+ */
+function fetchUserContributionCalendarV2($login) {
+    $query = <<<'GRAPHQL'
+        query($login: String!) {
+          user(login: $login) {
+            contributionsCollection {
+              contributionCalendar {
+                totalContributions
+                weeks {
+                  contributionDays {
+                    date
+                    contributionCount
+                  }
+                }
+              }
+            }
+          }
+        }
+    GRAPHQL;
+
+    $variables = ['login' => $login];
+    $result = executeGitHubGraphQLQuery($query, $variables);
+
+    $calendar = $result['user']['contributionsCollection']['contributionCalendar'] ?? null;
+
+    if (!$calendar) {
+        return ['commit_activity' => []];
+    }
+
+    $flattened = [];
+    foreach ($calendar['weeks'] as $week) {
+        foreach ($week['contributionDays'] as $day) {
+            $flattened[] = [
+                'date' => $day['date'],
+                'value' => $day['contributionCount']
+            ];
+        }
+    }
+
+    return [
+        'total_contributions' => $calendar['totalContributions'],
+        'commit_activity' => $flattened
+    ];
+}
+
