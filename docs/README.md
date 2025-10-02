@@ -16,6 +16,10 @@ This directory contains all the documentation for the 3dime project.
 ### 📊 Technical Reviews
 - **[SITE_REVIEW_RECOMMENDATIONS.md](SITE_REVIEW_RECOMMENDATIONS.md)** - Detailed technical recommendations
 
+### 🤖 Automation & Workflows
+- **[SCREENSHOT_WORKFLOW.md](SCREENSHOT_WORKFLOW.md)** - Automated screenshot capture and update workflow
+- **[DEAD_LINK_CHECKER.md](DEAD_LINK_CHECKER.md)** - Automated dead link detection workflow
+
 ## 🔗 Project Files
 
 For general project information, see the main documentation:
@@ -38,6 +42,8 @@ For general project information, see the main documentation:
 │   ├── SECURITY.md        # Security policy
 │   ├── SECURITY_HEADERS.md# Security implementation
 │   ├── SITE_REVIEW_RECOMMENDATIONS.md # Technical recommendations
+│   ├── SCREENSHOT_WORKFLOW.md # Screenshot automation
+│   ├── DEAD_LINK_CHECKER.md # Link validation automation
 │   └── WEBSITE_AUDIT_REPORT.md # Audit results
 ├── .github/               # GitHub configuration
 ├── services/              # Service documentation
