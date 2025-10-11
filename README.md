@@ -269,8 +269,9 @@ This architecture ensures 3dime delivers value regardless of hosting constraints
 
 3dime includes **automated workflows** via GitHub Actions:
 
-- **📸 Screenshot Updates**: Automatically captures and updates website screenshots daily
+- **📸 Screenshot Updates**: Automatically captures and updates website screenshots daily ([documentation](docs/SCREENSHOT_WORKFLOW.md))
 - **🚀 Auto-deployment**: Deploys changes to production when pushed to master branch
+- **🔗 Dead Link Checker**: Validates all external links weekly ([documentation](docs/DEAD_LINK_CHECKER.md))
 
 All workflows run automatically - no configuration needed!
 
@@ -378,7 +379,9 @@ Based on the audit findings, 3dime follows a structured development roadmap focu
 
 ### 📚 Additional Documentation
 - **[Developer Guide](docs/DEVELOPER_GUIDE.md)** - Comprehensive technical documentation
-- **[Security Policy](docs/SECURITY.md)** - Security guidelines and vulnerability reporting  
+- **[Security Policy](docs/SECURITY.md)** - Security guidelines and vulnerability reporting
+- **[Screenshot Workflow](docs/SCREENSHOT_WORKFLOW.md)** - Automated screenshot capture documentation
+- **[Dead Link Checker](docs/DEAD_LINK_CHECKER.md)** - Automated link validation documentation
 - **[Contributing Guidelines](CONTRIBUTING.md)** - How to contribute to the project
 - **[Code of Conduct](CODE_OF_CONDUCT.md)** - Community guidelines
 
